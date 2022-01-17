@@ -1,0 +1,61 @@
+<app-back></app-back>
+<div *ngIf="plan" class="center-children">
+  <tui-avatar
+    size="xxl"
+    [rounded]="true"
+    class="avatar shadow"
+    avatarUrl="{{ plan.imageUrl }}"
+  ></tui-avatar>
+  <div class="center-children-row tui-space_top-3">
+    <tui-tag
+      status="custom"
+      class="level-{{ plan.level }}"
+      size="l"
+      [hoverable]="true"
+      [value]="'Level ' + plan.level"
+      class="tui-space_right-5"
+    ></tui-tag>
+    <tui-tag
+      status="custom"
+      size="l"
+      [hoverable]="true"
+      [value]="plan.duration + ' Weeks'"
+      class="sec-wrapper"
+    ></tui-tag>
+  </div>
+
+  <div class="tui-text_h5 tui-space_top-5 text-center">
+    {{ plan.title }}
+  </div>
+  <div class="tui-space_top-2 text-center">{{ plan.subtitle }}</div>
+</div>
+
+<div *ngIf="plan" class="tui-space_top-10 center-children">
+  <div class="tui-text_h6 tui-space_bottom-3">Week</div>
+  <tui-pagination
+    [length]="length"
+    [index]="weekIndex"
+    (indexChange)="changeIndex($event)"
+    class="tui-space_bottom-3"
+  ></tui-pagination>
+
+  <app-slider-steps [step]="currentStep"></app-slider-steps>
+</div>
+
+<div *ngIf="plan" class="center-children tui-space_top-10">
+  <button
+    tuiButton
+    type="button"
+    appearance="primary-custom"
+    (click)="startPlan()"
+  >
+    Start Plan
+  </button>
+</div>
+
+<div class="big-footer-space"></div>
+
+<app-footer-tabs
+  [id]="this.userId"
+  [index]="this.activeItemIndex"
+></app-footer-tabs>

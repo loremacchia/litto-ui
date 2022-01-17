@@ -1,0 +1,53 @@
+<app-search-item [id]="this.userId"></app-search-item>
+
+<div>
+  <app-back></app-back>
+</div>
+<div class="button-big-space">
+  <div class="tui-text_body-xl big-top-space tui-space_bottom-3">
+    Active Plans
+  </div>
+  <div *ngIf="this.steps">
+    <!--  TODO modifica ling-->
+    <div *ngFor="let s of this.steps" class="tui-space_bottom-5">
+      <a
+        size="m"
+        href="http://ng-web-apis.github.io/"
+        tuiIsland
+        target="_blank"
+        [hoverable]="true"
+      >
+        <div class="tui-island__content active-plans-island">
+          <div class="spacy-children-row">
+            <div>
+              <div class="tui-island__category">
+                {{ s.planName }}
+              </div>
+              <h3 class="tui-island__title ter-color">{{ s.title }}</h3>
+            </div>
+
+            <div class="prim-color even-little-padding">
+              <p>{{ s.endDate | date: "MMM d" }}</p>
+            </div>
+          </div>
+
+          <figure class="tui-island__figure">
+            <tui-avatar
+              size="m"
+              [rounded]="true"
+              [avatarUrl]="s.imageUrl"
+              class="shadow-light"
+            ></tui-avatar>
+          </figure>
+
+          <div></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<app-footer-tabs
+  [id]="this.userId"
+  [index]="this.activeItemIndex"
+></app-footer-tabs>

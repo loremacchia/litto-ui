@@ -1,0 +1,130 @@
+@import "./app/components/app.component.css";
+
+/* Color schema definition*/
+:root {
+  --prim-custom: #6c98db;
+  --prim-custom-light: #9fc8ff;
+  --prim-custom-dark: #376aa9;
+  --tui-primary:#6c98db !important;
+  --tui-primary-hover: #376aa9 !important;
+  --tui-primary-active: #376aa9 !important;
+  --sec-custom: #f5efdb;
+  --sec-custom-light: #fcf8ea;
+  --sec-custom-dark: #c2bda9;
+  --tui-secondary: #f5efdb;
+  --tui-secondary-hover: #fcf8ea;
+  --tui-secondary-active: #c2bda9;
+  --ter-custom: #254d9d;
+  --level-1: #9de2c8;
+  --level-2: #89dcbe;
+  --level-3: #76d6b3;
+  --level-4: #4eca9d;
+  --level-5: #35b181;
+  
+}
+.logo-color {
+  color: #526ed3;
+}
+
+.prim-color {
+  color: var(--prim-custom);
+}
+
+.sec-color {
+  color: var(--sec-custom);
+}
+
+.ter-color {
+  color: var(--ter-custom);
+}
+
+.level-1 {
+  background-color: #ffe0b2;
+}
+
+.level-2 {
+  background-color: #fff176;
+}
+
+.level-3 {
+  background-color: #d4e157;
+}
+
+.level-4 {
+  background-color: #8bc34a;
+}
+
+.level-5 {
+  background-color: #43a047;
+}
+
+/*Buttons definitons*/
+tui-wrapper[data-appearance="primary-custom"] {
+  background: var(--prim-custom);
+  color: #fff;
+}
+
+tui-wrapper[data-appearance="primary-custom"]:hover {
+  background: var(--prim-custom); /*var(--prim-custom-light);*/
+  color: #fff;
+}
+
+tui-wrapper[data-appearance="primary-custom"]:active {
+  background: var(--prim-custom-dark);
+  color: #fff;
+}
+
+tui-wrapper[data-appearance="secondary-custom"] {
+  background: var(--sec-custom);
+  color: var(--ter-custom);
+}
+
+tui-wrapper[data-appearance="secondary-custom"]:hover {
+  background: var(--sec-custom); /*var(--sec-custom-light);*/
+  color: var(--ter-custom);
+}
+
+tui-wrapper[data-appearance="secondary-custom"]:active {
+  background: var(--sec-custom-dark);
+  color: #fff;
+}
+
+tui-wrapper[data-appearance="primary"]{
+  background: var(--prim-custom);
+  color: #fff;
+}
+
+tui-wrapper[data-appearance="primary"]:hover{
+  background: var(--prim-custom-dark);
+  color: #fff;
+}
+
+tui-wrapper[data-appearance="primary"]:active {
+  background: var(--prim-custom-dark);
+  color: #fff;
+}
+tui-wrapper[data-appearance="flat"]{
+  color: var(--ter-custom);
+}
+tui-wrapper[data-appearance="flat"][data-state="hovered"]{
+  background: var(--sec-custom);
+  color: var(--ter-custom);
+}
+
+/*General useful rules*/
+.text-center {
+  text-align: center;
+}
+
+a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
+
+.shadow {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.shadow-light {
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.15), 0 4px 16px 0 rgba(0, 0, 0, 0.15);
+}

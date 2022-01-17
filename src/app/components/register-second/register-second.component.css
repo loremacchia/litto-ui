@@ -1,0 +1,10 @@
+.floating-button {
+    position: absolute;
+    margin-left: 26px;
+
+}
+
+.avatar {
+    position: absolute;
+    margin-left: -48px;
+}

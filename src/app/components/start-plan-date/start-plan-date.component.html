@@ -1,0 +1,68 @@
+<app-back></app-back>
+
+<div class="center-children-row go-up">
+  <tui-avatar
+    size="m"
+    [rounded]="true"
+    class="avatar shadow-light top-align"
+    avatarUrl="{{ this.plan.imageUrl }}"
+  ></tui-avatar>
+  <div class="tui-text_h6 tui-space_left-3">{{ this.plan.title }}</div>
+</div>
+
+<div class="tui-space_top-5 center-children">
+  <button tuiButton type="button" appearance="secondary-custom" size="m">
+    Plan is {{ plan.duration }} Weeks
+  </button>
+</div>
+
+<div class="tui-space_top-10">
+  <div tuiIsland class="center-children">
+    <div class="tui-island__category">Choose when to start the plan</div>
+    <tui-calendar
+    [value]="value"
+    [showAdjacent]="false"
+    [month]="firstMonth"
+    [(hoveredItem)]="hoveredItem"
+    (dayClick)="onDayClick($event)"
+  ></tui-calendar>
+  </div>
+  
+</div>
+
+
+<tui-island size="m" textAlign="left" class="tui-space_top-3" [formGroup]="notificationForm">
+  <div class="tui-island__content">
+    <figure class="tui-island__figure">
+      <tui-toggle size="l" formControlName="notifications"></tui-toggle>
+    </figure>
+    <div>
+      <div class="tui-text_h6 tui-island__title">Enable Notifications?</div>
+<!-- 
+      <div *ngIf="this.notificationForm.controls['notifications'].value" class="tui-island__category">Notifications <b class="prim-color">enabled</b></div>
+      <div *ngIf="!this.notificationForm.controls['notifications'].value" class="tui-island__category">Notifications <b style="color: var(--tui-error-fill);">disabled</b></div>
+       -->
+    </div>
+  </div>
+  <div *ngIf="this.notificationForm.controls['notifications'].value" class="tui-space_top-2">
+    <!-- <p class="tui-island__paragraph tui-space_right-2">Notification time</p> -->
+    <tui-input-time
+      formControlName="notifyTime"
+      tuiTextfieldSize="l"
+    >
+      Notify Time
+    </tui-input-time>
+  </div>
+</tui-island>
+
+<div class="tui-space_top-5 tui-space_bottom-10 center-children">
+  <button tuiButton type="button" appearance="primary-custom" size="l" (click)="startPlan()">
+    Start Plan
+  </button>
+</div>
+
+<div class="big-footer-space"></div>
+<app-footer-tabs
+  [id]="this.userId"
+  [index]="this.activeItemIndex"
+></app-footer-tabs>

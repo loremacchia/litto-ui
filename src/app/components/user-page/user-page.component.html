@@ -1,0 +1,62 @@
+<button
+  tuiIconButton
+  type="button"
+  size="s"
+  appearance="secondary-custom"
+  shape="rounded"
+  icon="tuiIconDraft"
+  class="absolute"
+></button>
+<div *ngIf="user"  class="center-children moving">
+  <tui-avatar
+    size="xxl"
+    [rounded]="true"
+    class="avatar shadow"
+    avatarUrl="{{ user.imageUrl }}"
+  ></tui-avatar>
+  <tui-tag
+    status="custom"
+    class="level-{{ user.level }} tui-space_top-3"
+    size="l"
+    [hoverable]="true"
+    [value]="'Level ' + user.level"
+  ></tui-tag>
+  <div class="tui-text_h4 tui-space_top-5 text-center">
+    {{ user.name }} {{ user.surname }}
+  </div>
+  <div class="tui-space_top-2 text-center">{{ user.bio }}</div>
+</div>
+<div *ngIf="user" class="tui-space_top-10">
+  <div class="tui-text_body-xl">Interests</div>
+  <div class="in-row">
+    <div *ngFor="let i of user.interests" class="elems">
+      <div>
+        <tui-badged-content
+          size="m"
+          colorTop="var(--level-{{ i.level }})"
+          [contentTop]="i.level"
+          status="success"
+        >
+          <tui-avatar
+            size="m"
+            [avatarUrl]="i.url"
+            class="shadow-light"
+          ></tui-avatar>
+        </tui-badged-content>
+      </div>
+      <div class="tui-text_body-m tui-space_top-2 logo-color">
+        {{ i.inter }}
+      </div>
+    </div>
+  </div>
+  <div class="tui-space_top-10">
+    <div class="tui-text_body-xl">Plans Completed</div>
+    <app-plan-slider [plans]="this.user.plans"></app-plan-slider>
+  </div>
+  <div class="button-big-space"></div>
+</div>
+
+<app-footer-tabs
+  [id]="this.id"
+  [index]="this.activeItemIndex"
+></app-footer-tabs>

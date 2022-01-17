@@ -1,0 +1,50 @@
+<form [formGroup]="form">
+    <tui-input class="search"
+        formControlName="searchedValue"
+        icon="tuiIconSearch"
+        iconAlign="right"
+        (input)="searchStringInit()"
+		(keyup.enter)="searchString(form.controls['searchedValue'].value)"
+    >
+        Search
+        <ng-container *ngIf="search">
+	        <tui-data-list *tuiDataList>
+	            <button
+	                *ngFor="let item of search.plans"
+	                tuiOption
+	                [value]="item.title"
+	                (click)="searchString(item.title)"
+	            >
+	                <tui-avatar
+	                    size="s"
+	                    class="avatar"
+	                    [avatarUrl]="item.imageUrl || null"
+	                    [text]="item.title.toString()"
+	                ></tui-avatar>
+	                <span class="name">{{item.title}}</span>
+
+                    
+	            </button>
+                <div *ngIf="search.plans.length && search.tags.length">
+                    <hr  style="width:90%;text-align:left;margin-left:5%"> 
+                </div>
+                
+                <button
+	                *ngFor="let item of search.tags"
+	                tuiOption
+	                [value]="item"
+	                (click)="searchString(item)"
+	            >
+	                <span class="name">{{item}}</span>
+
+                    
+	            </button>
+	        </tui-data-list>
+            
+            
+	    </ng-container>
+    </tui-input >
+</form>
+
+
+

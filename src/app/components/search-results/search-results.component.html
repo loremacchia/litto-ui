@@ -1,0 +1,37 @@
+<app-search-item [id]="this.id" ></app-search-item>
+<div>
+  <app-back ></app-back>
+</div>
+
+<div class="big-top-space">
+    <!-- <div class="tui-text_body-l">Results for: <span class="tui-text_body-xl prim-color"> <strong>{{searched}}</strong></span></div> -->
+    <div class="tui-text_body-l">Results for: <span class="tui-text_h6 prim-color">{{searched}}</span></div>
+</div>
+
+<div class="tui-space_top-10">
+  <div class="tui-text_body-xl">Related Plans</div>
+  <div *ngIf="this.plans.length" >
+    <app-plan-slider [plans]="this.plans"></app-plan-slider>
+  </div>
+  <div *ngIf="this.plans.length == 0">
+    <div class="tui-text_body-m elems" style="color: var(--tui-text-03);">No Plan Found </div>
+  </div>
+</div>
+
+<div  class="tui-space_top-10">
+  <div class="tui-text_body-xl">Related Tags</div>
+  <div *ngIf="this.tags.length" class="in-row">
+    <div *ngFor="let item of [].constructor(this.tags.length); let idx = index" class="elems-tag">
+      <tui-tag size="l" [ngStyle]="{'opacity' : 0.4+(0.6*idx/this.tags.length)}"  status="custom" class="taggy shadow-light" [hoverable]="true" [value]="this.tags[idx]" (click)="searchString(this.tags[idx])"></tui-tag>
+      
+    </div>
+  </div>
+  <div *ngIf="this.tags.length == 0">
+    <div class="tui-text_body-m elems" style="color: var(--tui-text-03);">No Tag Found </div>
+  </div>
+</div>
+
+<app-footer-tabs
+  [id]="this.id"
+  [index]="this.activeItemIndex"
+></app-footer-tabs>

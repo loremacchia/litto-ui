@@ -1,0 +1,22 @@
+{
+    "/": {
+      "target": "http://localhost:3000/",
+      "secure": false
+    },
+    "/login": {
+      "target": "http://localhost:3000/login",
+      "secure": false
+    },
+    "/register": {
+      "target": "http://localhost:3000/register",
+      "secure": false
+    },
+    "/register-second": {
+      "target": "http://localhost:3000/register-second",
+      "secure": false
+    },
+    "/display-interests": {
+      "target": "http://localhost:3000/display-interests",
+      "secure": false
+    }
+  }

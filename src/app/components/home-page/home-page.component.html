@@ -1,0 +1,42 @@
+
+<app-search-item [id]="this.id"></app-search-item>
+
+<div class="button-big-space">
+    <div class="tui-text_body-xl big-top-space tui-space_bottom-3">Steps to Complete</div>
+    <div *ngIf="this.steps">
+        <!--  TODO modifica ling-->
+        <div *ngFor="let s of this.steps" class="tui-space_bottom-5">
+            <a
+                size="l"
+                href="http://ng-web-apis.github.io/" 
+                tuiIsland
+                target="_blank"
+                [hoverable]="true"
+            >
+            <div class="tui-island__category">
+                {{s.planName}}
+            </div>
+                <div class="tui-island__content">
+                    
+                    <figure class="tui-island__figure center-children-top" >
+                        <tui-avatar
+                            size="m"
+                            [avatarUrl]="s.imageUrl"
+                            class="shadow-light"
+                        ></tui-avatar>
+                        <div class="prim-color">
+                            <p>{{s.endDate | date:'MMM d'}}</p>
+                        </div>
+                    </figure>
+                    
+                    <div>
+                        <h3 class="tui-island__title ter-color">{{s.title}}</h3>
+                        <p class="tui-island__paragraph">{{s.subtitle}}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<app-footer-tabs [id]="this.id" [index]="this.activeItemIndex"></app-footer-tabs>

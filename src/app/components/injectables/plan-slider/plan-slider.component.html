@@ -1,0 +1,17 @@
+<div class="in-row">
+  <div
+    *ngFor="let p of this.plans"
+    class="elems plan-slider"
+    (click)="goOverview(p)"
+  >
+    <tui-avatar
+      size="l"
+      [avatarUrl]="p.imageUrl"
+      class="shadow-light"
+    ></tui-avatar>
+    <div class="tui-text_body-m tui-space_top-2 logo-color plans-show">
+      {{ p.title }}
+    </div>
+    <div class="tui-text_body-s">{{ p.duration }} Weeks</div>
+  </div>
+</div>
