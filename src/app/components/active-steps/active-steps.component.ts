@@ -1,10 +1,8 @@
-import { PlanService } from 'src/app/services/plan.service';
+import { LocalStorageService } from './../../services/local-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from './../../services/home.service';
 import { Step } from './../../model/Step';
 import { ChangeDetectionStrategy } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-active-steps',
@@ -19,21 +17,13 @@ export class ActiveStepsComponent implements OnInit {
   changeDetection!: ChangeDetectionStrategy.OnPush;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
     private homeService: HomeService,
-    private router: Router
+    private localService: LocalStorageService
   ) {}
   ngOnInit(): void {
-    if (window.history.state['userId'] !== undefined && window.history.state['planId'] !== undefined) {
-      this.userId = window.history.state['userId'];
-    }
-    else {
-      this.userId=0;
-    }
-    this.homeService.getCurrentGoals(this.userId)
-        .subscribe(steps => {
-          this.steps = steps;
-        })
-
+    this.userId = this.localService.getLogId();
+    this.homeService.getCurrentGoals(this.userId).subscribe((steps) => {
+      this.steps = steps;
+    });
   }
 }

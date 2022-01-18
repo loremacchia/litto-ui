@@ -1,12 +1,12 @@
 .wrapper1 {
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-columns: repeat(3, 1fr);
-    grid-row-gap: 1em;
-    grid-column-gap: 1em;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(3, 1fr);
+  grid-row-gap: 1em;
+  grid-column-gap: 1em;
 }
 
 .pre-trans {
-    transition: 0.2s linear all; 
-    -webkit-transition: 0.2s linear all;
+  transition: 0.2s linear all;
+  -webkit-transition: 0.2s linear all;
 }

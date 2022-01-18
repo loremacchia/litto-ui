@@ -1,4 +1,5 @@
 <app-back></app-back>
+
 <div *ngIf="plan" class="center-children">
   <tui-avatar
     size="xxl"
@@ -55,7 +56,4 @@
 
 <div class="big-footer-space"></div>
 
-<app-footer-tabs
-  [id]="this.userId"
-  [index]="this.activeItemIndex"
-></app-footer-tabs>
+<app-footer-tabs [index]="this.activeItemIndex"></app-footer-tabs>

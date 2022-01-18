@@ -15,7 +15,7 @@ export class PlanSliderComponent implements OnInit {
 
   goOverview(plan: Plan) {
     this.router.navigateByUrl('/view-plan', {
-      state: { userId: 0, planId: plan.id },
+      state: { planId: plan.id },
     });
   }
 }

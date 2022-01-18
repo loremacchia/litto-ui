@@ -1,4 +1,4 @@
-<app-search-item [id]="this.userId"></app-search-item>
+<app-search-item></app-search-item>
 
 <div>
   <app-back></app-back>
@@ -93,12 +93,14 @@
     How many Weeks/Steps?
 </tui-input-number> -->
   <div class="tui-space_top-10 right-children">
-    <a routerLink="/login">
+    <a >
+      <!-- <a routerLink="/login"> -->
       <button
         tuiButton
         type="button"
         appearance="secondary-custom"
         iconRight="tuiIconChevronRightLarge"
+        (click)="goCustSteps()"
       >
         Customize Steps
       </button>
@@ -106,7 +108,4 @@
   </div>
 </div>
 
-<app-footer-tabs
-  [id]="this.userId"
-  [index]="this.activeItemIndex"
-></app-footer-tabs>
+<app-footer-tabs [index]="this.activeItemIndex"></app-footer-tabs>

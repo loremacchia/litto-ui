@@ -1,7 +1,6 @@
-
 .floating-button {
-    position: absolute;
-    margin-left: calc(96px - 44px/2);
-    margin-top: -96px;
-    top: inherit;
-  }
+  position: absolute;
+  margin-left: calc(96px - 44px / 2);
+  margin-top: -96px;
+  top: inherit;
+}

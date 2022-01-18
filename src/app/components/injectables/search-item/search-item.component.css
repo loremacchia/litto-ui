@@ -1,9 +1,9 @@
 .search {
-    position: absolute !important;
-    height: 300px !important;
-    width: 90vw;
-    left: 0;
-    top: 10px;
-    padding-left: 5vw;
-    padding-right: 5vw; 
-  }
+  position: absolute !important;
+  height: 300px !important;
+  width: 90vw;
+  left: 0;
+  top: 10px;
+  padding-left: 5vw;
+  padding-right: 5vw;
+}

@@ -1,25 +1,49 @@
-import { NgDompurifySanitizer } from "@tinkoff/ng-dompurify";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { TuiRootModule, TuiDialogModule, TuiNotificationsModule, TUI_SANITIZER, 
-  TuiSvgModule, TuiPrimitiveTextfieldModule,TuiDropdownControllerModule, TuiDataListModule, TuiCalendarModule, TuiTextfieldControllerModule } from "@taiga-ui/core";
+import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  TuiRootModule,
+  TuiDialogModule,
+  TuiNotificationsModule,
+  TUI_SANITIZER,
+  TuiSvgModule,
+  TuiPrimitiveTextfieldModule,
+  TuiDropdownControllerModule,
+  TuiDataListModule,
+  TuiCalendarModule,
+  TuiTextfieldControllerModule,
+} from '@taiga-ui/core';
 import { NgModule, Injectable } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app.component';
 
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {TuiInputModule, TuiInputPasswordModule, TuiCheckboxBlockModule, TuiTextAreaModule, TuiTagModule,
-        TuiIslandModule, TuiFieldErrorModule, TuiBadgedContentModule, TuiAvatarModule, TuiTabsModule, 
-        TuiPaginationModule, TuiCalendarRangeModule,TuiToggleModule, TuiInputTimeModule, TuiSliderModule, 
-        TuiInputTagModule, TuiInputNumberModule} from '@taiga-ui/kit';
-import {TuiButtonModule, TUI_ICONS} from '@taiga-ui/core';
-import { LoginFieldsComponent } from './components/login-fields/login-fields.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  TuiInputModule,
+  TuiInputPasswordModule,
+  TuiCheckboxBlockModule,
+  TuiTextAreaModule,
+  TuiTagModule,
+  TuiIslandModule,
+  TuiFieldErrorModule,
+  TuiBadgedContentModule,
+  TuiAvatarModule,
+  TuiTabsModule,
+  TuiPaginationModule,
+  TuiCalendarRangeModule,
+  TuiToggleModule,
+  TuiInputTimeModule,
+  TuiSliderModule,
+  TuiInputTagModule,
+  TuiInputNumberModule,
+} from '@taiga-ui/kit';
+import { TuiButtonModule, TUI_ICONS } from '@taiga-ui/core';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 import { RegisterSecondComponent } from './components/register-second/register-second.component';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule } from '@angular/common/http';
 import { DisplayInterestsComponent } from './components/display-interests/display-interests.component';
 import { UserPageComponent } from './components/user-page/user-page.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
@@ -38,7 +62,6 @@ import { CreatePlanFirstComponent } from './components/create-plan-first/create-
 @NgModule({
   declarations: [
     AppComponent,
-    LoginFieldsComponent,
     LoginPageComponent,
     RegisterPageComponent,
     WelcomePageComponent,
@@ -56,7 +79,7 @@ import { CreatePlanFirstComponent } from './components/create-plan-first/create-
     StartPlanDateComponent,
     StepCompleteComponent,
     ActiveStepsComponent,
-    CreatePlanFirstComponent
+    CreatePlanFirstComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,9 +115,9 @@ import { CreatePlanFirstComponent } from './components/create-plan-first/create-
     TuiBadgedContentModule,
     HttpClientModule,
     TuiDropdownControllerModule,
-    TuiDataListModule
-],
-  providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}],
-  bootstrap: [AppComponent]
+    TuiDataListModule,
+  ],
+  providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

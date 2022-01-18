@@ -4,14 +4,12 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-slider-steps',
   templateUrl: './slider-steps.component.html',
-  styleUrls: ['./slider-steps.component.css']
+  styleUrls: ['./slider-steps.component.css'],
 })
 export class SliderStepsComponent implements OnInit {
-  @Input() step! : Step;
+  @Input() step!: Step;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

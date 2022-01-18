@@ -1,14 +1,9 @@
+import { LocalStorageService } from './../../services/local-storage.service';
 import { Plan } from './../../model/Plan';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlanService } from 'src/app/services/plan.service';
-import {
-  TuiDay,
-  TuiDayLike,
-  TuiDayRange,
-  TuiMonth,
-  TuiTime,
-} from '@taiga-ui/cdk';
+import { TuiDay, TuiDayRange, TuiMonth, TuiTime } from '@taiga-ui/cdk';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -19,7 +14,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class StartPlanDateComponent implements OnInit {
   plan!: Plan;
   activeItemIndex = 1;
-  userId = 0;
+  userId!: number;
   value!: TuiDayRange;
   firstMonth = TuiMonth.currentLocal();
   hoveredItem: TuiDay | null = null;
@@ -32,8 +27,10 @@ export class StartPlanDateComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private planService: PlanService,
+    private localService: LocalStorageService,
     private router: Router
   ) {}
+
   onDayClick(day: TuiDay) {
     let year = day.year;
     let month = day.month;
@@ -56,21 +53,18 @@ export class StartPlanDateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userId = this.localService.getLogId();
     this.activatedRoute.paramMap.subscribe(() => {
-      if (
-        window.history.state['plan'] !== undefined &&
-        window.history.state['userId'] !== undefined
-      ) {
+      if (window.history.state['plan'] !== undefined) {
         this.plan = window.history.state['plan'];
       } else {
         this.router.navigateByUrl('/view-plan', {
           state: {
-            userId: 0,
             planId: 0,
           },
         });
       }
-      this.onDayClick(TuiDay.currentLocal())
+      this.onDayClick(TuiDay.currentLocal());
     });
   }
 
@@ -84,7 +78,7 @@ export class StartPlanDateComponent implements OnInit {
       ) //per riportarle ok usare parseRawDateString
       .subscribe((activePlanId) =>
         this.router.navigateByUrl('/step-complete', {
-          state: { userId: this.userId, planId: activePlanId },
+          state: { planId: activePlanId },
         })
       );
   }

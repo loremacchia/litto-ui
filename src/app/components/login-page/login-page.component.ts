@@ -1,3 +1,4 @@
+import { LocalStorageService } from './../../services/local-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -7,7 +8,7 @@ import { UserServiceService } from 'src/app/services/user-service.service';
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css']
+  styleUrls: ['./login-page.component.css'],
 })
 export class LoginPageComponent implements OnInit {
   form = new FormGroup({
@@ -17,17 +18,21 @@ export class LoginPageComponent implements OnInit {
 
   constructor(
     private userService: UserServiceService,
-    private router: Router,
-  ) { }
+    private localService: LocalStorageService,
+    private router: Router
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   login() {
-    this.userService.loginUser(this.form.controls['email'].value, this.form.controls['password'].value)
-      .subscribe(retrievedId => {
-        console.log(retrievedId)
-        this.router.navigateByUrl('/user-page', { state: { id: retrievedId } })
+    this.userService
+      .loginUser(
+        this.form.controls['email'].value,
+        this.form.controls['password'].value
+      )
+      .subscribe((retrievedId) => {
+        this.localService.setCurrentUserId(retrievedId);
+        this.router.navigateByUrl('/user-page');
       });
   }
 }
