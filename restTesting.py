@@ -98,7 +98,7 @@ plans = [
         "duration": 5,
         "imageUrl": "https://i.pinimg.com/originals/87/74/9d/87749dade5d236a1665f6c37c0258fe7.jpg"},
         {"id":3,
-        "title": "Introduction to YOLOv5",
+        "title": "Intro to YOLOv5",
         "duration": 5,
         "imageUrl": "https://www.mdpi.com/remotesensing/remotesensing-12-01667/article_deploy/html/images/remotesensing-12-01667-g002.png"}
     ]
@@ -285,4 +285,4 @@ def createResponse(response):
 
 if __name__ == '__main__':
     port = 8000  # the custom port you want
-    app.run(host='192.168.1.127', port=port, debug=True)
+    app.run(host='192.168.1.135', port=port, debug=True)

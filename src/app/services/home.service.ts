@@ -16,7 +16,7 @@ import { classToPlain, plainToClass } from 'class-transformer';
 })
 
 export class HomeService {
-  private baseUrl = 'http://192.168.1.127:8000/'
+  private baseUrl = 'http://192.168.1.135:8000/'
   headers!: 
     {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
   constructor(private http: HttpClient) { }

@@ -1,7 +1,7 @@
 import { NgDompurifySanitizer } from "@tinkoff/ng-dompurify";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { TuiRootModule, TuiDialogModule, TuiNotificationsModule, TUI_SANITIZER, 
-  TuiSvgModule, TuiPrimitiveTextfieldModule,TuiDropdownControllerModule, TuiDataListModule, TuiCalendarModule } from "@taiga-ui/core";
+  TuiSvgModule, TuiPrimitiveTextfieldModule,TuiDropdownControllerModule, TuiDataListModule, TuiCalendarModule, TuiTextfieldControllerModule } from "@taiga-ui/core";
 import { NgModule, Injectable } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -11,7 +11,8 @@ import { AppComponent } from './components/app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TuiInputModule, TuiInputPasswordModule, TuiCheckboxBlockModule, TuiTextAreaModule, TuiTagModule,
         TuiIslandModule, TuiFieldErrorModule, TuiBadgedContentModule, TuiAvatarModule, TuiTabsModule, 
-        TuiPaginationModule, TuiCalendarRangeModule,TuiToggleModule, TuiInputTimeModule} from '@taiga-ui/kit';
+        TuiPaginationModule, TuiCalendarRangeModule,TuiToggleModule, TuiInputTimeModule, TuiSliderModule, 
+        TuiInputTagModule, TuiInputNumberModule} from '@taiga-ui/kit';
 import {TuiButtonModule, TUI_ICONS} from '@taiga-ui/core';
 import { LoginFieldsComponent } from './components/login-fields/login-fields.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
@@ -32,6 +33,7 @@ import { SliderStepsComponent } from './components/injectables/slider-steps/slid
 import { StartPlanDateComponent } from './components/start-plan-date/start-plan-date.component';
 import { StepCompleteComponent } from './components/step-complete/step-complete.component';
 import { ActiveStepsComponent } from './components/active-steps/active-steps.component';
+import { CreatePlanFirstComponent } from './components/create-plan-first/create-plan-first.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,8 @@ import { ActiveStepsComponent } from './components/active-steps/active-steps.com
     SliderStepsComponent,
     StartPlanDateComponent,
     StepCompleteComponent,
-    ActiveStepsComponent
+    ActiveStepsComponent,
+    CreatePlanFirstComponent
   ],
   imports: [
     BrowserModule,
@@ -62,11 +65,15 @@ import { ActiveStepsComponent } from './components/active-steps/active-steps.com
     TuiSvgModule,
     TuiToggleModule,
     AppRoutingModule,
+    TuiTextfieldControllerModule,
     TuiCalendarRangeModule,
+    TuiSliderModule,
+    TuiInputTagModule,
     TuiTagModule,
     TuiRootModule,
     TuiPrimitiveTextfieldModule,
     BrowserAnimationsModule,
+    TuiInputNumberModule,
     TuiCalendarModule,
     TuiDialogModule,
     TuiNotificationsModule,
