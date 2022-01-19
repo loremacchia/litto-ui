@@ -24,6 +24,10 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.localService.getLogId();
     this.homeService.getCurrentGoals(this.id).subscribe((steps) => {
+      for (let s of steps){
+        s.normalize();
+      }
+      console.log(steps)
       this.steps = steps;
       console.log(this.steps);
     });

@@ -25,7 +25,7 @@
               class="shadow-light"
             ></tui-avatar>
             <div class="prim-color">
-              <p>{{ s.endDate | date: "MMM d" }}</p>
+              <p >{{ s.getFormatted(s.endDateCorr) }}</p>
             </div>
           </figure>
 

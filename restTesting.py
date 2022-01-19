@@ -39,7 +39,7 @@ tags = ["Java","JavaScript","Java Isle","JavaEE"]
 steps = [
     {   
         "planWeek":1,
-        "endDate": 1642075063920,
+        "endDate": "12.02.2022",
         "title": "Variables",
         "subtitle": "We will see how variables can store different types of data: int, float, strings and booleans!",
         "planName": "0 to Java in 5 Weeks",
@@ -47,7 +47,7 @@ steps = [
     },
     {   
         "planWeek":2,
-        "endDate": 1642075063920,
+        "endDate": "12.02.2022",
         "title": "Loops",
         "subtitle": "Let's dive into the loops! We will discover the for, while and the do while!",
         "planName": "0 to Java in 5 Weeks",
@@ -55,7 +55,7 @@ steps = [
     },
     {   
         "planWeek":3,
-        "endDate": 1642075063920,
+        "endDate": "12.02.2022",
         "title": "Lists",
         "subtitle": "Here comes the lists where there are Arrays and Lists!",
         "planName": "0 to Java in 5 Weeks",
@@ -63,7 +63,7 @@ steps = [
     },
     {   
         "planWeek":4,
-        "endDate": 1642075063920,
+        "endDate": "12.02.2022",
         "title": "Functions",
         "subtitle": "Which better way to reuse your code than using functions?",
         "planName": "0 to Java in 5 Weeks",
@@ -71,7 +71,7 @@ steps = [
     },
     {   
         "planWeek":5,
-        "endDate": 1642075063920,
+        "endDate": "12.02.2022",
         "title": "OOP",
         "subtitle": "Scratching the surface of Object Oriented Programming!",
         "planName": "0 to Java in 5 Weeks",
@@ -107,7 +107,7 @@ content= [{"gigi":1}]
 activeStep = [
     {   
 
-        "endDate": 1642075063920,
+        "endDate": "12.02.2022",
         "title": "Variables",
         "subtitle": "We will see how variables can store different types of data: int, float, strings and booleans!",
         "planName": "0 to Java in 5 Weeks",
@@ -118,7 +118,7 @@ activeStep = [
         "content":content
     },
     {
-        "endDate": 1642075063920,
+        "endDate": "12.02.2022",
         "title": "Braking Basics",
         "subtitle": "The braking phase is one of the most important in racing, we will discover how a driver should apply the pressure.",
         "planName": "How to Trail Braking",
