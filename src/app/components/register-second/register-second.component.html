@@ -21,7 +21,7 @@
           size="xl"
           [rounded]="true"
           class="avatar"
-          avatarUrl="https://iupac.org/wp-content/uploads/2018/05/default-avatar.png"
+          [avatarUrl]="imageUrl"
         ></tui-avatar>
         <button
           tuiIconButton
@@ -31,7 +31,15 @@
           shape="rounded"
           icon="tuiIconPlus"
           class="floating-button"
-        ></button>
+          (click)="fileInput.click()"
+          ></button>
+          <input
+            type="file"
+            #fileInput
+            style="display: none"
+            accept="image/*"
+            (change)="uploadImage($event)"
+          />
       </div>
     </div>
     <form [formGroup]="form" class="tui-space_top-10">

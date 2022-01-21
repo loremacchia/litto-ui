@@ -30,12 +30,13 @@ export class DisplayInterestsComponent implements OnInit {
           window.history.state['user'].id,
           window.history.state['user'].bio,
           window.history.state['user'].name,
-          window.history.state['user'].surname
+          window.history.state['user'].surname,
+          window.history.state['user'].imageUrl,
         );
         this.id = window.history.state['user'].id;
       } else {
         this.id = this.localService.getLogId();
-        this.user.setInitial(this.id, '', '', '');
+        this.user.setInitial(this.id, '', '', '',"https://iupac.org/wp-content/uploads/2018/05/default-avatar.png");
       }
     });
     this.getInterests().subscribe((val) => {
