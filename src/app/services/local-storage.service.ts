@@ -46,4 +46,60 @@ export class LocalStorageService {
   setCreatingPlan(json : string){
     localStorage.setItem('creatingPlans', json);
   }
+
+  getCreatingStepsNumber() : number{
+    if(localStorage.getItem('creatingSteps')){ 
+      let d = JSON.parse(localStorage.getItem('creatingSteps') as string);
+      return d.length
+    }
+    return 0;
+  }
+
+  getCreatingSteps() {
+    if(localStorage.getItem('creatingSteps')){ 
+      let d = JSON.parse(localStorage.getItem('creatingSteps') as string);
+      return d
+    }
+    return undefined;
+  }
+
+  setCreatingStep(newStep : {[key:string]:any}){
+    if(localStorage.getItem('creatingSteps')){ 
+      console.log(newStep)
+      let d = JSON.parse(localStorage.getItem('creatingSteps') as string);
+      let found = false;
+      for (let dic of d){
+        if(newStep["planWeek"] == dic["planWeek"]){
+          found= true;
+          dic["title"]=newStep["title"],
+          dic["subtitle"]=newStep["subtitle"],
+          dic["material"]=newStep["material"]
+        }
+      }
+      if(!found){
+        d.push(newStep)
+      }
+      localStorage.setItem('creatingSteps', JSON.stringify(d));
+    }
+    else {
+      localStorage.setItem('creatingSteps', JSON.stringify([newStep]));
+    }
+  }
+
+  getCreatingStep(num : number){
+    if(localStorage.getItem('creatingSteps')){ 
+      let d = JSON.parse(localStorage.getItem('creatingSteps') as string);
+      for (let dic of d){
+        if(num == dic["planWeek"]){
+          return dic;
+        }
+      }
+    }
+    return false;
+  }
+
+  freeCreatingPlanAndSteps(){
+    localStorage.removeItem('creatingSteps');
+    localStorage.removeItem('creatingPlans');
+  }
 }

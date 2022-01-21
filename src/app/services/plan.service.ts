@@ -33,4 +33,9 @@ export class PlanService {
     return this.http.post(this.baseUrl + "/start-plan", JSON.stringify({"userId":userId, "planId":plan.id, "dateFrom":from, "dateTo":to }))
       .pipe(map(res => plainToClass(Number, res as Object)))
   }
+
+  createPlan(newPlan : {[key:string]:any}) : Observable<Number>{
+    return this.http.post(this.baseUrl + "/create-plan", JSON.stringify(newPlan))
+      .pipe(map(res => plainToClass(Number, res as Object)))
+  }
 }

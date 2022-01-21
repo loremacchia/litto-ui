@@ -1,3 +1,4 @@
+import { StepCreateComponent } from './components/step-create/step-create.component';
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -11,13 +12,13 @@ import {
   TuiDataListModule,
   TuiCalendarModule,
   TuiTextfieldControllerModule,
+  TuiHostedDropdownModule
 } from '@taiga-ui/core';
 import { NgModule, Injectable } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { TuiEditorModule } from '@taiga-ui/addon-editor'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app.component';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   TuiInputModule,
@@ -37,7 +38,10 @@ import {
   TuiSliderModule,
   TuiInputTagModule,
   TuiInputNumberModule,
+  TuiInputFileModule
 } from '@taiga-ui/kit';
+import {TuiReorderModule} from '@taiga-ui/addon-table/components/reorder';
+	 
 import { TuiButtonModule, TUI_ICONS } from '@taiga-ui/core';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
@@ -80,17 +84,22 @@ import { CreatePlanFirstComponent } from './components/create-plan-first/create-
     StepCompleteComponent,
     ActiveStepsComponent,
     CreatePlanFirstComponent,
+    StepCreateComponent
   ],
   imports: [
     BrowserModule,
     TuiInputTimeModule,
     TuiTabsModule,
     TuiSvgModule,
+    TuiEditorModule,
     TuiToggleModule,
     AppRoutingModule,
     TuiTextfieldControllerModule,
+    TuiHostedDropdownModule,
     TuiCalendarRangeModule,
     TuiSliderModule,
+    TuiInputFileModule,
+    TuiReorderModule,
     TuiInputTagModule,
     TuiTagModule,
     TuiRootModule,

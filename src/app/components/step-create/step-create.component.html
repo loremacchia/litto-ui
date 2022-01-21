@@ -1,0 +1,251 @@
+<div style="margin-top: -5vh">
+  <div>
+    <app-back></app-back>
+  </div>
+
+  <div class="">
+    <div
+      class="tui-text_body-xl big-top-space tui-space_bottom-3 spacy-children-row"
+    >
+      <div class="tui-text_h4 ter-color">Step {{ this.planWeek }}</div>
+      <!-- <tui-tag
+        status="custom"
+        size="l"
+        [hoverable]="true"
+        [value]="'Plan is ' + planDuration + ' Weeks long'"
+        class="sec-wrapper"
+      ></tui-tag> -->
+    </div>
+
+    <form [formGroup]="form" class="b-form tui-space_top-10">
+      <div class="tui-space_bottom-5">
+        <div class="tui-space_bottom-5">
+          <tui-input formControlName="title"> Title </tui-input>
+        </div>
+        <tui-text-area
+          formControlName="subtitle"
+          [expandable]="true"
+          [rows]="10"
+        >
+          Description
+        </tui-text-area>
+      </div>
+    </form>
+    <div class="spacy-children-row" style="width: 100%">
+      <tui-hosted-dropdown [content]="content">
+        <button
+          tuiButton
+          type="button"
+          size="m"
+          appearance="secondary-custom"
+          [iconRight]="arrow"
+          class="official-shadow dropdown-button"
+        >
+          Add Materials
+        </button>
+      </tui-hosted-dropdown>
+      <div *ngIf="this.selectedMaterial" class="spacy-children-row">
+        <tui-svg
+          src="{{ this.selectedMaterial['icon'] }}"
+          class="tui-space_right-1"
+        ></tui-svg>
+        <div class="tui-text_body-l">{{ this.selectedMaterial["label"] }}</div>
+      </div>
+    </div>
+
+    <ng-template #content class="">
+      <tui-data-list role="menu">
+        <button
+          *ngFor="let item of items"
+          tuiOption
+          (click)="addMaterialComp(item)"
+        >
+          <tui-svg src="{{ item.icon }}" class="tui-space_right-1"></tui-svg>
+          {{ item.label }}
+        </button>
+      </tui-data-list>
+    </ng-template>
+  </div>
+
+  <div *ngIf="this.selectedMaterial">
+    <div *ngIf="this.selectedMaterial['label'] == 'YouTube'">
+      <form [formGroup]="formYouTube">
+        <tui-input
+          formControlName="title"
+          icon="tuiIconCodeLarge"
+          class="tui-space_top-5"
+        >
+          Title
+        </tui-input>
+        <tui-input
+          formControlName="link"
+          icon="tuiIconLinkLarge"
+          class="tui-space_top-5"
+        >
+          YouTube Link
+        </tui-input>
+        <tui-text-area
+          formControlName="description"
+          [expandable]="true"
+          [rows]="10"
+          class="tui-space_top-5"
+        >
+          Description
+        </tui-text-area>
+      </form>
+    </div>
+    <div *ngIf="this.selectedMaterial['label'] == 'Link'">
+      <form [formGroup]="formLink">
+        <tui-input
+          formControlName="link"
+          icon="tuiIconLinkLarge"
+          class="tui-space_top-5"
+        >
+          Webpage Link
+        </tui-input>
+        <tui-input
+          formControlName="title"
+          icon="tuiIconCodeLarge"
+          class="tui-space_top-5"
+        >
+          Webpage Name
+        </tui-input>
+        <tui-text-area
+          formControlName="description"
+          [expandable]="true"
+          [rows]="10"
+          class="tui-space_top-5"
+        >
+          Description
+        </tui-text-area>
+      </form>
+    </div>
+    <div *ngIf="this.selectedMaterial['label'] == 'Podcast'">
+      <form [formGroup]="formPodcast">
+        <tui-input
+          formControlName="title"
+          icon="tuiIconCodeLarge"
+          class="tui-space_top-5"
+        >
+          Title
+        </tui-input>
+        <tui-input
+          formControlName="link"
+          icon="tuiIconLinkLarge"
+          class="tui-space_top-5"
+        >
+          SoundCloud Link
+        </tui-input>
+        <tui-text-area
+          formControlName="description"
+          [expandable]="true"
+          [rows]="10"
+          class="tui-space_top-5"
+        >
+          Description
+        </tui-text-area>
+      </form>
+    </div>
+    <div *ngIf="this.selectedMaterial['label'] == 'Text'">
+      <form [formGroup]="formText">
+        <tui-input
+          formControlName="title"
+          icon="tuiIconCodeLarge"
+          class="tui-space_top-5"
+        >
+          Title
+        </tui-input>
+        <tui-editor
+          [tools]="tools"
+          class="editor tui-space_top-5"
+          formControlName="text"
+        >
+          Write your formatted text!
+        </tui-editor>
+      </form>
+    </div>
+    <div *ngIf="this.selectedMaterial['label'] == 'PDF'">
+      <form [formGroup]="formPDF">
+        <tui-input
+          formControlName="title"
+          icon="tuiIconCodeLarge"
+          class="tui-space_top-5"
+        >
+          Title
+        </tui-input>
+
+        <tui-input-file
+          class="tui-space_top-5"
+          formControlName="file"
+          [loadingFiles]="loading$ | async"
+          [accept]="'application/pdf'"
+          [link]="'Choose a PDF'"
+          [showSize]="true"
+        ></tui-input-file>
+      </form>
+    </div>
+
+    <div class="right-children">
+      <button
+        tuiButton
+        type="button"
+        size="s"
+        appearance="secondary-custom"
+        icon="tuiIconPlus"
+        class="official-shadow dropdown-button tui-space_top-5"
+        (click)="stepAdd(this.selectedMaterial['label'])"
+      >
+        Add
+      </button>
+    </div>
+  </div>
+
+  <tui-reorder
+    *ngIf="this.printableSteps.length != 0"
+    class="official-shadow tui-space_top-10 list"
+    tuiTextfieldSize="l"
+    [(items)]="this.printableSteps"
+    [enabled]="this.printableSteps"
+  ></tui-reorder>
+
+  <div class="two-button big-top-space">
+    <button
+      *ngIf="this.planWeek > 1"
+      tuiIconButton
+      type="button"
+      size="l"
+      appearance="secondary-custom"
+      shape="rounded"
+      icon="tuiIconChevronLeft"
+      (click)="goCustStepsPrev()"
+    ></button>
+    <div></div>
+    <button
+      tuiButton
+      type="button"
+      size="l"
+      appearance="primary-custom"
+      shape="rounded"
+      iconRight="tuiIconChevronRight"
+      (click)="goCustStepsNext()"
+    >
+      Step {{ this.planWeek + 1 }}
+    </button>
+  </div>
+  <div class="right-children tui-space_top-5">
+    <button
+      tuiButton
+      type="button"
+      size="l"
+      appearance="flat"
+      shape="rounded"
+      iconRight="tuiIconCheckLarge"
+      class="shadow-light"
+      (click)="finishStepEditing()"
+    >
+      Finish Editing
+    </button>
+  </div>
+  <div class="big-footer-space"></div>
+  <app-footer-tabs [index]="this.activeItemIndex"></app-footer-tabs>
+</div>

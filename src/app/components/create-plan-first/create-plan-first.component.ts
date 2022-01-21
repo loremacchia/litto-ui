@@ -1,3 +1,4 @@
+import { FileUploadService } from './../../services/file-upload.service';
 import { LocalStorageService } from './../../services/local-storage.service';
 import { SearchReturn } from './../../model/SearchReturn';
 import { PlanService } from 'src/app/services/plan.service';
@@ -16,20 +17,23 @@ export class CreatePlanFirstComponent implements OnInit {
   searchActive = '';
   userId!: number;
   activeItemIndex = 2;
-  avatarUrl =
+  imageUrl =
     'https://www.idmore.it/wp-content/uploads/2016/12/ef3-placeholder-image.jpg';
 
+  loading: boolean = false; // Flag variable
+  file!: File;
+
   form = new FormGroup({
-    difficulty: new FormControl(1),
+    level: new FormControl(1),
     title: new FormControl(''),
-    description: new FormControl(''),
-    weeks: new FormControl(1),
+    subtitle: new FormControl(''),
+    // weeks: new FormControl(1),
     discord: new FormControl(true),
     tags: new FormControl([]),
   });
   search!: SearchReturn;
   constructor(
-    private activatedRoute: ActivatedRoute,
+    private fileUploadService: FileUploadService,
     private localService: LocalStorageService,
     private homeService: HomeService,
     private router: Router
@@ -37,7 +41,7 @@ export class CreatePlanFirstComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.localService.getLogId();
-    if(this.localService.getCreatingPlan(this.userId)){
+    if (this.localService.getCreatingPlan(this.userId)) {
       this.parseJson(this.localService.getCreatingPlan(this.userId) as string);
     }
   }
@@ -48,31 +52,46 @@ export class CreatePlanFirstComponent implements OnInit {
     });
   }
 
-  goCustSteps(){
+  goCustSteps() {
     this.localService.setCreatingPlan(this.createJson());
+    this.router.navigateByUrl('/step-create', { state: { number: 1 } });
+  }
+
+  uploadImage(event: any) {
+    this.file = event.target.files[0];
+    this.loading = !this.loading;
+    console.log(this.file);
+    this.fileUploadService.upload(this.file).subscribe(event => {
+        event = JSON.stringify(event)
+        let e = JSON.parse(event);
+        if(e["url"] != "False"){
+          console.log(e["url"])
+          this.imageUrl = e["url"];
+        }
+    });
   }
 
   createJson() {
     const dict = {
       userId: this.userId,
-      avatarUrl: this.avatarUrl,
-      difficulty: this.form.controls['difficulty'].value,
+      imageUrl: this.imageUrl,
+      level: this.form.controls['level'].value,
       title: this.form.controls['title'].value,
-      description: this.form.controls['description'].value,
-      weeks: this.form.controls['weeks'].value,
+      subtitle: this.form.controls['subtitle'].value,
+      // weeks: this.form.controls['weeks'].value,
       discord: this.form.controls['discord'].value,
       tags: this.form.controls['tags'].value,
     };
     return JSON.stringify(dict);
   }
 
-  parseJson(dict : string) {
+  parseJson(dict: string) {
     var d = JSON.parse(dict);
-    this.avatarUrl = d['avatarUrl'];
-    this.form.controls['difficulty'].setValue(d['difficulty']);
+    this.imageUrl = d['imageUrl'];
+    this.form.controls['level'].setValue(d['level']);
     this.form.controls['title'].setValue(d['title']);
-    this.form.controls['description'].setValue(d['description']);
-    this.form.controls['weeks'].setValue(d['weeks']);
+    this.form.controls['subtitle'].setValue(d['subtitle']);
+    // this.form.controls['weeks'].setValue(d['weeks']);
     this.form.controls['discord'].setValue(d['discord']);
     this.form.controls['tags'].setValue(d['tags']);
   }

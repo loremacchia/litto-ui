@@ -1,11 +1,16 @@
+from dataclasses import dataclass
 import os
 from os.path import isfile, join
 from flask import Flask, flash, request, redirect, url_for, jsonify
+from werkzeug.utils import secure_filename
+from flask import send_file
 import json
 app = Flask(__name__)
 app.secret_key = b'sese'
 
 
+UPLOAD_FOLDER = './src/assets/'
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 interests = [
         {"inter": "Racing",
@@ -270,6 +275,91 @@ def startPlan(): #userId:number, plan:Plan, from:string, to:string
     activeStep.append(obj)
     
     return createResponse(jsonify({"userId":data["userId"], "planId": planFound[0]["id"]}))
+
+@app.route('/create-plan', methods=['GET', 'POST'])
+def createPlan(): #userId:number, plan:Plan, from:string, to:string
+    data = json.loads(request.data.decode('utf-8'))
+    print(data["steps"])
+    data["id"] = len(plans)
+    plans.append(data)
+    print(plans)
+    
+    return createResponse(jsonify(len(plans)-1))
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/upload-img', methods=['GET', 'POST'])
+def uploadImg():
+    
+    if request.method == 'POST':
+        # check if the post request has the file part
+        print(request.files)
+        if 'image' not in request.files:
+            flash('No file part')
+            return createResponse(jsonify({"url":"False"}))
+        file = request.files['image']
+        print(file)
+
+        print(file.filename)
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            print("nnnnooo")
+            flash('No selected file')
+            return createResponse(jsonify({"url":"False"}))
+        if file :
+
+            print("innnn")
+            filename = secure_filename(file.filename)
+            print(os.path.join(UPLOAD_FOLDER+"image/", filename))
+            path = os.path.join(UPLOAD_FOLDER+"image/", filename)
+            file.save(path)
+            return createResponse(jsonify({"url":"http://192.168.1.135:8000/get_image/"+filename}))
+    return createResponse(jsonify({"url":"False"}))
+    
+
+@app.route('/get_image/<filename>')
+def get_image(filename):
+    return send_file("./src/assets/image/"+filename, mimetype='image/*')
+
+
+@app.route('/upload-pdf', methods=['GET', 'POST'])
+def uploadPdf():
+    
+    if request.method == 'POST':
+        # check if the post request has the file part
+        print(request.files)
+        if 'pdf' not in request.files:
+            flash('No file part')
+            return createResponse(jsonify({"url":"False"}))
+        file = request.files['pdf']
+        print(file)
+
+        print(file.filename)
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            print("nnnnooo")
+            flash('No selected file')
+            return createResponse(jsonify({"url":"False"}))
+        if file :
+
+            print("innnn")
+            filename = secure_filename(file.filename)
+            print(os.path.join(UPLOAD_FOLDER+"pdf/", filename))
+            path = os.path.join(UPLOAD_FOLDER+"pdf/", filename)
+            file.save(path)
+            return createResponse(jsonify({"url":"http://192.168.1.135:8000/get_pdf/"+filename}))
+    return createResponse(jsonify({"url":"False"}))
+    
+
+@app.route('/get_pdf/<filename>')
+def get_pdf(filename):
+    return send_file("./src/assets/pdf/"+filename, mimetype='pdf')
 
 
 

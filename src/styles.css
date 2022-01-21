@@ -128,3 +128,7 @@ a {
 .shadow-light {
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.15), 0 4px 16px 0 rgba(0, 0, 0, 0.15);
 }
+
+.official-shadow {
+  box-shadow: 0 0.125rem 0.1875rem rgba(0, 0, 0, 0.1);
+}

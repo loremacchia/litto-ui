@@ -10,3 +10,8 @@
   transition: 0.2s linear all;
   -webkit-transition: 0.2s linear all;
 }
+
+.back-button {
+  position: absolute !important;
+  margin-left: -12vw;
+}

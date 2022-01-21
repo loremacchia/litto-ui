@@ -50,6 +50,13 @@
   justify-content: end;
 }
 
+.left-children {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+}
+
 .two-button {
   display: flex;
   justify-content: space-between;

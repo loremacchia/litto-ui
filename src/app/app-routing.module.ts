@@ -1,3 +1,4 @@
+import { StepCreateComponent } from './components/step-create/step-create.component';
 import { CreatePlanFirstComponent } from './components/create-plan-first/create-plan-first.component';
 import { ActiveStepsComponent } from './components/active-steps/active-steps.component';
 import { StepCompleteComponent } from './components/step-complete/step-complete.component';
@@ -27,7 +28,8 @@ const routes: Routes = [
   { path: 'start-plan', component: StartPlanDateComponent },
   { path: 'step-complete', component: StepCompleteComponent },
   { path: 'active-steps', component: ActiveStepsComponent },
-  { path: 'create-plan-first', component: CreatePlanFirstComponent}
+  { path: 'create-plan-first', component: CreatePlanFirstComponent},
+  { path: 'step-create', component: StepCreateComponent }
 ];
 
 @NgModule({
