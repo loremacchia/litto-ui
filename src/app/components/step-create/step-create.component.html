@@ -97,18 +97,18 @@
     <div *ngIf="this.selectedMaterial['label'] == 'Link'">
       <form [formGroup]="formLink">
         <tui-input
-          formControlName="link"
-          icon="tuiIconLinkLarge"
-          class="tui-space_top-5"
-        >
-          Webpage Link
-        </tui-input>
-        <tui-input
           formControlName="title"
           icon="tuiIconCodeLarge"
           class="tui-space_top-5"
         >
           Webpage Name
+        </tui-input>
+        <tui-input
+          formControlName="link"
+          icon="tuiIconLinkLarge"
+          class="tui-space_top-5"
+        >
+          Webpage Link
         </tui-input>
         <tui-text-area
           formControlName="description"
@@ -120,8 +120,8 @@
         </tui-text-area>
       </form>
     </div>
-    <div *ngIf="this.selectedMaterial['label'] == 'Podcast'">
-      <form [formGroup]="formPodcast">
+    <div *ngIf="this.selectedMaterial['label'] == 'Spreaker'">
+      <form [formGroup]="formSpreaker">
         <tui-input
           formControlName="title"
           icon="tuiIconCodeLarge"
@@ -134,7 +134,7 @@
           icon="tuiIconLinkLarge"
           class="tui-space_top-5"
         >
-          SoundCloud Link
+          Spreaker Link
         </tui-input>
         <tui-text-area
           formControlName="description"

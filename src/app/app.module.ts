@@ -12,7 +12,8 @@ import {
   TuiDataListModule,
   TuiCalendarModule,
   TuiTextfieldControllerModule,
-  TuiHostedDropdownModule
+  TuiHostedDropdownModule,
+  TuiLinkModule
 } from '@taiga-ui/core';
 import { NgModule, Injectable } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -32,15 +33,18 @@ import {
   TuiAvatarModule,
   TuiTabsModule,
   TuiPaginationModule,
+  TuiProgressModule,
   TuiCalendarRangeModule,
   TuiToggleModule,
   TuiInputTimeModule,
   TuiSliderModule,
   TuiInputTagModule,
+  TuiPdfViewerModule,
   TuiInputNumberModule,
   TuiInputFileModule
 } from '@taiga-ui/kit';
 import {TuiReorderModule} from '@taiga-ui/addon-table/components/reorder';
+import {YouTubePlayerModule} from '@angular/youtube-player';
 	 
 import { TuiButtonModule, TUI_ICONS } from '@taiga-ui/core';
 import { LoginPageComponent } from './components/login-page/login-page.component';
@@ -90,11 +94,15 @@ import { CreatePlanFirstComponent } from './components/create-plan-first/create-
     BrowserModule,
     TuiInputTimeModule,
     TuiTabsModule,
+    TuiPdfViewerModule,
     TuiSvgModule,
     TuiEditorModule,
     TuiToggleModule,
     AppRoutingModule,
     TuiTextfieldControllerModule,
+    YouTubePlayerModule,
+    TuiLinkModule,
+    TuiProgressModule,
     TuiHostedDropdownModule,
     TuiCalendarRangeModule,
     TuiSliderModule,

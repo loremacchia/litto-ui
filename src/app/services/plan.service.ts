@@ -38,4 +38,15 @@ export class PlanService {
     return this.http.post(this.baseUrl + "/create-plan", JSON.stringify(newPlan))
       .pipe(map(res => plainToClass(Number, res as Object)))
   }
+
+  getActiveStep(userId : number,planId : number)  : Observable<Step>{
+    console.log("gigi")
+    return this.http.post(this.baseUrl + "/get-active-step", JSON.stringify({"userId":userId,"planId":planId}))
+      .pipe(map(res => plainToClass(Step, res as Object)))
+  }
+
+  completeStep(userId : number,planId : number)  : Observable<Boolean>{
+    return this.http.post(this.baseUrl + "/next-active-step", JSON.stringify({"userId":userId,"planId":planId}))
+      .pipe(map(res => res as Boolean))
+  }
 }

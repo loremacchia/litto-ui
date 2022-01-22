@@ -14,6 +14,9 @@
   --tui-secondary: #f5efdb;
   --tui-secondary-hover: #fcf8ea;
   --tui-secondary-active: #c2bda9;
+  --qua-custom: #FFC199;
+  --qua-custom-dark:#FF944F;
+  --qua-custom-light:#FFDEC9;
   --ter-custom: #254d9d;
   --level-1: #9de2c8;
   --level-2: #89dcbe;
@@ -86,7 +89,24 @@ tui-wrapper[data-appearance="secondary-custom"]:hover {
 
 tui-wrapper[data-appearance="secondary-custom"]:active {
   background: var(--sec-custom-dark);
-  color: #fff;
+  color: var(--ter-custom);
+}
+
+tui-wrapper[data-appearance="quaternary-custom"] {
+  border-style: solid !important;
+  border: var(--qua-custom);
+  background: #fff;
+  color: var(--qua-custom-dark);
+}
+
+tui-wrapper[data-appearance="quaternary-custom"]:hover {
+  background: var(--qua-custom-light); /*var(--prim-custom-light);*/
+  color: var(--ter-custom);
+}
+
+tui-wrapper[data-appearance="quaternary-custom"]:active {
+  background: var(--qua-custom-dark);
+  color: var(--ter-custom);
 }
 
 tui-wrapper[data-appearance="primary"]{

@@ -23,6 +23,7 @@ export class UserPageComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.localService.getLogId();
     this.userService.getUser(this.id).subscribe((user) => {
+      console.log(user);
       this.user = user;
       this.user.id = this.id;
       console.log(this.user);

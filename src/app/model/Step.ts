@@ -1,3 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { TuiDay } from '@taiga-ui/cdk';
 export class Step {
   endDate!: string;
@@ -5,8 +6,11 @@ export class Step {
   title!: string;
   subtitle!: string;
   imageUrl!: string;
-  planName!: string; // change in planId
+  planName!: string;
+  planId!: number;
   planWeek!: number;
+  material!:[{[key:string]:string}];
+  materialLength!:number;
 
   constructor(
     endDate: string,
@@ -14,7 +18,8 @@ export class Step {
     subtitle: string,
     imageUrl: string,
     planName: string,
-    planWeek: number
+    planWeek: number,
+    planId: number
   ) {
     this.endDate = endDate;
     this.title = title;
@@ -22,6 +27,7 @@ export class Step {
     this.planName = planName;
     this.imageUrl = imageUrl;
     this.planWeek = planWeek;
+    this.planId = planId;
   }
 
   getFormatted(date : TuiDay): string {

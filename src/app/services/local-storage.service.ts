@@ -102,4 +102,21 @@ export class LocalStorageService {
     localStorage.removeItem('creatingSteps');
     localStorage.removeItem('creatingPlans');
   }
+
+  getMaterialIndex(){
+    if(localStorage.getItem('materialIndex')){ 
+      return JSON.parse(localStorage.getItem('materialIndex') as string);
+    }
+    else{
+      return -1;
+    }
+  }
+
+  setMaterialIndex(val:number){
+    localStorage.setItem('materialIndex',JSON.stringify(val));
+  }
+
+  removeMaterialIndex(){
+    localStorage.removeItem('materialIndex');
+  }
 }

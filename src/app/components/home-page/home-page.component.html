@@ -4,15 +4,14 @@
   <div class="tui-text_body-xl big-top-space tui-space_bottom-3">
     Steps to Complete
   </div>
-  <div *ngIf="this.steps">
+  <div *ngIf="this.steps && this.steps.length > 0">
     <!--  TODO modifica ling-->
     <div *ngFor="let s of this.steps" class="tui-space_bottom-5">
       <a
         size="l"
-        href="http://ng-web-apis.github.io/"
         tuiIsland
-        target="_blank"
         [hoverable]="true"
+        (click)="goToStep(s)"
       >
         <div class="tui-island__category">
           {{ s.planName }}
@@ -36,6 +35,9 @@
         </div>
       </a>
     </div>
+  </div>
+  <div *ngIf="this.steps && this.steps.length == 0">
+    <div class="prim-color">No step to complete</div>
   </div>
 </div>
 

@@ -12,9 +12,8 @@
     <div *ngFor="let s of this.steps" class="tui-space_bottom-5">
       <a
         size="m"
-        href="http://ng-web-apis.github.io/"
+        (click)="goToStep(s)"
         tuiIsland
-        target="_blank"
         [hoverable]="true"
       >
         <div class="tui-island__content active-plans-island">

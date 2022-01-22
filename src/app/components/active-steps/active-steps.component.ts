@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { LocalStorageService } from './../../services/local-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from './../../services/home.service';
@@ -18,6 +19,7 @@ export class ActiveStepsComponent implements OnInit {
 
   constructor(
     private homeService: HomeService,
+    private router: Router,
     private localService: LocalStorageService
   ) {}
   ngOnInit(): void {
@@ -28,5 +30,9 @@ export class ActiveStepsComponent implements OnInit {
       }
       this.steps = steps;
     });
+  }
+
+  goToStep(step:Step){
+    this.router.navigateByUrl("/step-complete",{state:{planId:step.planId}});
   }
 }
