@@ -35,12 +35,12 @@ export class PlanOverviewComponent implements OnInit {
       } else {
         this.planId = 0;
       }
-      console.log(this.planId)
+      console.log(this.planId);
       this.planService.getPlan(this.planId).subscribe((plan) => {
         this.plan = plan;
         this.length = this.plan.steps.length;
         this.currentStep = this.searchStep(this.weekIndex);
-        console.log(this.plan)
+        console.log(this.plan);
       });
     });
   }

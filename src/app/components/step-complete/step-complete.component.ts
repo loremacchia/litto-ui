@@ -1,3 +1,4 @@
+import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 import { LocalStorageService } from './../../services/local-storage.service';
 import { PlanService } from 'src/app/services/plan.service';
 import { Step } from './../../model/Step';
@@ -18,16 +19,15 @@ import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
   styleUrls: ['./step-complete.component.css'],
 })
 export class StepCompleteComponent implements OnInit {
-  activeItemIndex = 1
-  userId!:number;
+  activeItemIndex = 1;
+  userId!: number;
   planInfo = {
-    planId:0,
-  }
+    planId: 0,
+  };
 
-  step!:Step;
+  step!: Step;
   totalMaterials: number = 1;
   materialIndex: number = this.localService.getMaterialIndex();
-
 
   playerWidth = window.innerWidth * 0.775;
   playerHeight = this.playerWidth * 0.65;
@@ -41,6 +41,7 @@ export class StepCompleteComponent implements OnInit {
     private pdfService: TuiPdfViewerService,
     private localService: LocalStorageService,
     private planService: PlanService,
+    private readonly notificationsService: TuiNotificationsService,
     private router: Router
   ) {}
 
@@ -48,21 +49,21 @@ export class StepCompleteComponent implements OnInit {
     const tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
-    
+
     this.userId = this.localService.getLogId();
     this.activatedRoute.paramMap.subscribe(() => {
       if (window.history.state['planId'] !== undefined) {
         this.planInfo.planId = window.history.state['planId'];
       }
-      this.planService.getActiveStep(this.userId,this.planInfo.planId).subscribe((step) => {
-        // step.normalize();
-        this.step = step;
-        console.log(this.step.planWeek);
-        this.totalMaterials=  this.step.material.length
-      });
-
-    })
-      
+      this.planService
+        .getActiveStep(this.userId, this.planInfo.planId)
+        .subscribe((step) => {
+          // step.normalize();
+          this.step = step;
+          console.log(this.step.planWeek);
+          this.totalMaterials = this.step.material.length;
+        });
+    });
   }
 
   sanitize(s: string) {
@@ -72,14 +73,17 @@ export class StepCompleteComponent implements OnInit {
 
   prevMaterial() {
     this.materialIndex--;
-    this.localService.setMaterialIndex(this.materialIndex)
+    this.localService.setMaterialIndex(this.materialIndex);
   }
   nextMaterial() {
     this.materialIndex++;
-    this.localService.setMaterialIndex(this.materialIndex)
+    this.localService.setMaterialIndex(this.materialIndex);
   }
 
-  show(actions: PolymorpheusContent<TuiPdfViewerOptions>, url: string| undefined) {
+  show(
+    actions: PolymorpheusContent<TuiPdfViewerOptions>,
+    url: string | undefined
+  ) {
     this.pdfService
       .open(this.sanitizer.bypassSecurityTrustResourceUrl(url as string), {
         label: 'Taiga UI',
@@ -88,16 +92,27 @@ export class StepCompleteComponent implements OnInit {
       .subscribe();
   }
 
-  completeStep(){
-    this.planService.completeStep(this.userId, this.planInfo.planId).subscribe(val=>{
-      if(val){
-        console.log("finish plan")
-      }
-      else {
-        console.log("finish step")
-      }
-      this.localService.removeMaterialIndex();
-      this.router.navigateByUrl('/home-page');
-    })
+  completeStep() {
+    this.planService
+      .completeStep(this.userId, this.planInfo.planId)
+      .subscribe((val) => {
+        if (val) {
+          console.log('finish plan');
+          this.notificationsService
+            .show('You have completed the plan!!', {
+              status: TuiNotification.Success,
+            })
+            .subscribe();
+        } else {
+          console.log('finish step');
+          this.notificationsService
+            .show('You have completed the step!', {
+              status: TuiNotification.Success,
+            })
+            .subscribe();
+        }
+        this.localService.removeMaterialIndex();
+        this.router.navigateByUrl('/home-page');
+      });
   }
 }

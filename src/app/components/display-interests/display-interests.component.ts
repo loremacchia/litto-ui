@@ -1,3 +1,4 @@
+import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 import { LocalStorageService } from './../../services/local-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,7 +21,8 @@ export class DisplayInterestsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private userService: UserServiceService,
     private localService: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private readonly notificationsService: TuiNotificationsService
   ) {}
 
   ngOnInit(): void {
@@ -31,12 +33,18 @@ export class DisplayInterestsComponent implements OnInit {
           window.history.state['user'].bio,
           window.history.state['user'].name,
           window.history.state['user'].surname,
-          window.history.state['user'].imageUrl,
+          window.history.state['user'].imageUrl
         );
         this.id = window.history.state['user'].id;
       } else {
         this.id = this.localService.getLogId();
-        this.user.setInitial(this.id, '', '', '',"https://iupac.org/wp-content/uploads/2018/05/default-avatar.png");
+        this.user.setInitial(
+          this.id,
+          '',
+          '',
+          '',
+          'https://iupac.org/wp-content/uploads/2018/05/default-avatar.png'
+        );
       }
     });
     this.getInterests().subscribe((val) => {
@@ -78,6 +86,9 @@ export class DisplayInterestsComponent implements OnInit {
     this.userService
       .completeUserAccount(this.id, this.user)
       .subscribe((val) => {
+        this.notificationsService
+          .show('Correctly Registered!', { status: TuiNotification.Success })
+          .subscribe();
         this.router.navigateByUrl('/user-page');
       });
   }

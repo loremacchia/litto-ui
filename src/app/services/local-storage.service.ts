@@ -1,3 +1,4 @@
+import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 
@@ -5,7 +6,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class LocalStorageService {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private readonly notificationsService: TuiNotificationsService
+  ) {}
 
   getCurrentUserId() {
     return JSON.parse(localStorage.getItem('userId') as string);
@@ -26,16 +30,25 @@ export class LocalStorageService {
     if (this.checkUser()) {
       return this.getCurrentUserId();
     } else {
+      this.notificationsService
+        .show('Something has gone wrong, please log-in or register', {
+          status: TuiNotification.Error,
+        })
+        .subscribe();
       this.router.navigateByUrl('/');
     }
+  }
+
+  removeUserId() {
+    localStorage.removeItem('userId');
   }
 
   storeUserSubInfo() {
     return true;
   }
 
-  getCreatingPlan(userId:number) {
-    console.log("heyy")
+  getCreatingPlan(userId: number) {
+    console.log('heyy');
     if (localStorage.getItem('creatingPlans')) {
       var plan = localStorage.getItem('creatingPlans') as string;
       return plan;
@@ -43,54 +56,53 @@ export class LocalStorageService {
     return false;
   }
 
-  setCreatingPlan(json : string){
+  setCreatingPlan(json: string) {
     localStorage.setItem('creatingPlans', json);
   }
 
-  getCreatingStepsNumber() : number{
-    if(localStorage.getItem('creatingSteps')){ 
+  getCreatingStepsNumber(): number {
+    if (localStorage.getItem('creatingSteps')) {
       let d = JSON.parse(localStorage.getItem('creatingSteps') as string);
-      return d.length
+      return d.length;
     }
     return 0;
   }
 
   getCreatingSteps() {
-    if(localStorage.getItem('creatingSteps')){ 
+    if (localStorage.getItem('creatingSteps')) {
       let d = JSON.parse(localStorage.getItem('creatingSteps') as string);
-      return d
+      return d;
     }
     return undefined;
   }
 
-  setCreatingStep(newStep : {[key:string]:any}){
-    if(localStorage.getItem('creatingSteps')){ 
-      console.log(newStep)
+  setCreatingStep(newStep: { [key: string]: any }) {
+    if (localStorage.getItem('creatingSteps')) {
+      console.log(newStep);
       let d = JSON.parse(localStorage.getItem('creatingSteps') as string);
       let found = false;
-      for (let dic of d){
-        if(newStep["planWeek"] == dic["planWeek"]){
-          found= true;
-          dic["title"]=newStep["title"],
-          dic["subtitle"]=newStep["subtitle"],
-          dic["material"]=newStep["material"]
+      for (let dic of d) {
+        if (newStep['planWeek'] == dic['planWeek']) {
+          found = true;
+          (dic['title'] = newStep['title']),
+            (dic['subtitle'] = newStep['subtitle']),
+            (dic['material'] = newStep['material']);
         }
       }
-      if(!found){
-        d.push(newStep)
+      if (!found) {
+        d.push(newStep);
       }
       localStorage.setItem('creatingSteps', JSON.stringify(d));
-    }
-    else {
+    } else {
       localStorage.setItem('creatingSteps', JSON.stringify([newStep]));
     }
   }
 
-  getCreatingStep(num : number){
-    if(localStorage.getItem('creatingSteps')){ 
+  getCreatingStep(num: number) {
+    if (localStorage.getItem('creatingSteps')) {
       let d = JSON.parse(localStorage.getItem('creatingSteps') as string);
-      for (let dic of d){
-        if(num == dic["planWeek"]){
+      for (let dic of d) {
+        if (num == dic['planWeek']) {
           return dic;
         }
       }
@@ -98,25 +110,24 @@ export class LocalStorageService {
     return false;
   }
 
-  freeCreatingPlanAndSteps(){
+  freeCreatingPlanAndSteps() {
     localStorage.removeItem('creatingSteps');
     localStorage.removeItem('creatingPlans');
   }
 
-  getMaterialIndex(){
-    if(localStorage.getItem('materialIndex')){ 
+  getMaterialIndex() {
+    if (localStorage.getItem('materialIndex')) {
       return JSON.parse(localStorage.getItem('materialIndex') as string);
-    }
-    else{
+    } else {
       return -1;
     }
   }
 
-  setMaterialIndex(val:number){
-    localStorage.setItem('materialIndex',JSON.stringify(val));
+  setMaterialIndex(val: number) {
+    localStorage.setItem('materialIndex', JSON.stringify(val));
   }
 
-  removeMaterialIndex(){
+  removeMaterialIndex() {
     localStorage.removeItem('materialIndex');
   }
 }

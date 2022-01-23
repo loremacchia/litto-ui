@@ -26,17 +26,19 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.localService.getLogId();
     this.homeService.getCurrentGoals(this.id).subscribe((steps) => {
-      console.log(steps)
-      for (let s of steps){
+      console.log(steps);
+      for (let s of steps) {
         s.normalize();
       }
-      console.log(steps)
+      console.log(steps);
       this.steps = steps;
       console.log(this.steps);
     });
   }
 
-  goToStep(step:Step){
-    this.router.navigateByUrl("/step-complete",{state:{planId:step.planId}});
+  goToStep(step: Step) {
+    this.router.navigateByUrl('/step-complete', {
+      state: { planId: step.planId },
+    });
   }
 }

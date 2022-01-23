@@ -1,3 +1,4 @@
+import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 import { FileUploadService } from './../../services/file-upload.service';
 import { EditorConstant } from './../constants/editor';
 import { LocalStorageService } from './../../services/local-storage.service';
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 import { HomeService } from './../../services/home.service';
 import { Step } from './../../model/Step';
 import { ChangeDetectionStrategy } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TUI_ARROW } from '@taiga-ui/kit';
 import { tuiPure } from '@taiga-ui/cdk';
@@ -58,37 +64,45 @@ export class StepCreateComponent implements OnInit {
       icon: 'tuiIconEditLarge',
     },
   ];
+  reg = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
+
   form = new FormGroup({
-    title: new FormControl(''),
-    subtitle: new FormControl(''),
+    title: new FormControl('', Validators.required),
+    subtitle: new FormControl('', Validators.required),
   });
 
   formSpreaker = new FormGroup({
-    link: new FormControl(''),
-    title: new FormControl(''),
+    link: new FormControl('', [
+      Validators.required,
+      Validators.pattern(this.reg),
+    ]),
+    title: new FormControl('', Validators.required),
     description: new FormControl(''),
   });
 
   formYouTube = new FormGroup({
-    link: new FormControl(''),
-    title: new FormControl(''),
+    link: new FormControl('', Validators.required),
+    title: new FormControl('', Validators.required),
     description: new FormControl(''),
   });
 
   formText = new FormGroup({
-    title: new FormControl(''),
-    text: new FormControl(''),
+    title: new FormControl('', Validators.required),
+    text: new FormControl('', Validators.required),
   });
 
   formLink = new FormGroup({
-    link: new FormControl(''),
-    title: new FormControl(''),
+    link: new FormControl('', [
+      Validators.required,
+      Validators.pattern(this.reg),
+    ]),
+    title: new FormControl('', Validators.required),
     description: new FormControl(''),
   });
 
   formPDF = new FormGroup({
-    title: new FormControl(''),
-    file: new FormControl(),
+    title: new FormControl('', Validators.required),
+    file: new FormControl(Validators.required),
     fileLink: new FormControl(''),
   });
 
@@ -97,6 +111,7 @@ export class StepCreateComponent implements OnInit {
     private localService: LocalStorageService,
     private router: Router,
     private planService: PlanService,
+    private readonly notificationsService: TuiNotificationsService,
     private fileUploadService: FileUploadService
   ) {}
 
@@ -128,12 +143,20 @@ export class StepCreateComponent implements OnInit {
   }
 
   goCustStepsNext() {
-    this.goCustSteps();
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-      this.router.navigateByUrl('/step-create', {
-        state: { number: this.planWeek + 1 },
-      })
-    );
+    if (this.form.valid) {
+      this.goCustSteps();
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+        this.router.navigateByUrl('/step-create', {
+          state: { number: this.planWeek + 1 },
+        })
+      );
+    } else {
+      this.notificationsService
+        .show('Check the step title and description!', {
+          status: TuiNotification.Error,
+        })
+        .subscribe();
+    }
   }
 
   goCustStepsPrev() {
@@ -174,71 +197,105 @@ export class StepCreateComponent implements OnInit {
   stepAdd(type: string) {
     switch (type) {
       case 'Spreaker':
-        this.steps.push({
-          type: type,
-          title: this.formSpreaker.controls['title'].value,
-          link: this.formSpreaker.controls['link'].value,
-          description: this.formSpreaker.controls['description'].value,
-        });
-        this.printableSteps.push(
-          this.formSpreaker.controls['title'].value as string
-        );
-        this.formSpreaker.controls['title'].setValue('');
-        this.formSpreaker.controls['link'].setValue('');
-        this.formSpreaker.controls['description'].setValue('');
+        if (this.formSpreaker.valid) {
+          this.steps.push({
+            type: type,
+            title: this.formSpreaker.controls['title'].value,
+            link: this.formSpreaker.controls['link'].value,
+            description: this.formSpreaker.controls['description'].value,
+          });
+          this.printableSteps.push(
+            this.formSpreaker.controls['title'].value as string
+          );
+          this.formSpreaker.controls['title'].setValue('');
+          this.formSpreaker.controls['link'].setValue('');
+          this.formSpreaker.controls['description'].setValue('');
+        } else {
+          this.notificationsService
+            .show('Check the Spreaker link or title', {
+              status: TuiNotification.Error,
+            })
+            .subscribe();
+        }
         break;
       case 'PDF':
-        this.steps.push({
-          type: type,
-          title: this.formPDF.controls['title'].value,
-          file: this.formPDF.controls['fileLink'].value,
-        });
-        this.printableSteps.push(
-          this.formPDF.controls['title'].value as string
-        );
-        this.formPDF.controls['title'].setValue('');
-        this.formPDF.controls['fileLink'].setValue('');
-        this.formPDF.controls['file'].setValue(undefined);
+        if (this.formPDF.valid) {
+          this.steps.push({
+            type: type,
+            title: this.formPDF.controls['title'].value,
+            file: this.formPDF.controls['fileLink'].value,
+          });
+          this.printableSteps.push(
+            this.formPDF.controls['title'].value as string
+          );
+          this.formPDF.controls['title'].setValue('');
+          this.formPDF.controls['fileLink'].setValue('');
+          this.formPDF.controls['file'].setValue(undefined);
+        } else {
+          this.notificationsService
+            .show('Check the PDF file or title', {
+              status: TuiNotification.Error,
+            })
+            .subscribe();
+        }
         break;
       case 'YouTube':
-        this.steps.push({
-          type: type,
-          title: this.formYouTube.controls['title'].value,
-          link: this.formYouTube.controls['link'].value,
-          description: this.formYouTube.controls['description'].value,
-        });
-        this.printableSteps.push(
-          this.formYouTube.controls['title'].value as string
-        );
-        this.formYouTube.controls['title'].setValue('');
-        this.formYouTube.controls['link'].setValue('');
-        this.formYouTube.controls['description'].setValue('');
+        if (this.formYouTube.valid) {
+          this.steps.push({
+            type: type,
+            title: this.formYouTube.controls['title'].value,
+            link: this.formYouTube.controls['link'].value,
+            description: this.formYouTube.controls['description'].value,
+          });
+          this.printableSteps.push(
+            this.formYouTube.controls['title'].value as string
+          );
+          this.formYouTube.controls['title'].setValue('');
+          this.formYouTube.controls['link'].setValue('');
+          this.formYouTube.controls['description'].setValue('');
+        } else {
+          this.notificationsService
+            .show('Check the YouTube title', { status: TuiNotification.Error })
+            .subscribe();
+        }
         break;
       case 'Text':
-        this.steps.push({
-          type: type,
-          title: this.formText.controls['title'].value,
-          text: this.formText.controls['text'].value,
-        });
-        this.printableSteps.push(
-          this.formText.controls['title'].value as string
-        );
-        this.formText.controls['title'].setValue('');
-        this.formText.controls['text'].setValue('');
+        if (this.formText.valid) {
+          this.steps.push({
+            type: type,
+            title: this.formText.controls['title'].value,
+            text: this.formText.controls['text'].value,
+          });
+          this.printableSteps.push(
+            this.formText.controls['title'].value as string
+          );
+          this.formText.controls['title'].setValue('');
+          this.formText.controls['text'].setValue('');
+        } else {
+          this.notificationsService
+            .show('Check the Text or title', { status: TuiNotification.Error })
+            .subscribe();
+        }
         break;
       case 'Link':
-        this.steps.push({
-          type: type,
-          link: this.formLink.controls['link'].value,
-          title: this.formLink.controls['title'].value,
-          description: this.formLink.controls['description'].value,
-        });
-        this.printableSteps.push(
-          this.formLink.controls['title'].value as string
-        );
-        this.formLink.controls['link'].setValue('');
-        this.formLink.controls['title'].setValue('');
-        this.formLink.controls['description'].setValue('');
+        if (this.formLink.valid) {
+          this.steps.push({
+            type: type,
+            link: this.formLink.controls['link'].value,
+            title: this.formLink.controls['title'].value,
+            description: this.formLink.controls['description'].value,
+          });
+          this.printableSteps.push(
+            this.formLink.controls['title'].value as string
+          );
+          this.formLink.controls['link'].setValue('');
+          this.formLink.controls['title'].setValue('');
+          this.formLink.controls['description'].setValue('');
+        } else {
+          this.notificationsService
+            .show('Check the link or title', { status: TuiNotification.Error })
+            .subscribe();
+        }
         break;
 
       default:
@@ -261,12 +318,26 @@ export class StepCreateComponent implements OnInit {
     plan['duration'] = this.localService.getCreatingStepsNumber();
     let steps = this.localService.getCreatingSteps();
     plan['steps'] = steps;
-    this.planService.createPlan(plan).subscribe((planIdd) => {
-      this.localService.freeCreatingPlanAndSteps(),
-        this.router.navigateByUrl('/view-plan', {
-          state: { planId: planIdd },
-        });
-    });
+    if (steps != undefined) {
+      this.planService.createPlan(plan).subscribe((planIdd) => {
+        this.notificationsService
+          .show('The plan is correctly created!', {
+            status: TuiNotification.Success,
+          })
+          .subscribe();
+
+        this.localService.freeCreatingPlanAndSteps(),
+          this.router.navigateByUrl('/view-plan', {
+            state: { planId: planIdd },
+          });
+      });
+    } else {
+      this.notificationsService
+        .show('Create some step before completing the plan!', {
+          status: TuiNotification.Error,
+        })
+        .subscribe();
+    }
   }
 
   @tuiPure

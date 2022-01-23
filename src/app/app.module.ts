@@ -13,7 +13,8 @@ import {
   TuiCalendarModule,
   TuiTextfieldControllerModule,
   TuiHostedDropdownModule,
-  TuiLinkModule
+  TuiLinkModule,
+  TuiNotificationModule
 } from '@taiga-ui/core';
 import { NgModule, Injectable } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -106,6 +107,7 @@ import { CreatePlanFirstComponent } from './components/create-plan-first/create-
     TuiHostedDropdownModule,
     TuiCalendarRangeModule,
     TuiSliderModule,
+    TuiNotificationModule,
     TuiInputFileModule,
     TuiReorderModule,
     TuiInputTagModule,

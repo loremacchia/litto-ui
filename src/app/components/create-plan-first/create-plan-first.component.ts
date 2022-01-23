@@ -1,3 +1,4 @@
+import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 import { FileUploadService } from './../../services/file-upload.service';
 import { LocalStorageService } from './../../services/local-storage.service';
 import { SearchReturn } from './../../model/SearchReturn';
@@ -6,7 +7,12 @@ import { Component, OnInit } from '@angular/core';
 import { HomeService } from './../../services/home.service';
 import { Step } from './../../model/Step';
 import { ChangeDetectionStrategy } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-create-plan-first',
@@ -24,11 +30,11 @@ export class CreatePlanFirstComponent implements OnInit {
   file!: File;
 
   form = new FormGroup({
-    level: new FormControl(1),
-    title: new FormControl(''),
-    subtitle: new FormControl(''),
+    level: new FormControl(1, Validators.required),
+    title: new FormControl('', Validators.required),
+    subtitle: new FormControl('', Validators.required),
     // weeks: new FormControl(1),
-    discord: new FormControl(true),
+    discord: new FormControl(true, Validators.required),
     tags: new FormControl([]),
   });
   search!: SearchReturn;
@@ -36,6 +42,7 @@ export class CreatePlanFirstComponent implements OnInit {
     private fileUploadService: FileUploadService,
     private localService: LocalStorageService,
     private homeService: HomeService,
+    private readonly notificationsService: TuiNotificationsService,
     private router: Router
   ) {}
 
@@ -53,21 +60,27 @@ export class CreatePlanFirstComponent implements OnInit {
   }
 
   goCustSteps() {
-    this.localService.setCreatingPlan(this.createJson());
-    this.router.navigateByUrl('/step-create', { state: { number: 1 } });
+    if (this.form.valid) {
+      this.localService.setCreatingPlan(this.createJson());
+      this.router.navigateByUrl('/step-create', { state: { number: 1 } });
+    } else {
+      this.notificationsService
+        .show('Complete the plan infos', { status: TuiNotification.Error })
+        .subscribe();
+    }
   }
 
   uploadImage(event: any) {
     this.file = event.target.files[0];
     this.loading = !this.loading;
     console.log(this.file);
-    this.fileUploadService.upload(this.file).subscribe(event => {
-        event = JSON.stringify(event)
-        let e = JSON.parse(event);
-        if(e["url"] != "False"){
-          console.log(e["url"])
-          this.imageUrl = e["url"];
-        }
+    this.fileUploadService.upload(this.file).subscribe((event) => {
+      event = JSON.stringify(event);
+      let e = JSON.parse(event);
+      if (e['url'] != 'False') {
+        console.log(e['url']);
+        this.imageUrl = e['url'];
+      }
     });
   }
 

@@ -1,3 +1,4 @@
+import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 import { LocalStorageService } from './../../services/local-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -22,7 +23,8 @@ export class RegisterPageComponent implements OnInit {
   constructor(
     private userService: UserServiceService,
     private localService: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private readonly notificationsService: TuiNotificationsService
   ) {}
 
   ngOnInit(): void {}
@@ -37,6 +39,11 @@ export class RegisterPageComponent implements OnInit {
         )
       )
       .subscribe((retrievedId) => {
+        this.notificationsService
+          .show('Check your Email to continue the registration', {
+            status: TuiNotification.Info,
+          })
+          .subscribe();
         this.id = +retrievedId;
         this.localService.setCurrentUserId(retrievedId);
         this.router.navigateByUrl('/register-second');

@@ -1,12 +1,22 @@
-<button
-  tuiIconButton
-  type="button"
-  size="s"
-  appearance="secondary-custom"
-  shape="rounded"
-  icon="tuiIconDraft"
+<tui-hosted-dropdown
+  tuiDropdownAlign="right"
+  [content]="dropdown"
   class="absolute"
-></button>
+>
+  <button
+    tuiIconButton
+    type="button"
+    size="s"
+    appearance="flat"
+    icon="tuiIconMoreVertLarge"
+  ></button>
+</tui-hosted-dropdown>
+<ng-template #dropdown>
+  <tui-data-list>
+    <button tuiOption (click)="logOut()">Log Out</button>
+  </tui-data-list>
+</ng-template>
+
 <div *ngIf="user" class="center-children moving">
   <tui-avatar
     size="xxl"
@@ -56,6 +66,4 @@
   <div class="button-big-space"></div>
 </div>
 
-<app-footer-tabs
-  [index]="this.activeItemIndex"
-></app-footer-tabs>
+<app-footer-tabs [index]="this.activeItemIndex"></app-footer-tabs>

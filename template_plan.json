@@ -1,0 +1,125 @@
+[
+  {
+    "planWeek": 1,
+    "title": "Variables",
+    "subtitle": "We will see how variables can store different types of data: int, float, strings and booleans!",
+    "material": [
+      {
+        "type": "YouTube",
+        "title": "Introduction to variables (in italian)",
+        "link": "https://www.youtube.com/watch?v=7Aotk1edPlM",
+        "description": "Variables is a concept indipendent to the coding language. Variables are used in all kind of scenarios: from videogames to smartphone apps and so on."
+      },
+      {
+        "type": "Link",
+        "link": "https://www.w3schools.com/java/java_intro.asp",
+        "title": "Intro to Java ",
+        "description": "First of all let's see some Java syntax"
+      },
+      {
+        "type": "Link",
+        "link": "https://www.w3schools.com/java/java_variables.asp",
+        "title": "Java Variables",
+        "description": "An overview of how the variables are declared and managed in Java!"
+      },
+      {
+        "type": "Podcast",
+        "title": "Listen to some coding music",
+        "link": "<iframe width=\"100%\" height=\"300\" scrolling=\"no\" frameborder=\"no\" allow=\"autoplay\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1381864711&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true\"></iframe><div style=\"font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;\"><a href=\"https://soundcloud.com/programmingcodingambientchill\" title=\"Programming Coding Ambient Chill\" target=\"_blank\" style=\"color: #cccccc; text-decoration: none;\">Programming Coding Ambient Chill</a> · <a href=\"https://soundcloud.com/programmingcodingambientchill/sets/programming-coding-chill-ocean\" title=\"Programming &amp; Coding Chill Ocean Waves\" target=\"_blank\" style=\"color: #cccccc; text-decoration: none;\">Programming &amp; Coding Chill Ocean Waves</a></div>",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "planWeek": 2,
+    "title": "Loops",
+    "subtitle": "Let's dive into the loops! We will discover the for, while and the do while!",
+    "material": [
+      {
+        "type": "Text",
+        "title": "Loops Intro",
+        "text": "<p><span style=\"font-size: 14px;\"><span style=\"font-weight: 400;\">In this lesson, you’ll learn about loops. </span><span style=\"color: #43b02a;\"><b>Loops</b></span><span style=\"font-weight: 400;\">\n are a way to tell a computer to do something many times in a row. \nComputers are really good at doing things over and over again, and doing\n them fast. </span></span></p>\n<p><span style=\"font-size: 14px;\"><span style=\"font-weight: 400;\">Imagine\n you were asked to write your name down 100 times in a row. This might \ntake you a long time, and you might make a few mistakes along the way. \nThis is a perfect task for a computer, which would be able to do it \nreally fast and without any mistakes. You can take advantage of this by \nusing loops. A loop is a block of code that will repeat over and over \nagain.</span></span></p>\n<p><span style=\"font-size: 14px;\"><span style=\"font-weight: 400;\">There are two types of loops, “while loops” and “for loops”. </span><span style=\"color: #43b02a;\"><b>While loops</b></span><span style=\"font-weight: 400;\"> will repeat&nbsp;while a condition is true, and </span><span style=\"color: #43b02a;\"><b>for loops</b></span><span style=\"font-weight: 400;\"> will repeat a certain number of times. You’ll also learn about </span><b><span style=\"color: #43b02a;\">for each loops </span></b><span style=\"font-weight: 400;\">which are a type of </span><span style=\"color: #43b02a;\"><b>for loop</b></span><span style=\"font-weight: 400;\"> that repeats once for each item in a list. Let’s go through each of them in more detail.</span></span></p>"
+      },
+      {
+        "type": "Link",
+        "link": "https://www.w3schools.com/java/java_conditions.asp",
+        "title": "If-Else",
+        "description": ""
+      },
+      {
+        "type": "Link",
+        "link": "https://www.w3schools.com/java/java_while_loop.asp",
+        "title": "While",
+        "description": ""
+      },
+      {
+        "type": "Link",
+        "link": "https://www.w3schools.com/java/java_for_loop.asp",
+        "title": "For",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "planWeek": 3,
+    "title": "Lists",
+    "subtitle": "Here comes the lists where there are Arrays and Lists!",
+    "material": [
+      {
+        "type": "Link",
+        "link": "https://www.w3schools.com/java/java_arrays.asp",
+        "title": "Arrays",
+        "description": ""
+      },
+      {
+        "type": "Link",
+        "link": "https://docs.oracle.com/javase/8/docs/api/java/util/List.html",
+        "title": "Lists dive into the documentation",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "planWeek": 4,
+    "title": "Functions",
+    "subtitle": "Which better way to reuse your code than using functions?",
+    "material": [
+      {
+        "type": "Link",
+        "link": "https://www.w3schools.com/java/java_methods.asp",
+        "title": "Intro to Java Methods",
+        "description": ""
+      },
+      {
+        "type": "Link",
+        "link": "https://www.w3schools.com/java/java_methods_param.asp",
+        "title": "How to use parameters",
+        "description": ""
+      },
+      {
+        "type": "Link",
+        "link": "https://www.w3schools.com/java/java_recursion.asp",
+        "title": "Recursion!",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "planWeek": 5,
+    "title": "OOP",
+    "subtitle": "Scratching the surface of Object Oriented Programming!",
+    "material": [
+      {
+        "type": "Link",
+        "link": "https://www.w3schools.com/java/java_oop.asp",
+        "title": "Intro to OOP",
+        "description": ""
+      },
+      {
+        "type": "PDF",
+        "title": "Deep dive into OOP",
+        "file": "http://192.168.1.135:8000/get_pdf/OOProgWithJava-notes.pdf"
+      }
+    ]
+  }
+]

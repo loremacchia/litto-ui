@@ -1,3 +1,4 @@
+import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 import { LocalStorageService } from './../../services/local-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,6 +18,8 @@ export class UserPageComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private localService: LocalStorageService,
+    private router: Router,
+    private readonly notificationsService: TuiNotificationsService,
     private userService: UserServiceService
   ) {}
 
@@ -28,5 +31,13 @@ export class UserPageComponent implements OnInit {
       this.user.id = this.id;
       console.log(this.user);
     });
+  }
+
+  logOut() {
+    this.localService.removeUserId();
+    this.notificationsService
+      .show('Logged out', { status: TuiNotification.Success })
+      .subscribe();
+    this.router.navigateByUrl('/');
   }
 }

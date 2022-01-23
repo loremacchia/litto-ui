@@ -393,9 +393,11 @@ def getPlan():
 def startPlan():  # userId:number, plan:Plan, from:string, to:string
     data = json.loads(request.data.decode('utf-8'))
     planFound = [plan for plan in plans if plan["id"] == data["planId"]]
-    interestFound = [interest for interest in planFound[0]
-                     ["steps"] if interest["planWeek"] == 1]
-
+    interestFound = [interest for interest in planFound[0]["steps"] if interest["planWeek"] == 1]
+    isAlreadyStarted = False
+    for a in activeStep:
+        if a["planId"] == data["planId"] and a["userId"] == data["userId"]:
+            isAlreadyStarted = True
     obj = {"endDate": data["dateTo"],
            "title": interestFound[0]["title"],
            "subtitle": interestFound[0]["subtitle"],
@@ -405,9 +407,11 @@ def startPlan():  # userId:number, plan:Plan, from:string, to:string
            "userId": data["userId"],
            "imageUrl": planFound[0]["imageUrl"],
            "material": interestFound[0]["material"]}
-    activeStep.append(obj)
-
-    return createResponse(jsonify(planFound[0]["id"]))
+    if(not isAlreadyStarted):
+        activeStep.append(obj)
+        return createResponse(jsonify(planFound[0]["id"]))
+    else:
+        return createResponse(jsonify(-1))
 
 
 @app.route('/create-plan', methods=['GET', 'POST'])

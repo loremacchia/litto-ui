@@ -1,3 +1,4 @@
+import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 import { LocalStorageService } from './../../services/local-storage.service';
 import { Plan } from './../../model/Plan';
 import { Component, OnInit } from '@angular/core';
@@ -28,6 +29,7 @@ export class StartPlanDateComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private planService: PlanService,
     private localService: LocalStorageService,
+    private readonly notificationsService: TuiNotificationsService,
     private router: Router
   ) {}
 
@@ -58,11 +60,12 @@ export class StartPlanDateComponent implements OnInit {
       if (window.history.state['plan'] !== undefined) {
         this.plan = window.history.state['plan'];
       } else {
-        this.router.navigateByUrl('/view-plan', {
-          state: {
-            planId: 0,
-          },
-        });
+        this.notificationsService
+          .show('Something has gone wrong', {
+            status: TuiNotification.Error,
+          })
+          .subscribe();
+        this.router.navigateByUrl('/home-page');
       }
       this.onDayClick(TuiDay.currentLocal());
     });
@@ -76,10 +79,24 @@ export class StartPlanDateComponent implements OnInit {
         this.value.from.toString(),
         this.value.to.toString()
       ) //per riportarle ok usare parseRawDateString
-      .subscribe((activePlanId) =>
-        this.router.navigateByUrl('/step-complete', {
-          state: { planId: activePlanId },
-        })
-      );
+      .subscribe((activePlanId) => {
+        if (activePlanId == -1) {
+          this.notificationsService
+            .show('The plan was already started', {
+              status: TuiNotification.Info,
+            })
+            .subscribe();
+          this.router.navigateByUrl('/home-page');
+        } else {
+          this.notificationsService
+            .show('The plan is started!', {
+              status: TuiNotification.Success,
+            })
+            .subscribe();
+          this.router.navigateByUrl('/step-complete', {
+            state: { planId: activePlanId },
+          });
+        }
+      });
   }
 }

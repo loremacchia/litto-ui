@@ -2,142 +2,157 @@
   <app-back></app-back>
 </div>
 <div *ngIf="this.step">
-
-<div class="spacy-children-row tui-space_bottom-5">
-  <div class="left-children">
-    <div class="tui-text_h4 ter-color">Step {{ this.step.planWeek }}</div>
-  </div>
-  <div class="right-children">
-    <tui-avatar
-      size="s"
-      [rounded]="true"
-      class="avatar official-shadow top-align"
-      avatarUrl="{{ this.step.imageUrl }}"
-    ></tui-avatar>
-    <div class="tui-text_xxl tui-space_left-3">
-      <b>{{ this.step.planName }}</b>
+  <div class="spacy-children-row tui-space_bottom-5">
+    <div class="left-children">
+      <div class="tui-text_h4 ter-color">Step {{ this.step.planWeek }}</div>
     </div>
+    <div class="right-children">
+      <tui-avatar
+        size="s"
+        [rounded]="true"
+        class="avatar official-shadow top-align"
+        avatarUrl="{{ this.step.imageUrl }}"
+      ></tui-avatar>
+      <div class="tui-text_xxl tui-space_left-3">
+        <b>{{ this.step.planName }}</b>
+      </div>
+    </div>
+  </div>
+
+  <tui-progress-segmented
+    class="tui-space_bottom-5"
+    [max]="totalMaterials"
+    [value]="materialIndex + 1"
+  ></tui-progress-segmented>
+
+  <div>
+    <div *ngIf="materialIndex == -1">
+      <div class="tui-text_h4 tui-space_top-5 text-center">
+        {{ this.step.title }}
+      </div>
+      <div class="tui-space_top-2 tui-text_xxl">{{ this.step.subtitle }}</div>
+    </div>
+    <div *ngIf="materialIndex != -1">
+      <div *ngIf="this.step.material[materialIndex]['type'] == 'YouTube'">
+        <div class="tui-space_bottom-10">
+          <div class="tui-text_h5 tui-space_top-5 text-center">
+            {{ this.step.material[materialIndex]["title"] }}
+          </div>
+          <div class="tui-space_top-2 tui-text_xxl">
+            {{ this.step.material[materialIndex]["description"] }}
+          </div>
+        </div>
+        <youtube-player
+          #player
+          [videoId]="this.step.material[materialIndex]['id']"
+          [width]="playerWidth"
+          [height]="playerHeight"
+        ></youtube-player>
+      </div>
+      <div *ngIf="this.step.material[materialIndex]['type'] == 'Link'">
+        <div class="tui-space_bottom-10">
+          <div class="tui-text_h5 tui-space_top-5 text-center">
+            {{ this.step.material[materialIndex]["title"] }}
+          </div>
+          <div class="tui-space_top-2 tui-text_xxl">
+            {{ this.step.material[materialIndex]["description"] }}
+          </div>
+        </div>
+        <a
+          href="{{ this.step.material[materialIndex]['link'] }}"
+          class="center-children-row"
+          ><button size="m" appearance="quaternary-custom" tuiButton>
+            Go to Link
+          </button></a
+        >
+
+        <!-- <iframe width="100%" height="100%" frameBorder="0" [src]="sanitize()"></iframe> -->
+      </div>
+      <div *ngIf="this.step.material[materialIndex]['type'] == 'Spreaker'">
+        <div class="tui-space_bottom-10">
+          <div class="tui-text_h5 tui-space_top-5 text-center">
+            {{ this.step.material[materialIndex]["title"] }}
+          </div>
+          <div class="tui-space_top-2 tui-text_xxl">
+            {{ this.step.material[materialIndex]["description"] }}
+          </div>
+        </div>
+        <!-- <iframe [src]="this.sanitize(this.step.material[materialIndex]['link'])" frameborder="0"></iframe> -->
+        <iframe
+          src="https://widget.spreaker.com/player?episode_id=17577829&theme=light&playlist=false&cover_image_url=https%3A%2F%2Fd3wo5wojvuv7l.cloudfront.net%2Fimages.spreaker.com%2Foriginal%2F846b65af72c5d3d160eef12a77418d48.jpg"
+          width="100%"
+          height="400px"
+          frameborder="0"
+        ></iframe>
+      </div>
+      <div *ngIf="this.step.material[materialIndex]['type'] == 'Text'">
+        <div class="tui-space_bottom-10">
+          <div class="tui-text_h5 tui-space_top-5 text-center">
+            {{ this.step.material[materialIndex]["title"] }}
+          </div>
+        </div>
+        <div [innerHTML]="this.step.material[materialIndex]['text']"></div>
+      </div>
+      <div *ngIf="this.step.material[materialIndex]['type'] == 'PDF'">
+        <div class="tui-space_bottom-10">
+          <div class="tui-text_h5 tui-space_top-5 text-center">
+            {{ this.step.material[materialIndex]["title"] }}
+          </div>
+        </div>
+        <div class="center-children-row">
+          <button
+            appearance="quaternary-custom"
+            tuiButton
+            (click)="show(actions, this.step.material[materialIndex]['file'])"
+          >
+            Read the File!
+          </button>
+        </div>
+        <ng-template #actions let-content="content">
+          <a tuiButton shape="rounded" size="s" download [href]="content"
+            >Download</a
+          >
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="two-button big-top-space">
+      <button
+        *ngIf="this.materialIndex > -1"
+        tuiIconButton
+        type="button"
+        size="l"
+        appearance="secondary-custom"
+        shape="rounded"
+        icon="tuiIconChevronLeft"
+        (click)="prevMaterial()"
+      ></button>
+      <div></div>
+      <button
+        *ngIf="this.materialIndex < this.totalMaterials - 1"
+        tuiIconButton
+        type="button"
+        size="l"
+        appearance="primary-custom"
+        shape="rounded"
+        iconRight="tuiIconChevronRight"
+        (click)="nextMaterial()"
+      ></button>
+      <button
+        *ngIf="this.materialIndex == this.totalMaterials - 1"
+        tuiButton
+        type="button"
+        size="l"
+        appearance="flat"
+        shape="rounded"
+        iconRight="tuiIconChevronRight"
+        class="shadow"
+        (click)="completeStep()"
+      >
+        Complete
+      </button>
+    </div>
+    <div class="big-footer-space"></div>
   </div>
 </div>
-
-<tui-progress-segmented
-  class="tui-space_bottom-5"
-  [max]="totalMaterials"
-  [value]="materialIndex + 1"
-></tui-progress-segmented>
-
-<div>
-  <div *ngIf="materialIndex == -1">
-    <div class="tui-text_h4 tui-space_top-5 text-center">
-      {{ this.step.title }}
-    </div>
-    <div class="tui-space_top-2 tui-text_xxl">{{ this.step.subtitle }}</div>
-  </div>
-  <div *ngIf="materialIndex != -1">
-    <div *ngIf="this.step.material[materialIndex]['type'] == 'YouTube'">
-      <div class="tui-space_bottom-10">
-        <div class="tui-text_h5 tui-space_top-5 text-center">
-          {{ this.step.material[materialIndex]['title'] }}
-        </div>
-        <div class="tui-space_top-2 tui-text_xxl">
-          {{ this.step.material[materialIndex]['description'] }}
-        </div>
-      </div>
-      <youtube-player
-        #player
-        [videoId]="this.step.material[materialIndex]['id']"
-        [width]="playerWidth"
-        [height]="playerHeight"
-      ></youtube-player>
-    </div>
-    <div *ngIf="this.step.material[materialIndex]['type'] == 'Link'">
-      <div class="tui-space_bottom-10">
-        <div class="tui-text_h5 tui-space_top-5 text-center">
-          {{ this.step.material[materialIndex]['title'] }}
-        </div>
-        <div class="tui-space_top-2 tui-text_xxl">
-          {{ this.step.material[materialIndex]['description'] }}
-        </div>
-      </div>
-      <a href="{{ this.step.material[materialIndex]['link'] }}" class="center-children-row"><button size="m" appearance="quaternary-custom" tuiButton >Go to Link</button></a>
-      
-      <!-- <iframe width="100%" height="100%" frameBorder="0" [src]="sanitize()"></iframe> -->
-    </div>
-    <div *ngIf="this.step.material[materialIndex]['type'] == 'Spreaker'">
-      <div class="tui-space_bottom-10">
-        <div class="tui-text_h5 tui-space_top-5 text-center">
-          {{ this.step.material[materialIndex]['title'] }}
-        </div>
-        <div class="tui-space_top-2 tui-text_xxl">
-          {{ this.step.material[materialIndex]['description'] }}
-        </div>
-      </div>
-      <!-- <iframe [src]="this.sanitize(this.step.material[materialIndex]['link'])" frameborder="0"></iframe> -->
-      <iframe src="https://widget.spreaker.com/player?episode_id=17577829&theme=light&playlist=false&cover_image_url=https%3A%2F%2Fd3wo5wojvuv7l.cloudfront.net%2Fimages.spreaker.com%2Foriginal%2F846b65af72c5d3d160eef12a77418d48.jpg" width="100%" height="400px" frameborder="0"></iframe>
-    </div>
-    <div *ngIf="this.step.material[materialIndex]['type'] == 'Text'">
-      <div class="tui-space_bottom-10">
-        <div class="tui-text_h5 tui-space_top-5 text-center">
-          {{ this.step.material[materialIndex]['title'] }}
-        </div>
-      </div>
-      <div [innerHTML]="this.step.material[materialIndex]['text'] "></div>
-      
-    </div>
-    <div *ngIf="this.step.material[materialIndex]['type'] == 'PDF'">
-      <div class="tui-space_bottom-10">
-        <div class="tui-text_h5 tui-space_top-5 text-center">
-          {{ this.step.material[materialIndex]['title'] }}
-        </div>
-      </div>	
-      <div class="center-children-row"><button appearance="quaternary-custom" tuiButton (click)="show(actions,this.step.material[materialIndex]['file'])">Read the File!</button></div>
-      <ng-template #actions let-content="content">
-	    <a tuiButton shape="rounded" size="s" download [href]="content">Download</a>
-	</ng-template>
-    </div>
-  </div>
-
-  <div class="two-button big-top-space">
-    <button
-      *ngIf="this.materialIndex > -1"
-      tuiIconButton
-      type="button"
-      size="l"
-      appearance="secondary-custom"
-      shape="rounded"
-      icon="tuiIconChevronLeft"
-      (click)="prevMaterial()"
-    ></button>
-    <div></div>
-    <button
-      *ngIf="this.materialIndex < this.totalMaterials - 1"
-      tuiIconButton
-      type="button"
-      size="l"
-      appearance="primary-custom"
-      shape="rounded"
-      iconRight="tuiIconChevronRight"
-      (click)="nextMaterial()"
-    ></button>
-    <button
-      *ngIf="this.materialIndex == this.totalMaterials - 1"
-      tuiButton
-      type="button"
-      size="l"
-      appearance="flat"
-      shape="rounded"
-      iconRight="tuiIconChevronRight"
-      class="shadow"
-      (click)="completeStep()"
-    >
-      Complete
-    </button>
-  </div>
-  <div class="big-footer-space"></div>
-</div>
-
-
-</div>
-<app-footer-tabs
-  [index]="this.activeItemIndex"
-></app-footer-tabs>
+<app-footer-tabs [index]="this.activeItemIndex"></app-footer-tabs>

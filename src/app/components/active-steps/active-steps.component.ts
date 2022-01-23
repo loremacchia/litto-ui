@@ -25,14 +25,16 @@ export class ActiveStepsComponent implements OnInit {
   ngOnInit(): void {
     this.userId = this.localService.getLogId();
     this.homeService.getCurrentGoals(this.userId).subscribe((steps) => {
-      for (let s of steps){
+      for (let s of steps) {
         s.normalize();
       }
       this.steps = steps;
     });
   }
 
-  goToStep(step:Step){
-    this.router.navigateByUrl("/step-complete",{state:{planId:step.planId}});
+  goToStep(step: Step) {
+    this.router.navigateByUrl('/step-complete', {
+      state: { planId: step.planId },
+    });
   }
 }

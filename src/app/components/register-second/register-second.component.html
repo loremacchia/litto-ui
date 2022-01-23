@@ -32,14 +32,14 @@
           icon="tuiIconPlus"
           class="floating-button"
           (click)="fileInput.click()"
-          ></button>
-          <input
-            type="file"
-            #fileInput
-            style="display: none"
-            accept="image/*"
-            (change)="uploadImage($event)"
-          />
+        ></button>
+        <input
+          type="file"
+          #fileInput
+          style="display: none"
+          accept="image/*"
+          (change)="uploadImage($event)"
+        />
       </div>
     </div>
     <form [formGroup]="form" class="tui-space_top-10">

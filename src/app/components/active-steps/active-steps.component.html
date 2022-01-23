@@ -10,12 +10,7 @@
   <div *ngIf="this.steps">
     <!--  TODO modifica ling-->
     <div *ngFor="let s of this.steps" class="tui-space_bottom-5">
-      <a
-        size="m"
-        (click)="goToStep(s)"
-        tuiIsland
-        [hoverable]="true"
-      >
+      <a size="m" (click)="goToStep(s)" tuiIsland [hoverable]="true">
         <div class="tui-island__content active-plans-island">
           <div class="spacy-children-row">
             <div>
