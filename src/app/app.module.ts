@@ -14,6 +14,8 @@ import {
   TuiTextfieldControllerModule,
   TuiHostedDropdownModule,
   TuiLinkModule,
+  TuiHintModule,
+  TuiTooltipModule,
   TuiNotificationModule
 } from '@taiga-ui/core';
 import { NgModule, Injectable } from '@angular/core';
@@ -22,6 +24,7 @@ import { TuiEditorModule } from '@taiga-ui/addon-editor'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 import {
   TuiInputModule,
   TuiInputPasswordModule,
@@ -96,13 +99,16 @@ import { CreatePlanFirstComponent } from './components/create-plan-first/create-
     TuiInputTimeModule,
     TuiTabsModule,
     TuiPdfViewerModule,
+    TuiHintModule,
     TuiSvgModule,
     TuiEditorModule,
     TuiToggleModule,
     AppRoutingModule,
+    TuiTooltipModule,
     TuiTextfieldControllerModule,
     YouTubePlayerModule,
     TuiLinkModule,
+    PdfViewerModule,
     TuiProgressModule,
     TuiHostedDropdownModule,
     TuiCalendarRangeModule,

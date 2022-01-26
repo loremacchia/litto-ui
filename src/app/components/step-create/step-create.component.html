@@ -77,13 +77,22 @@
         >
           Title
         </tui-input>
-        <tui-input
+        <div class="spacy-children-row">
+          <tui-input
           formControlName="link"
           icon="tuiIconLinkLarge"
           class="tui-space_top-5"
+          [tuiTextfieldLabelOutside]="true"
+          style="width: 100%;"
         >
           YouTube Link
         </tui-input>
+
+      <tui-tooltip class="tui-space_left-2" direction="right" [content]="tooltip"></tui-tooltip>
+        </div>
+      <ng-template #tooltip>
+        <img class="official-shadow" src="./../../../assets/images/Screenshot 2022-01-25 at 18-57-39 Angular 9 Render PDF Documents Using ng2-pdf-viewer Library 2020 - YouTube.png" alt="">
+      </ng-template>
         <tui-text-area
           formControlName="description"
           [expandable]="true"
@@ -129,13 +138,28 @@
         >
           Title
         </tui-input>
+        <div class="spacy-children-row">
         <tui-input
           formControlName="link"
           icon="tuiIconLinkLarge"
           class="tui-space_top-5"
+          [tuiTextfieldLabelOutside]="true"
+          style="width: 100%;"
         >
           Spreaker Link
         </tui-input>
+
+      <tui-tooltip class="tui-space_left-2" direction="right" [content]="tooltip"></tui-tooltip>
+        </div>
+      <ng-template #tooltip class="center-children">
+        <div class="center-children">
+          <img class="official-shadow" src="./../../../assets/images/Screenshot from 2022-01-25 19-03-54.png" alt="">
+        </div>
+        <div class="tui-space_top-3 center-children-row">
+          <img class="official-shadow" src="./../../../assets/images/Screenshot 2022-01-25 at 19-02-50 What is coding.png" alt="">
+          <img class="tui-space_left-2 official-shadow" src="./../../../assets/images/Screenshot 2022-01-25 at 19-07-50 What is coding.png" alt="">
+        </div>
+      </ng-template>
         <tui-text-area
           formControlName="description"
           [expandable]="true"
@@ -177,7 +201,7 @@
         <tui-input-file
           class="tui-space_top-5"
           formControlName="file"
-          [loadingFiles]="loading$ | async"
+          [loadingFiles]="loading$"
           [accept]="'application/pdf'"
           [link]="'Choose a PDF'"
           [showSize]="true"
@@ -186,6 +210,7 @@
     </div>
 
     <div class="right-children">
+	 
       <button
         tuiButton
         type="button"
@@ -204,7 +229,7 @@
     *ngIf="this.printableSteps.length != 0"
     class="official-shadow tui-space_top-10 list"
     tuiTextfieldSize="l"
-    [(items)]="this.printableSteps"
+    [(items)]=this.printableSteps
     [enabled]="this.printableSteps"
   ></tui-reorder>
 
@@ -232,7 +257,7 @@
       Step {{ this.planWeek + 1 }}
     </button>
   </div>
-  <div class="right-children tui-space_top-5">
+  <div class="right-children tui-space_top-5 big-footer-space">
     <button
       tuiButton
       type="button"

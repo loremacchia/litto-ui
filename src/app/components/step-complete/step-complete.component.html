@@ -44,7 +44,7 @@
         </div>
         <youtube-player
           #player
-          [videoId]="this.step.material[materialIndex]['id']"
+          [videoId]="this.step.material[materialIndex]['link']"
           [width]="playerWidth"
           [height]="playerHeight"
         ></youtube-player>
@@ -94,6 +94,7 @@
         <div [innerHTML]="this.step.material[materialIndex]['text']"></div>
       </div>
       <div *ngIf="this.step.material[materialIndex]['type'] == 'PDF'">
+
         <div class="tui-space_bottom-10">
           <div class="tui-text_h5 tui-space_top-5 text-center">
             {{ this.step.material[materialIndex]["title"] }}

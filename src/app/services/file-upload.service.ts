@@ -9,8 +9,9 @@ import { map } from 'rxjs/operators';
 export class FileUploadService {
     
   // API url
-  baseUrl = 'http://192.168.1.135:8000/'
-    
+  // baseUrl = 'http://192.168.1.135:8000'
+  baseUrl = "http://21fe-151-41-61-172.ngrok.io"
+  
   constructor(private http:HttpClient) { }
   
   // Returns an observable
@@ -18,14 +19,14 @@ export class FileUploadService {
       const formData = new FormData(); 
       formData.append("image", file, file.name);
       console.log(formData)
-      return this.http.post(this.baseUrl+"upload-img", formData).pipe(map(res => res as string))
+      return this.http.post(this.baseUrl+"/upload-img", formData).pipe(map(res => res as string))
   }
 
   uploadPdf(file: File):Observable<string> {
     const formData = new FormData(); 
     formData.append("pdf", file, file.name);
-    console.log(formData)
-    return this.http.post(this.baseUrl+"upload-pdf", formData).pipe(map(res => res as string))
+    console.log(file)
+    return this.http.post(this.baseUrl+"/upload-pdf", formData).pipe(map(res => res as string))
 
   }
 }

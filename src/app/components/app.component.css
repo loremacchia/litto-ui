@@ -67,7 +67,7 @@
 }
 
 .sub-page {
-  top: 0;
+  /* top: 0;
   left: 0;
   padding-left: 12.5vw;
   padding-right: 12.5vw;
@@ -76,11 +76,11 @@
   position: absolute;
   display: grid;
   align-content: space-between;
-  height: 90vh;
+  height: 90vh; */
 }
 
 .sub-page-compress {
-  top: 0;
+  /* top: 0;
   left: 0;
   padding-left: 12.5vw;
   padding-right: 12.5vw;
@@ -89,7 +89,7 @@
   position: absolute;
   display: grid;
   align-content: flex-start;
-  height: 90vh;
+  height: 90vh; */
 }
 
 .back-button {

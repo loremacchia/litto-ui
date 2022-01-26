@@ -5,6 +5,7 @@ import { Step } from './../../model/Step';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JsonpClientBackend } from '@angular/common/http';
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import {TUI_IS_MOBILE} from '@taiga-ui/cdk';
 import {
   DomSanitizer,
   SafeResourceUrl,
@@ -37,7 +38,7 @@ export class StepCompleteComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private pdfService: TuiPdfViewerService,
     private localService: LocalStorageService,
     private planService: PlanService,
@@ -60,7 +61,7 @@ export class StepCompleteComponent implements OnInit {
         .subscribe((step) => {
           // step.normalize();
           this.step = step;
-          console.log(this.step.planWeek);
+          console.log(this.step.material);
           this.totalMaterials = this.step.material.length;
         });
     });
@@ -84,8 +85,9 @@ export class StepCompleteComponent implements OnInit {
     actions: PolymorpheusContent<TuiPdfViewerOptions>,
     url: string | undefined
   ) {
+    let realUrl = url
     this.pdfService
-      .open(this.sanitizer.bypassSecurityTrustResourceUrl(url as string), {
+      .open(this.sanitizer.bypassSecurityTrustResourceUrl(realUrl as string), {
         label: 'Taiga UI',
         actions,
       })

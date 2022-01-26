@@ -65,7 +65,7 @@ export class CreatePlanFirstComponent implements OnInit {
       this.router.navigateByUrl('/step-create', { state: { number: 1 } });
     } else {
       this.notificationsService
-        .show('Complete the plan infos', { status: TuiNotification.Error })
+        .show('Fill both Title and Description', { status: TuiNotification.Error })
         .subscribe();
     }
   }

@@ -18,7 +18,8 @@ import { classToPlain, plainToClass } from 'class-transformer';
 })
 
 export class PlanService {
-  private baseUrl = 'http://192.168.1.135:8000'
+  // baseUrl = 'http://192.168.1.135:8000'
+  baseUrl = "http://21fe-151-41-61-172.ngrok.io"
   headers!: 
     {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
   constructor(private http: HttpClient) { }

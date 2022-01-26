@@ -13,6 +13,7 @@ app.secret_key = b'sese'
 UPLOAD_FOLDER = '/home/lorem/Documents/assets/'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
+baseUrl = "http://21fe-151-41-61-172.ngrok.io"
 interests = [
     {"inter": "Racing",
      "url": "https://assets.materialup.com/uploads/d6522050-2ab3-4c75-945c-90fbb0ddd5ac/preview.jpg"},
@@ -176,7 +177,7 @@ steps = [
             {
                 "type": "PDF",
                 "title": "Deep dive into OOP",
-                "file": "http://192.168.1.135:8000/get_pdf/OOProgWithJava-notes.pdf"
+                "file": baseUrl + "/get_pdf/OOProgWithJava-notes.pdf"
             }
         ],
         "imageUrl": "https://uploads-ssl.webflow.com/5f75a99ea4169266c712b19e/5ff813eb07605c5ba93aa580_Java_logo.png"
@@ -223,7 +224,7 @@ activeStep = [
             {
                 "type": "YouTube",
                 "title": "Introduction to variables (in italian)",
-                "link": "https://www.youtube.com/watch?v=7Aotk1edPlM",
+                "link": "7Aotk1edPlM",
                 "description": "Variables is a concept indipendent to the coding language. Variables are used in all kind of scenarios: from videogames to smartphone apps and so on."
             },
             {
@@ -353,7 +354,13 @@ def get_user():
     # print(data)
     # print(i for i in users)
     if(data in users):
-        return createResponse(jsonify(users[data]))
+        newUser = users[data]
+        planny = []
+        for p in newUser["plans"]:
+            if(p["id"] != 0):
+                planny.append(p)
+        newUser["plans"] = planny
+        return createResponse(jsonify(newUser))
     else:
         return jsonify(False)
 
@@ -463,7 +470,7 @@ def uploadImg():
             # print(os.path.join(UPLOAD_FOLDER+"image/", filename))
             path = os.path.join(UPLOAD_FOLDER+"image/", filename)
             file.save(path)
-            return createResponse(jsonify({"url": "http://192.168.1.135:8000/get_image/"+filename}))
+            return createResponse(jsonify({"url": baseUrl + "/get_image/"+filename}))
     return createResponse(jsonify({"url": "False"}))
 
 
@@ -498,7 +505,7 @@ def uploadPdf():
             # print(os.path.join(UPLOAD_FOLDER+"pdf/", filename))
             path = os.path.join(UPLOAD_FOLDER+"pdf/", filename)
             file.save(path)
-            return createResponse(jsonify({"url": "http://192.168.1.135:8000/get_pdf/"+filename}))
+            return createResponse(jsonify({"url": baseUrl + "/get_pdf/"+filename}))
     return createResponse(jsonify({"url": "False"}))
 
 
@@ -608,7 +615,6 @@ def getSpreakerUrl(url):
         if(found):
             link += s
     return link[1:]
-
 
 if __name__ == '__main__':
     port = 8000  # the custom port you want

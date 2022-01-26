@@ -3313,7 +3313,7 @@ tui-wrapper[data-appearance='whiteblock-active'][data-state='pressed']:after {
 }
 
 .sub-page {
-  top: 0;
+  /* top: 0;
   left: 0;
   padding-left: 12.5vw;
   padding-right: 12.5vw;
@@ -3322,11 +3322,11 @@ tui-wrapper[data-appearance='whiteblock-active'][data-state='pressed']:after {
   position: absolute;
   display: grid;
   align-content: space-between;
-  height: 90vh;
+  height: 90vh; */
 }
 
 .sub-page-compress {
-  top: 0;
+  /* top: 0;
   left: 0;
   padding-left: 12.5vw;
   padding-right: 12.5vw;
@@ -3335,7 +3335,7 @@ tui-wrapper[data-appearance='whiteblock-active'][data-state='pressed']:after {
   position: absolute;
   display: grid;
   align-content: flex-start;
-  height: 90vh;
+  height: 90vh; */
 }
 
 .back-button {
@@ -3344,37 +3344,37 @@ tui-wrapper[data-appearance='whiteblock-active'][data-state='pressed']:after {
 }
 
 .absolute {
-  float: left;
+  float: right;
 }
 
 .moving {
-  transform: translate(-16px, 0);
+  transform: translate(16px, 0);
 }
 
-.in-row  {
-    white-space: nowrap; /* [1] */
-    overflow-x: auto; /* [2] */
-    overscroll-behavior-x: initial;
-    /* -webkit-overflow-scrolling: touch; [3] */
+.in-row {
+  white-space: nowrap; /* [1] */
+  overflow-x: auto; /* [2] */
+  overscroll-behavior-x: initial;
+  /* -webkit-overflow-scrolling: touch; [3] */
 }
 
 .elems {
-    display: inline-block;
-    text-align: center;
-    padding: 18px;
-    vertical-align:top;
+  display: inline-block;
+  text-align: center;
+  padding: 18px;
+  vertical-align: top;
 }
 
 .elems-tag {
   display: inline-block;
   text-align: center;
   padding: 18px 0 18px 18px;
-  vertical-align:top;
+  vertical-align: top;
 }
 
 .plans-show {
-    inline-size: 64px; 
-    white-space: normal;
+  inline-size: 64px;
+  white-space: normal;
 }
 
 .tabs {
@@ -3386,7 +3386,7 @@ tui-wrapper[data-appearance='whiteblock-active'][data-state='pressed']:after {
   bottom: 0;
   padding-left: 12.5vw;
   padding-right: 12.5vw;
-  box-shadow: 0px 0px 21px 9px rgba(0,0,0,0.05) !important;
+  box-shadow: 0px 0px 21px 9px rgba(0, 0, 0, 0.05) !important;
   display: flex;
   justify-content: space-between;
   border-top: 1px solid gainsboro;
@@ -3405,17 +3405,18 @@ tui-wrapper[data-appearance='whiteblock-active'][data-state='pressed']:after {
   color: var(--prim-custom-dark) !important;
 }
 
-._active .footer-icon > *{
-
+._active .footer-icon > * {
   stroke-width: 24;
 }
 
-.footer-icon{
-  width:32;
+.footer-icon {
+  width: 32;
   height: 32;
 }
 
-.footer-icon > path, line, circle{
+.footer-icon > path,
+line,
+circle {
   stroke: currentColor !important;
 }
 
@@ -3432,17 +3433,16 @@ tui-wrapper[data-appearance='whiteblock-active'][data-state='pressed']:after {
   color: var(--ter-custom);
 }
 
-.top-align{
+.top-align {
   align-self: flex-start;
 }
 
-.active-plans-island *{
+.active-plans-island * {
   margin: 0 !important;
 }
 
 .active-plans-island .spacy-children-row {
   width: 100%;
-
 }
 
 .even-little-padding {

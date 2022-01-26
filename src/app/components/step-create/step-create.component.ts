@@ -102,7 +102,7 @@ export class StepCreateComponent implements OnInit {
 
   formPDF = new FormGroup({
     title: new FormControl('', Validators.required),
-    file: new FormControl(Validators.required),
+    file: new FormControl(),
     fileLink: new FormControl(''),
   });
 
@@ -219,7 +219,10 @@ export class StepCreateComponent implements OnInit {
         }
         break;
       case 'PDF':
+        console.log("innnn")
+        console.log(this.formPDF.controls['fileLink'].value)
         if (this.formPDF.valid) {
+          console.log(this.formPDF.controls['fileLink'].value)
           this.steps.push({
             type: type,
             title: this.formPDF.controls['title'].value,
@@ -233,7 +236,7 @@ export class StepCreateComponent implements OnInit {
           this.formPDF.controls['file'].setValue(undefined);
         } else {
           this.notificationsService
-            .show('Check the PDF file or title', {
+            .show('Check the PDF title', {
               status: TuiNotification.Error,
             })
             .subscribe();
@@ -340,12 +343,21 @@ export class StepCreateComponent implements OnInit {
     }
   }
 
-  @tuiPure
-  get loading$(): Observable<ReadonlyArray<File>> {
+  req(): Observable<ReadonlyArray<File>> {
     return this.requests$.pipe(
       map((file) => (file instanceof File ? [file] : [])),
       startWith([])
     );
+  }
+
+  @tuiPure
+  get loading$(): ReadonlyArray<File> {
+    let file1 : ReadonlyArray<File> = [];
+    this.req().subscribe((file) => {
+      file1 = file;
+      return file1;
+    })
+    return file1;
   }
 
   @tuiPure
