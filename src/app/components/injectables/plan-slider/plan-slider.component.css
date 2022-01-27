@@ -1,3 +1,7 @@
 /* .plan-slider.shadow-light:active {
     box-shadow: none !important;
 } */
+.plan-slider{
+    width: 100px;
+    padding: 10px !important;
+}

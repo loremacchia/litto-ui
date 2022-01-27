@@ -127,7 +127,7 @@
 }
 
 .plans-show {
-  inline-size: 64px;
+  /* inline-size: 64px; */
   white-space: normal;
 }
 

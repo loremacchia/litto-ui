@@ -9,8 +9,7 @@ import { map } from 'rxjs/operators';
 export class FileUploadService {
     
   // API url
-  // baseUrl = 'http://192.168.1.135:8000'
-  baseUrl = "http://21fe-151-41-61-172.ngrok.io"
+  baseUrl = "http://ngrok.io"
   
   constructor(private http:HttpClient) { }
   

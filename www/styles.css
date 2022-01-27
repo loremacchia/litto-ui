@@ -3373,7 +3373,7 @@ tui-wrapper[data-appearance='whiteblock-active'][data-state='pressed']:after {
 }
 
 .plans-show {
-  inline-size: 64px;
+  /* inline-size: 64px; */
   white-space: normal;
 }
 

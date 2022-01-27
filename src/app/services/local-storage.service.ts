@@ -27,6 +27,7 @@ export class LocalStorageService {
   }
 
   getLogId() {
+    this.emptyUnusefulInfos();
     if (this.checkUser()) {
       return this.getCurrentUserId();
     } else {
@@ -129,5 +130,10 @@ export class LocalStorageService {
 
   removeMaterialIndex() {
     localStorage.removeItem('materialIndex');
+  }
+
+  emptyUnusefulInfos(){
+    this.removeMaterialIndex();
+    localStorage.removeItem('creatingSteps');
   }
 }
