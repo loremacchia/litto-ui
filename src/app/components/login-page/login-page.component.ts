@@ -27,6 +27,8 @@ export class LoginPageComponent implements OnInit {
   ngOnInit(): void {}
 
   login() {
+
+    this.form.controls['email'].setValue(this.form.controls['email'].value.trim())
     if (this.form.valid) {
       this.userService
         .loginUser(
@@ -45,7 +47,7 @@ export class LoginPageComponent implements OnInit {
               .show('Correct Login!', { status: TuiNotification.Success })
               .subscribe();
             this.localService.setCurrentUserId(retrievedId);
-            this.router.navigateByUrl('/user-page');
+            this.router.navigateByUrl('/home-page');
           }
         });
     } else {

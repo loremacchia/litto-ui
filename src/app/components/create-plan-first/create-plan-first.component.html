@@ -1,11 +1,7 @@
-<app-search-item></app-search-item>
 
-<div>
   <app-back></app-back>
-</div>
 
-<div class="button-big-space">
-  <div class="tui-text_body-xl big-top-space tui-space_bottom-3">
+  <div class="tui-text_body-xl tui-space_bottom-3">
     Create your Plan!
   </div>
 
@@ -50,10 +46,10 @@
         ></tui-slider>
       </div>
       <div class="tui-space_bottom-5">
-        <tui-input formControlName="title"> Title </tui-input>
+        <tui-input formControlName="title"> Title of the plan </tui-input>
       </div>
       <tui-text-area formControlName="subtitle" [expandable]="true" [rows]="10">
-        Description
+        Description: what the plan is about
       </tui-text-area>
     </div>
 
@@ -65,7 +61,7 @@
       [tuiTextfieldCleaner]="true"
       (input)="searchTag()"
       [(search)]="searchActive"
-      >Add plan tags
+      >Add plan topics (what it is about)
       <ng-container *ngIf="search">
         <tui-data-list *tuiDataList>
           <button *ngFor="let item of search.tags" tuiOption [value]="item">
@@ -74,8 +70,10 @@
         </tui-data-list>
       </ng-container>
     </tui-input-tag>
-
-    <tui-island
+    <div class="prim-color tui-text_body-m tui-space_top-5">
+      You will choose the <b>plan duration</b> by creating the number of Weeks that you want!
+    </div>
+    <!-- <tui-island
       size="m"
       textAlign="left"
       class="tui-space_top-5"
@@ -91,12 +89,12 @@
           </div>
         </div>
       </div>
-    </tui-island>
+    </tui-island> -->
   </form>
   <!-- <tui-input-number formControlName="weeks" [min]="1" [decimal]="'never'">
     How many Weeks/Steps?
 </tui-input-number> -->
-  <div class="tui-space_top-10 right-children">
+  <div class="tui-space_top-5 right-children">
     <a>
       <!-- <a routerLink="/login"> -->
       <button
@@ -106,10 +104,9 @@
         iconRight="tuiIconChevronRightLarge"
         (click)="goCustSteps()"
       >
-        Customize Steps
+        Customize Weeks
       </button>
     </a>
   </div>
-</div>
 
 <app-footer-tabs [index]="this.activeItemIndex"></app-footer-tabs>

@@ -1,3 +1,4 @@
+import { RecommendedPlan } from './../../model/RecommendedPlans';
 import { Router } from '@angular/router';
 import { LocalStorageService } from './../../services/local-storage.service';
 import { HomeService } from './../../services/home.service';
@@ -16,7 +17,8 @@ export class HomePageComponent implements OnInit {
   searchContent: string = '';
   activeItemIndex = 0;
   changeDetection!: ChangeDetectionStrategy.OnPush;
-
+  isRecommend :boolean= false;
+  recommendedPlans : RecommendedPlan[] = [];
   constructor(
     private homeService: HomeService,
     private localService: LocalStorageService,
@@ -40,5 +42,17 @@ export class HomePageComponent implements OnInit {
     this.router.navigateByUrl('/step-complete', {
       state: { planId: step.planId },
     });
+  }
+
+  recommend(){
+    this.isRecommend = !this.isRecommend;
+    if(this.isRecommend){
+      this.homeService.getRecommendedPlans(this.localService.getLogId()).subscribe((val) => {
+        this.recommendedPlans = val;
+      })
+    }
+    else {
+      this.recommendedPlans = [];
+    }
   }
 }

@@ -89,7 +89,7 @@ export class DisplayInterestsComponent implements OnInit {
         this.notificationsService
           .show('Correctly Registered!', { status: TuiNotification.Success })
           .subscribe();
-        this.router.navigateByUrl('/user-page');
+        this.router.navigateByUrl('/home-page');
       });
   }
 

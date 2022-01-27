@@ -13,7 +13,7 @@ app.secret_key = b'sese'
 UPLOAD_FOLDER = '/home/lorem/Documents/assets/'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
-baseUrl = "http://ngrok.io"
+baseUrl = "http://dd81-151-41-61-172.ngrok.io"
 interests = [
     {"inter": "Racing",
      "url": "https://assets.materialup.com/uploads/d6522050-2ab3-4c75-945c-90fbb0ddd5ac/preview.jpg"},
@@ -963,11 +963,40 @@ def get_user():
 @app.route('/get-current-goals', methods=['GET', 'POST'])
 def get_current_goals():
     data = json.loads(request.data.decode('utf-8'))
+    resp = []
     if(data in users):
-        return createResponse(jsonify(users[data]["activeStep"]))
+        for a in activeStep:
+            if(a["userId"] == data):
+                resp.append(a)
+        return createResponse(jsonify(resp))
     else:
         return createResponse(jsonify([]))
 
+@app.route('/get-recommended-plans', methods=['GET', 'POST'])
+def recommended():
+    id = json.loads(request.data.decode('utf-8'))
+    # print(substring)
+    if id in users:
+        res = []
+        for i in users[id]["interests"]:
+            substring = i["inter"]
+            plansFound = [string for string in plans if substring.lower()
+                        in string["title"].lower()]
+            plansFound1 = [string for string in plans if substring.lower()
+                        in string["subtitle"].lower()]
+            for p in plansFound1:
+                if p not in plansFound:
+                    plansFound.append(p)
+            if(len(plansFound) != 0):
+                res.append({
+                    "name":substring,
+                    "plans":plansFound
+                })
+        # print(data)
+        return createResponse(jsonify(res))
+    else:
+        return createResponse(jsonify([]))
+        
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():

@@ -1,3 +1,4 @@
+import { RecommendedPlan } from './../model/RecommendedPlans';
 import { SearchReturn } from './../model/SearchReturn';
 import { Injectable } from '@angular/core';
 import { UserCreate } from 'src/app/model/UserCreate';
@@ -16,7 +17,8 @@ import { classToPlain, plainToClass } from 'class-transformer';
 })
 
 export class HomeService {
-  baseUrl = "http://ngrok.io"
+  // baseUrl = 'http://192.168.1.135:8000'
+  baseUrl = "http://dd81-151-41-61-172.ngrok.io"
   headers!: 
     {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
   constructor(private http: HttpClient) { }
@@ -31,4 +33,9 @@ export class HomeService {
       .pipe(map(res => plainToClass(SearchReturn, res as Object)))
   }
 
+  getRecommendedPlans(userId:number) : Observable<RecommendedPlan[]>{
+    return this.http.post<RecommendedPlan[]>(this.baseUrl + "/get-recommended-plans", JSON.stringify(userId))
+      .pipe(map(res => plainToClass(RecommendedPlan, res as Object[])))
+    
+  }
 }

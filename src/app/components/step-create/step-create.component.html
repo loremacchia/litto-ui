@@ -7,7 +7,7 @@
     <div
       class="tui-text_body-xl big-top-space tui-space_bottom-3 spacy-children-row"
     >
-      <div class="tui-text_h4 ter-color">Step {{ this.planWeek }}</div>
+      <div class="tui-text_h4 ter-color">Week {{ this.planWeek }}</div>
       <!-- <tui-tag
         status="custom"
         size="l"
@@ -20,17 +20,21 @@
     <form [formGroup]="form" class="b-form tui-space_top-10">
       <div class="tui-space_bottom-5">
         <div class="tui-space_bottom-5">
-          <tui-input formControlName="title"> Title </tui-input>
+          <tui-input formControlName="title"> Title of the week</tui-input>
         </div>
         <tui-text-area
           formControlName="subtitle"
           [expandable]="true"
           [rows]="10"
         >
-          Description
+          Description: what the week is about
         </tui-text-area>
       </div>
     </form>
+
+    <div *ngIf="!this.selectedMaterial" class="prim-color tui-text_body-m tui-space_bottom-3">
+      Here you can add the materials: each material will be a new step of the week! 
+    </div>
     <div class="spacy-children-row" style="width: 100%">
       <tui-hosted-dropdown [content]="content">
         <button
@@ -60,7 +64,14 @@
           tuiOption
           (click)="addMaterialComp(item)"
         >
-          <tui-svg src="{{ item.icon }}" class="tui-space_right-1"></tui-svg>
+        <button
+        tuiIconButton
+        type="button"
+        appearance="icon"
+        size="m"
+        shape="rounded"
+        icon="{{ item.icon }}"
+    ></button>
           {{ item.label }}
         </button>
       </tui-data-list>
@@ -210,7 +221,12 @@
     </div>
 
     <div class="right-children">
-	 
+      <div></div>
+
+      <tui-tooltip class="tui-space_right-2" direction="right" [content]="tooltip"></tui-tooltip>
+      <ng-template #tooltip>
+        <div>Click the <b>Add</b> button to add the material to the week</div>
+      </ng-template>
       <button
         tuiButton
         type="button"
@@ -225,9 +241,10 @@
     </div>
   </div>
 
+  <div *ngIf="this.printableSteps.length != 0" class="prim-color tui-text_body-m tui-space_bottom-3 tui-space_top-7">Reorder the materials</div>
   <tui-reorder
     *ngIf="this.printableSteps.length != 0"
-    class="official-shadow tui-space_top-10 list"
+    class="official-shadow  list"
     tuiTextfieldSize="l"
     [(items)]=this.printableSteps
     [enabled]="this.printableSteps"
@@ -254,10 +271,15 @@
       iconRight="tuiIconChevronRight"
       (click)="goCustStepsNext()"
     >
-      Step {{ this.planWeek + 1 }}
+      Week {{ this.planWeek + 1 }}
     </button>
   </div>
   <div class="right-children tui-space_top-5 button-big-space">
+    <div></div>
+    <tui-tooltip class="tui-space_right-2" direction="right" [content]="tooltip1"></tui-tooltip>
+      <ng-template #tooltip1>
+        <div>Clicking the <b>Finish Editing</b> button you add this step to the plan and complete the editing</div>
+      </ng-template>
     <button
       tuiButton
       type="button"

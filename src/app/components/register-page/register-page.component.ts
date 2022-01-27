@@ -30,23 +30,32 @@ export class RegisterPageComponent implements OnInit {
   ngOnInit(): void {}
 
   async createUser() {
-    await this.userService
-      .createUser(
-        new UserInit(
-          this.form.controls['username'].value,
-          this.form.controls['email'].value,
-          this.form.controls['password'].value
+    this.form.controls['email'].setValue(this.form.controls['email'].value.trim())
+    if (this.form.valid) {
+      await this.userService
+        .createUser(
+          new UserInit(
+            this.form.controls['username'].value,
+            this.form.controls['email'].value,
+            this.form.controls['password'].value
+          )
         )
-      )
-      .subscribe((retrievedId) => {
-        this.notificationsService
-          .show('Check your Email to continue the registration', {
-            status: TuiNotification.Info,
-          })
-          .subscribe();
-        this.id = +retrievedId;
-        this.localService.setCurrentUserId(retrievedId);
-        this.router.navigateByUrl('/register-second');
-      });
+        .subscribe((retrievedId) => {
+          this.notificationsService
+            .show('Check your Email to continue the registration', {
+              status: TuiNotification.Info,
+            })
+            .subscribe();
+          this.id = +retrievedId;
+          this.localService.setCurrentUserId(retrievedId);
+          this.router.navigateByUrl('/register-second');
+        });
+    } else {
+      this.notificationsService
+        .show('Your email, username or password are incorrect', {
+          status: TuiNotification.Error,
+        })
+        .subscribe();
+    }
   }
 }

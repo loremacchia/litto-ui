@@ -27,7 +27,6 @@ export class LocalStorageService {
   }
 
   getLogId() {
-    this.emptyUnusefulInfos();
     if (this.checkUser()) {
       return this.getCurrentUserId();
     } else {

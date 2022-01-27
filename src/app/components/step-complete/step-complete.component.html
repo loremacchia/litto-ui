@@ -20,6 +20,7 @@
   </div>
 
   <tui-progress-segmented
+    *ngIf="materialIndex != -1"
     class="tui-space_bottom-5"
     [max]="totalMaterials"
     [value]="materialIndex + 1"
@@ -27,7 +28,7 @@
 
   <div>
     <div *ngIf="materialIndex == -1">
-      <div class="tui-text_h4 tui-space_top-5 text-center">
+      <div class="tui-text_h4 tui-space_top-10 text-center">
         {{ this.step.title }}
       </div>
       <div class="tui-space_top-2 tui-text_xxl">{{ this.step.subtitle }}</div>

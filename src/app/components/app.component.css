@@ -102,7 +102,7 @@
 }
 
 .moving {
-  transform: translate(16px, 0);
+  transform: translate(28px, 0);
 }
 
 .in-row {

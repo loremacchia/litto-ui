@@ -41,6 +41,12 @@
   color: var(--ter-custom);
 }
 
+.ter-button {
+
+  color: #fff;
+  background-color: var(--ter-custom);
+}
+
 .level-1 {
   background-color: #ffe0b2;
 }
