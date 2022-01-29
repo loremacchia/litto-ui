@@ -14,8 +14,8 @@ import { classToPlain, plainToClass } from 'class-transformer';
 })
 
 export class UserServiceService {
-  // baseUrl = 'http://192.168.1.135:8000'
-  baseUrl = "http://dd81-151-41-61-172.ngrok.io"
+  // baseUrl = "http://192.168.1.135:8000/"
+  baseUrl = "http://aa09-151-41-61-172.ngrok.io"
   constructor(private http: HttpClient) { }
 
   createUser(user: UserInit): Observable<number> {

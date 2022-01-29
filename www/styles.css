@@ -3348,7 +3348,7 @@ tui-wrapper[data-appearance='whiteblock-active'][data-state='pressed']:after {
 }
 
 .moving {
-  transform: translate(16px, 0);
+  transform: translate(28px, 0);
 }
 
 .in-row {
@@ -3491,6 +3491,12 @@ circle {
 
 .ter-color {
   color: var(--ter-custom);
+}
+
+.ter-button {
+
+  color: #fff;
+  background-color: var(--ter-custom);
 }
 
 .level-1 {

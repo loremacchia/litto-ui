@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from email.mime import base
 import os
 from os.path import isfile, join
 from re import S
@@ -13,7 +14,8 @@ app.secret_key = b'sese'
 UPLOAD_FOLDER = '/home/lorem/Documents/assets/'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
-baseUrl = "http://dd81-151-41-61-172.ngrok.io"
+# baseUrl = "http://192.168.1.135:8000/"
+baseUrl = "http://aa09-151-41-61-172.ngrok.io"
 interests = [
     {"inter": "Racing",
      "url": "https://assets.materialup.com/uploads/d6522050-2ab3-4c75-945c-90fbb0ddd5ac/preview.jpg"},
@@ -876,7 +878,7 @@ users = {0: {'username': 'ironman',
                      "level": 4},
              ],
              'imageUrl': 'https://avatarfiles.alphacoders.com/217/thumb-217097.jpg',
-             'plans': plans,
+             'plans': plans[3:5],
              'activeStep': activeStep
 
              }
@@ -921,7 +923,7 @@ def get_interests():
 @app.route('/complete-user', methods=['GET', 'POST'])
 def complete_user():
     data = json.loads(request.data.decode('utf-8'))
-    # print(data)
+    print(data)
     if(data["id"] in users):
         users[data["id"]]["bio"] = data["bio"]
         users[data["id"]]["name"] = data["name"]
@@ -929,7 +931,7 @@ def complete_user():
         users[data["id"]]["imageUrl"] = data["imageUrl"]
         users[data["id"]]["level"] = 1
 
-        users[data["id"]]["plans"] = plans  # []
+        users[data["id"]]["plans"] = plans[3:5]  # []
         inter = []
         for interest in data["interests"]:
             for i in interests:

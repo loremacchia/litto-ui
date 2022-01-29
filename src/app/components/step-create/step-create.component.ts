@@ -315,7 +315,9 @@ export class StepCreateComponent implements OnInit {
   }
 
   finishStepEditing() {
-    this.stepAdd(this.selectedMaterial['label'])
+    if(this.selectedMaterial != undefined){
+      this.stepAdd(this.selectedMaterial['label'])
+    }
     if (
       this.form.controls['title'].value != '' ||
       this.form.controls['subtitle'].value != ''
