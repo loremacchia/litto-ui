@@ -1,27 +1,38 @@
-# LittoUi
+# <img width="70" height="70" src="images/favicon.png"> Litto User Interface
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.1.
+## To help everyone reaching their goals
+It happens that when we are busy but we have plenty of time, we throw it anyway. Litto is an app that helps you to read, watch and even study about a certain topic you are interested in! Here users like you can create **plans** to help others learning what they have already learned. Litto is useful also to organize your study and work dividing it into **weeks**.
 
-## Development server
+## User Interface
+In this repository you will find the UI of Litto with a quite dummy Flask backend (a more complete backend will be provided soon). This is a mobile project that you can decide to build as Web Application or Android Application. It is developed with Angular using the [Taiga UI](https://taiga-ui.dev/) Component Library for the pure frontend and Ionic + Capacitor to build it for Android (and even IOs). To be able to interact with the backend you have to use Ngrok tunneling your backend port.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+### Application Architecture
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Building Project
+To build the project you have to build the web app at first and then, if you want, to build the Android App.
+Install npm using this command `npm install -g npm` and then download the project to a specific folder and run here `ng install` to install the dependency needed.
+To build and show a web interface you can run: to build run `ng build` and to show run `ng serve`. This will run the Litto web interface on http://localhost:4200/.
 
-## Build
+To make the web app usable you have to run also the Python server. To do so you have to install Flask and all its dependencies using `pip install flask`. 
+To locally run the server you have to check your local ip address using `ifconfig` on Linux/MacOs or `ipconfig` on Windows. Paste the URL as http://localIP:8000 on *baseUrl* of restTesting.py and all the files of *src/app/services*. Now you are able to run the server with `python3 restServices.py`.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+To run the Android App you first of all have to install Android Studio. Then, on Linux, you have to set the environment variable to the Android Studio location:
 
-## Running unit tests
+      export CAPACITOR_ANDROID_STUDIO_PATH=/path/to/android-studio/bin/studio.sh
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+and once you have done that run:
 
-## Running end-to-end tests
+      sudo ionic build && npx cap copy && npx cap sync && npx cap open android
+      
+This will build your angular code and open your Android Studio app.
+You can now start using Litto into your local network!
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+If you want to use it everywhere (as an Android App only, not a web app) you can use Ngrok. Install Ngrok and run 
 
-## Further help
+      ngrok http -host-header=rewrite localIP:8000
+      
+This will give you an URL that you have to paste on *baseUrl* of restTesting.py and all the files of *src/app/services*.
+So to rebuild your project run
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+      sudo ionic build && npx cap copy && npx cap sync
