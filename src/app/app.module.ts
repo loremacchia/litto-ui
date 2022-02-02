@@ -1,4 +1,4 @@
-import { StepCreateComponent } from './components/step-create/step-create.component';
+import { StepCreateComponent } from './components/plan/create/step-create/step-create.component';
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -52,25 +52,25 @@ import {TuiReorderModule} from '@taiga-ui/addon-table/components/reorder';
 import {YouTubePlayerModule} from '@angular/youtube-player';
 	 
 import { TuiButtonModule, TUI_ICONS } from '@taiga-ui/core';
-import { LoginPageComponent } from './components/login-page/login-page.component';
-import { RegisterPageComponent } from './components/register-page/register-page.component';
-import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
-import { RegisterSecondComponent } from './components/register-second/register-second.component';
+import { LoginPageComponent } from './components/user/login/login-page/login-page.component';
+import { RegisterPageComponent } from './components/user/login/register-page/register-page.component';
+import { WelcomePageComponent } from './components/user/login/welcome-page/welcome-page.component';
+import { RegisterSecondComponent } from './components/user/login/register-second/register-second.component';
 import { HttpClientModule } from '@angular/common/http';
-import { DisplayInterestsComponent } from './components/display-interests/display-interests.component';
-import { UserPageComponent } from './components/user-page/user-page.component';
-import { HomePageComponent } from './components/home-page/home-page.component';
+import { DisplayInterestsComponent } from './components/user/login/display-interests/display-interests.component';
+import { UserPageComponent } from './components/user/user-page/user-page.component';
+import { HomePageComponent } from './components/home/home-page/home-page.component';
 import { PlanSliderComponent } from './components/injectables/plan-slider/plan-slider.component';
 import { FooterTabsComponent } from './components/injectables/footer-tabs/footer-tabs.component';
 import { SearchItemComponent } from './components/injectables/search-item/search-item.component';
-import { SearchResultsComponent } from './components/search-results/search-results.component';
+import { SearchResultsComponent } from './components/home/search-results/search-results.component';
 import { BackComponent } from './components/injectables/back/back.component';
-import { PlanOverviewComponent } from './components/plan-overview/plan-overview.component';
+import { PlanOverviewComponent } from './components/plan/overview/plan-overview/plan-overview.component';
 import { SliderStepsComponent } from './components/injectables/slider-steps/slider-steps.component';
-import { StartPlanDateComponent } from './components/start-plan-date/start-plan-date.component';
-import { StepCompleteComponent } from './components/step-complete/step-complete.component';
+import { StartPlanDateComponent } from './components/plan/overview/start-plan-date/start-plan-date.component';
+import { StepCompleteComponent } from './components/plan/complete/step-complete/step-complete.component';
 import { ActiveStepsComponent } from './components/active-steps/active-steps.component';
-import { CreatePlanFirstComponent } from './components/create-plan-first/create-plan-first.component';
+import { CreatePlanFirstComponent } from './components/plan/create/create-plan-first/create-plan-first.component';
 
 @NgModule({
   declarations: [

@@ -33,7 +33,7 @@ export class ActiveStepsComponent implements OnInit {
   }
 
   goToStep(step: Step) {
-    this.router.navigateByUrl('/step-complete', {
+    this.router.navigateByUrl('/plan/complete/step-complete', {
       state: { planId: step.planId },
     });
   }

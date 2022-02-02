@@ -1,25 +1,19 @@
 import { Plan } from './../model/Plan';
-import { SearchReturn } from './../model/SearchReturn';
 import { Injectable } from '@angular/core';
-import { UserCreate } from 'src/app/model/UserCreate';
-import { User } from 'src/app/model/User';
 import { Step } from '../model/Step';
-import { UserInit } from './../model/userInit';
-import { Interest } from '../model/interest';
 import { Observable } from 'rxjs';
-import { TuiDay} from '@taiga-ui/cdk';
 import { map } from 'rxjs/operators';
 
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { classToPlain, plainToClass } from 'class-transformer';
+import { HttpClient } from '@angular/common/http';
+import { plainToClass } from 'class-transformer';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class PlanService {
-  // baseUrl = "http://192.168.1.135:8000/"
-  baseUrl = "http://b7ed-151-41-61-172.ngrok.io"
+  baseUrl = "http://192.168.1.135:8000/"
+  // baseUrl = "http://b7ed-151-41-61-172.ngrok.io"
   headers!: 
     {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
   constructor(private http: HttpClient) { }

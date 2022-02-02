@@ -1,12 +1,12 @@
 import { UserCreate } from 'src/app/model/UserCreate';
 import { User } from 'src/app/model/User';
-import { UserInit } from './../model/userInit';
-import { Interest } from '../model/interest';
+import { UserInit } from '../model/UserInit';
+import { Interest } from '../model/Interest';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { classToPlain, plainToClass } from 'class-transformer';
 
 @Injectable({
@@ -14,8 +14,8 @@ import { classToPlain, plainToClass } from 'class-transformer';
 })
 
 export class UserServiceService {
-  // baseUrl = "http://192.168.1.135:8000/"
-  baseUrl = "http://b7ed-151-41-61-172.ngrok.io"
+  baseUrl = "http://192.168.1.135:8000/"
+  // baseUrl = "http://b7ed-151-41-61-172.ngrok.io"
   constructor(private http: HttpClient) { }
 
   createUser(user: UserInit): Observable<number> {

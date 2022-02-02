@@ -14,7 +14,7 @@ export class PlanSliderComponent implements OnInit {
   ngOnInit(): void {}
 
   goOverview(plan: Plan) {
-    this.router.navigateByUrl('/view-plan', {
+    this.router.navigateByUrl('/plan/overview/view-plan', {
       state: { planId: plan.id },
     });
   }

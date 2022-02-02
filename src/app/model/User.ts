@@ -1,5 +1,5 @@
 import { Plan } from './Plan';
-import { Interest } from './interest';
+import { Interest } from './Interest';
 export class User {
   id!: number;
   username!: string;

@@ -28,7 +28,7 @@ export class SearchItemComponent implements OnInit {
   searchString(val: string) {
     console.log(val);
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-      this.router.navigateByUrl('/search-page', {
+      this.router.navigateByUrl('/home/search-page', {
         state: { searched: val },
       })
     );

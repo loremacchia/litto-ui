@@ -1,0 +1,73 @@
+<app-search-item></app-search-item>
+
+<div class="big-top-space spacy-children-row">
+  <button
+    tuiButton
+    type="button"
+    size="m"
+    appearance="secondary-custom"
+    (click)="recommend()"
+  >
+    Recommend <br />
+    Plans
+  </button>
+  <button
+    tuiButton
+    size="m"
+    type="button"
+    appearance="secondary-custom"
+    routerLink="/plan/create/create-plan-first"
+  >
+    Create <br />
+    New Plan
+  </button>
+</div>
+<div class="tui-space_top-7">
+  <div class="tui-text_body-xl tui-space_bottom-3">Steps of the Week</div>
+  <div *ngIf="this.steps && this.steps.length > 0">
+    <!--  TODO modifica ling-->
+    <div *ngFor="let s of this.steps" class="tui-space_bottom-5">
+      <a size="l" tuiIsland [hoverable]="true" (click)="goToStep(s)">
+        <div class="tui-island__category">
+          {{ s.planName }}
+        </div>
+        <div class="tui-island__content">
+          <figure class="tui-island__figure center-children-top">
+            <tui-avatar
+              size="m"
+              [avatarUrl]="s.imageUrl"
+              class="shadow-light"
+            ></tui-avatar>
+            <div class="prim-color">
+              <p>{{ s.getFormatted(s.endDateCorr) }}</p>
+            </div>
+          </figure>
+
+          <div>
+            <h3 class="tui-island__title ter-color">{{ s.title }}</h3>
+            <p class="tui-island__paragraph">{{ s.subtitle }}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div *ngIf="this.steps && this.steps.length == 0">
+    <div class="prim-color">No step to complete</div>
+  </div>
+</div>
+
+<div *ngIf="isRecommend" class="tui-space_top-10 button-big-space">
+  <div class="tui-text_body-xl">Recommended Plans</div>
+  <div *ngFor="let r of recommendedPlans" class="tui-space_top-5">
+    <tui-tag
+      size="l"
+      value="{{ r.name }}"
+      status="custom"
+      class="ter-button official-shadow tui-space_bottom-2"
+    ></tui-tag>
+    <app-plan-slider [plans]="r.plans"></app-plan-slider>
+  </div>
+</div>
+
+<div class="big-top-space"></div>
+<app-footer-tabs [index]="this.activeItemIndex"></app-footer-tabs>
