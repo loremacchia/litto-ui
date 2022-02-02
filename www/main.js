@@ -2445,7 +2445,7 @@ let FileUploadService = class FileUploadService {
         this.http = http;
         // API url
         // baseUrl = "http://192.168.1.135:8000/"
-        this.baseUrl = "http://aa09-151-41-61-172.ngrok.io";
+        this.baseUrl = "http://b7ed-151-41-61-172.ngrok.io";
     }
     // Returns an observable
     upload(file) {
@@ -2505,7 +2505,7 @@ let HomeService = class HomeService {
     constructor(http) {
         this.http = http;
         // baseUrl = "http://192.168.1.135:8000/"
-        this.baseUrl = "http://aa09-151-41-61-172.ngrok.io";
+        this.baseUrl = "http://b7ed-151-41-61-172.ngrok.io";
     }
     getCurrentGoals(userId) {
         return this.http.post(this.baseUrl + "/get-current-goals", JSON.stringify(userId))
@@ -2712,7 +2712,7 @@ let PlanService = class PlanService {
     constructor(http) {
         this.http = http;
         // baseUrl = "http://192.168.1.135:8000/"
-        this.baseUrl = "http://aa09-151-41-61-172.ngrok.io";
+        this.baseUrl = "http://b7ed-151-41-61-172.ngrok.io";
     }
     getPlan(planId) {
         return this.http.post(this.baseUrl + "/get-plan", JSON.stringify(planId))
@@ -2779,7 +2779,7 @@ let UserServiceService = class UserServiceService {
     constructor(http) {
         this.http = http;
         // baseUrl = "http://192.168.1.135:8000/"
-        this.baseUrl = "http://aa09-151-41-61-172.ngrok.io";
+        this.baseUrl = "http://b7ed-151-41-61-172.ngrok.io";
     }
     createUser(user) {
         return this.http.post(this.baseUrl + "/create-user", JSON.stringify((0,class_transformer__WEBPACK_IMPORTED_MODULE_2__.classToPlain)(user)));
@@ -2971,7 +2971,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<tui-tabs [(activeItemIndex)]=\"index\" class=\"tabs\">\n  <button tuiTab [routerLink]=\"['/home-page']\">\n    <svg\n      xmlns=\"http://www.w3.org/2000/svg\"\n      width=\"28\"\n      height=\"28\"\n      class=\"footer-icon\"\n      viewBox=\"0 0 256 256\"\n    >\n      <rect width=\"256\" height=\"256\" fill=\"none\"></rect>\n      <path\n        d=\"M152,208V160a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v48a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V115.5a8.3,8.3,0,0,1,2.6-5.9l80-72.7a8,8,0,0,1,10.8,0l80,72.7a8.3,8.3,0,0,1,2.6,5.9V208a8,8,0,0,1-8,8H160A8,8,0,0,1,152,208Z\"\n        fill=\"none\"\n        stroke=\"#000000\"\n        stroke-linecap=\"round\"\n        stroke-linejoin=\"round\"\n        stroke-width=\"16\"\n      ></path>\n    </svg>\n  </button>\n  <button tuiTab [routerLink]=\"['/active-steps']\">\n    <svg\n      xmlns=\"http://www.w3.org/2000/svg\"\n      width=\"28\"\n      height=\"28\"\n      class=\"footer-icon\"\n      viewBox=\"0 0 256 256\"\n    >\n      <rect width=\"256\" height=\"256\" fill=\"none\"></rect>\n      <line\n        x1=\"40\"\n        y1=\"216\"\n        x2=\"40\"\n        y2=\"48\"\n        fill=\"none\"\n        stroke=\"#000000\"\n        stroke-linecap=\"round\"\n        stroke-linejoin=\"round\"\n        stroke-width=\"16\"\n      ></line>\n      <path\n        d=\"M40,168c64-48,112,48,176,0V48C152,96,104,0,40,48\"\n        fill=\"none\"\n        stroke=\"#000000\"\n        stroke-linecap=\"round\"\n        stroke-linejoin=\"round\"\n        stroke-width=\"16\"\n      ></path>\n    </svg>\n  </button>\n  <button tuiTab [routerLink]=\"['/create-plan-first']\">\n    <svg\n      xmlns=\"http://www.w3.org/2000/svg\"\n      width=\"28\"\n      height=\"28\"\n      class=\"footer-icon\"\n      viewBox=\"0 0 256 256\"\n    >\n      <rect width=\"256\" height=\"256\" fill=\"none\"></rect>\n      <line\n        x1=\"40\"\n        y1=\"128\"\n        x2=\"216\"\n        y2=\"128\"\n        fill=\"none\"\n        stroke=\"#000000\"\n        stroke-linecap=\"round\"\n        stroke-linejoin=\"round\"\n        stroke-width=\"16\"\n      ></line>\n      <line\n        x1=\"128\"\n        y1=\"40\"\n        x2=\"128\"\n        y2=\"216\"\n        fill=\"none\"\n        stroke=\"#000000\"\n        stroke-linecap=\"round\"\n        stroke-linejoin=\"round\"\n        stroke-width=\"16\"\n      ></line>\n    </svg>\n  </button>\n  <button tuiTab [routerLink]=\"['/user-page']\">\n    <svg\n      xmlns=\"http://www.w3.org/2000/svg\"\n      width=\"28\"\n      height=\"28\"\n      class=\"footer-icon\"\n      viewBox=\"0 0 256 256\"\n    >\n      <rect width=\"256\" height=\"256\" fill=\"none\"></rect>\n      <circle\n        cx=\"128\"\n        cy=\"96\"\n        r=\"64\"\n        fill=\"none\"\n        stroke=\"#000000\"\n        stroke-miterlimit=\"10\"\n        stroke-width=\"16\"\n      ></circle>\n      <path\n        d=\"M31,216a112,112,0,0,1,194,0\"\n        fill=\"none\"\n        stroke=\"#000000\"\n        stroke-linecap=\"round\"\n        stroke-linejoin=\"round\"\n        stroke-width=\"16\"\n      ></path>\n    </svg>\n  </button>\n</tui-tabs>\n");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<div style=\"height: 100px;\"></div>\n\n<tui-tabs [(activeItemIndex)]=\"index\" class=\"tabs\">\n  <button tuiTab [routerLink]=\"['/home-page']\">\n    <svg\n      xmlns=\"http://www.w3.org/2000/svg\"\n      width=\"28\"\n      height=\"28\"\n      class=\"footer-icon\"\n      viewBox=\"0 0 256 256\"\n    >\n      <rect width=\"256\" height=\"256\" fill=\"none\"></rect>\n      <path\n        d=\"M152,208V160a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v48a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V115.5a8.3,8.3,0,0,1,2.6-5.9l80-72.7a8,8,0,0,1,10.8,0l80,72.7a8.3,8.3,0,0,1,2.6,5.9V208a8,8,0,0,1-8,8H160A8,8,0,0,1,152,208Z\"\n        fill=\"none\"\n        stroke=\"#000000\"\n        stroke-linecap=\"round\"\n        stroke-linejoin=\"round\"\n        stroke-width=\"16\"\n      ></path>\n    </svg>\n  </button>\n  <button tuiTab [routerLink]=\"['/active-steps']\">\n    <svg\n      xmlns=\"http://www.w3.org/2000/svg\"\n      width=\"28\"\n      height=\"28\"\n      class=\"footer-icon\"\n      viewBox=\"0 0 256 256\"\n    >\n      <rect width=\"256\" height=\"256\" fill=\"none\"></rect>\n      <line\n        x1=\"40\"\n        y1=\"216\"\n        x2=\"40\"\n        y2=\"48\"\n        fill=\"none\"\n        stroke=\"#000000\"\n        stroke-linecap=\"round\"\n        stroke-linejoin=\"round\"\n        stroke-width=\"16\"\n      ></line>\n      <path\n        d=\"M40,168c64-48,112,48,176,0V48C152,96,104,0,40,48\"\n        fill=\"none\"\n        stroke=\"#000000\"\n        stroke-linecap=\"round\"\n        stroke-linejoin=\"round\"\n        stroke-width=\"16\"\n      ></path>\n    </svg>\n  </button>\n  <button tuiTab [routerLink]=\"['/create-plan-first']\">\n    <svg\n      xmlns=\"http://www.w3.org/2000/svg\"\n      width=\"28\"\n      height=\"28\"\n      class=\"footer-icon\"\n      viewBox=\"0 0 256 256\"\n    >\n      <rect width=\"256\" height=\"256\" fill=\"none\"></rect>\n      <line\n        x1=\"40\"\n        y1=\"128\"\n        x2=\"216\"\n        y2=\"128\"\n        fill=\"none\"\n        stroke=\"#000000\"\n        stroke-linecap=\"round\"\n        stroke-linejoin=\"round\"\n        stroke-width=\"16\"\n      ></line>\n      <line\n        x1=\"128\"\n        y1=\"40\"\n        x2=\"128\"\n        y2=\"216\"\n        fill=\"none\"\n        stroke=\"#000000\"\n        stroke-linecap=\"round\"\n        stroke-linejoin=\"round\"\n        stroke-width=\"16\"\n      ></line>\n    </svg>\n  </button>\n  <button tuiTab [routerLink]=\"['/user-page']\">\n    <svg\n      xmlns=\"http://www.w3.org/2000/svg\"\n      width=\"28\"\n      height=\"28\"\n      class=\"footer-icon\"\n      viewBox=\"0 0 256 256\"\n    >\n      <rect width=\"256\" height=\"256\" fill=\"none\"></rect>\n      <circle\n        cx=\"128\"\n        cy=\"96\"\n        r=\"64\"\n        fill=\"none\"\n        stroke=\"#000000\"\n        stroke-miterlimit=\"10\"\n        stroke-width=\"16\"\n      ></circle>\n      <path\n        d=\"M31,216a112,112,0,0,1,194,0\"\n        fill=\"none\"\n        stroke=\"#000000\"\n        stroke-linecap=\"round\"\n        stroke-linejoin=\"round\"\n        stroke-width=\"16\"\n      ></path>\n    </svg>\n  </button>\n</tui-tabs>\n");
 
 /***/ }),
 

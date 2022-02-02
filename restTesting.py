@@ -15,7 +15,7 @@ UPLOAD_FOLDER = '/home/lorem/Documents/assets/'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 # baseUrl = "http://192.168.1.135:8000/"
-baseUrl = "http://aa09-151-41-61-172.ngrok.io"
+baseUrl = "http://b7ed-151-41-61-172.ngrok.io"
 interests = [
     {"inter": "Racing",
      "url": "https://assets.materialup.com/uploads/d6522050-2ab3-4c75-945c-90fbb0ddd5ac/preview.jpg"},

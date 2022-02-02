@@ -10,7 +10,7 @@ export class FileUploadService {
     
   // API url
   // baseUrl = "http://192.168.1.135:8000/"
-  baseUrl = "http://aa09-151-41-61-172.ngrok.io"
+  baseUrl = "http://b7ed-151-41-61-172.ngrok.io"
   
   constructor(private http:HttpClient) { }
   
