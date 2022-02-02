@@ -3,11 +3,23 @@
 ## To help everyone reaching their goals
 It happens that when we are busy but we have plenty of time, we throw it anyway. Litto is an app that helps you to read, watch and even study about a certain topic you are interested in! Here users like you can create **plans** to help others learning what they have already learned. Litto is useful also to organize your study and work dividing it into **weeks**.
 
+Here there are some screenshots of the main App pages. From left to right we have the one to create a plan, the one to overview and the one to complete.
+<p float="left">
+<img width="200" src="images/Create%20Plan.png"> 
+<img width="200" src="images/Plan%20Overview.png"> 
+<img width="200" src="images/Plan%20Complete.png"> 
+</p>
+
+
 ## User Interface
 In this repository you will find the UI of Litto with a quite dummy Flask backend (a more complete backend will be provided soon). This is a mobile project that you can decide to build as Web Application or Android Application. It is developed with Angular using the [Taiga UI](https://taiga-ui.dev/) Component Library for the pure frontend and Ionic + Capacitor to build it for Android (and even IOs). To be able to interact with the backend you have to use Ngrok tunneling your backend port.
-
+This project has been developed starting from the main idea, to need finding, then prototyping, coding and finally testing. All the steps are well descripted into the [Project Report](Relazione%20Progetto%20Macchiarini.pdf) made for the Human Computer Interaction exam (in italian).  
 
 ### Application Architecture
+The main aspects of the app are in *src/app*. Here you can find:
+- **components**: that represent the View and the Controller in the MVC, they can also interact with the services asking for an HTTP request;
+- **services**: the classes that execute the HTTP requests to the server;
+- **model**: the classes that represent the data exchanged from the server to the service (e.g. DTO)
 
 ### Building Project
 To build the project you have to build the web app at first and then, if you want, to build the Android App.
@@ -36,3 +48,6 @@ This will give you an URL that you have to paste on *baseUrl* of restTesting.py 
 So to rebuild your project run
 
       sudo ionic build && npx cap copy && npx cap sync
+
+#### Credits
+Project developed by Lorenzo Macchiarini for the Human Computer Interaction course tought by Prof. Andrew Bagdanov at Università degli Studi di Firenze.
