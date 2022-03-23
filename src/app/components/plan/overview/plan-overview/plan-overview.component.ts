@@ -17,7 +17,7 @@ export class PlanOverviewComponent implements OnInit {
   planId!: number;
   plan!: Plan;
   activeItemIndex = 0;
-  length!: number;
+  duration!: number;
   weekIndex = 0;
   currentStep!: Step;
   constructor(
@@ -38,7 +38,7 @@ export class PlanOverviewComponent implements OnInit {
       console.log(this.planId);
       this.planService.getPlan(this.planId).subscribe((plan) => {
         this.plan = plan;
-        this.length = this.plan.steps.length;
+        this.duration = this.plan.duration;
         this.currentStep = this.searchStep(this.weekIndex);
         console.log(this.plan);
       });

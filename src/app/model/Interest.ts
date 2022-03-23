@@ -6,7 +6,7 @@ export class Interest {
     isActive?: boolean = false;
     level!: number
 
-    constructor(inter: string, url: string, level: number = 10) {
+    constructor(inter: string, url: string, level: number = 1) {
         this.inter = inter;
         this.url = url;
         this.level = level;

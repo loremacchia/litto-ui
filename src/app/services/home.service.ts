@@ -13,7 +13,7 @@ import { plainToClass } from 'class-transformer';
 })
 
 export class HomeService {
-  baseUrl = "http://192.168.1.135:8000/"
+  baseUrl = "http://192.168.1.136:8080/"
   // baseUrl = "http://b7ed-151-41-61-172.ngrok.io"
   headers!: 
     {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
@@ -32,6 +32,5 @@ export class HomeService {
   getRecommendedPlans(userId:number) : Observable<RecommendedPlan[]>{
     return this.http.post<RecommendedPlan[]>(this.baseUrl + "/get-recommended-plans", JSON.stringify(userId))
       .pipe(map(res => plainToClass(RecommendedPlan, res as Object[])))
-    
   }
 }

@@ -12,7 +12,7 @@ import { plainToClass } from 'class-transformer';
 })
 
 export class PlanService {
-  baseUrl = "http://192.168.1.135:8000/"
+  baseUrl = "http://192.168.1.136:8080/"
   // baseUrl = "http://b7ed-151-41-61-172.ngrok.io"
   headers!: 
     {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }

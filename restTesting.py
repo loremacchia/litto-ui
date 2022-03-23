@@ -3,6 +3,7 @@ from email.mime import base
 import os
 from os.path import isfile, join
 from re import S
+from urllib import response
 from flask import Flask, flash, request, redirect, url_for, jsonify
 from werkzeug.utils import secure_filename
 from flask import send_file
@@ -14,8 +15,8 @@ app.secret_key = b'sese'
 UPLOAD_FOLDER = '/home/lorem/Documents/assets/'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
-# baseUrl = "http://192.168.1.135:8000/"
-baseUrl = "http://b7ed-151-41-61-172.ngrok.io"
+baseUrl = "http://192.168.1.136:8000/"
+# baseUrl = "http://b7ed-151-41-61-172.ngrok.io"
 interests = [
     {"inter": "Racing",
      "url": "https://assets.materialup.com/uploads/d6522050-2ab3-4c75-945c-90fbb0ddd5ac/preview.jpg"},
@@ -889,36 +890,21 @@ users = {0: {'username': 'ironman',
 def create_user():
     data = json.loads(request.data.decode('utf-8'))
     id = len(users)
+    print(data)
     users[id] = {
         "username": data["username"],
         "email": data["email"],
         "password": data["password"]}
     # if request.method == 'POST':
     response = jsonify(id)
+    print(response.data)
     return createResponse(response)
-
-
-@app.route('/login-user', methods=['GET', 'POST'])
-def login():
-    data = json.loads(request.data.decode('utf-8'))
-    # print(data)
-    # print(users)
-    email = data["email"].replace(" ", "")
-    for id in users:
-        if users[id]["email"] == email and users[id]["password"] == data["password"]:
-            response = jsonify(id)
-            # print(usplanWeekd)
-            return createResponse(response)
-    else:
-        response = jsonify(-1)
-        return createResponse(response)
-
 
 @app.route('/get-interests', methods=['GET', 'POST'])
 def get_interests():
     response = jsonify(interests)
+    print(response.data)
     return createResponse(response)
-
 
 @app.route('/complete-user', methods=['GET', 'POST'])
 def complete_user():
@@ -942,13 +928,31 @@ def complete_user():
         # print(users[data["id"]])
     # print(users)
     response = jsonify("gigi")
+    print(response.data)
     return createResponse(response)
+
+@app.route('/login-user', methods=['GET', 'POST'])
+def login():
+    data = json.loads(request.data.decode('utf-8'))
+    print(data)
+    # print(users)
+    email = data["email"].replace(" ", "")
+    for id in users:
+        if users[id]["email"] == email and users[id]["password"] == data["password"]:
+            response = jsonify(id)
+            print(response.data)
+            # print(usplanWeekd)
+            return createResponse(response)
+    else:
+        response = jsonify(-1)
+        print(response.data)
+        return createResponse(response)
 
 
 @app.route('/user-page', methods=['GET', 'POST'])
 def get_user():
     data = json.loads(request.data.decode('utf-8'))
-    # print(data)
+    print(data)
     # print(i for i in users)
     if(data in users):
         newUser = users[data]
@@ -957,7 +961,9 @@ def get_user():
             if(p["id"] != 0):
                 planny.append(p)
         newUser["plans"] = planny
-        return createResponse(jsonify(newUser))
+        response = jsonify(newUser)
+        print(response.data)
+        return createResponse(response)
     else:
         return jsonify(False)
 
@@ -965,12 +971,15 @@ def get_user():
 @app.route('/get-current-goals', methods=['GET', 'POST'])
 def get_current_goals():
     data = json.loads(request.data.decode('utf-8'))
+    print(data)
     resp = []
     if(data in users):
         for a in activeStep:
             if(a["userId"] == data):
                 resp.append(a)
-        return createResponse(jsonify(resp))
+        response = jsonify(resp)
+        print(response.data)
+        return createResponse(response)
     else:
         return createResponse(jsonify([]))
 
@@ -995,7 +1004,9 @@ def recommended():
                     "plans":plansFound
                 })
         # print(data)
-        return createResponse(jsonify(res))
+        response = jsonify(res)
+        print(response.data)
+        return createResponse(response)
     else:
         return createResponse(jsonify([]))
         
@@ -1003,7 +1014,7 @@ def recommended():
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     substring = json.loads(request.data.decode('utf-8'))
-    # print(substring)
+    print(substring)
     plansFound = [string for string in plans if substring.lower()
                   in string["title"].lower()]
     plansFound1 = [string for string in plans if substring.lower()
@@ -1013,23 +1024,24 @@ def search():
             plansFound.append(p)
     tagsFound = [string for string in tags if substring.lower()
                  in string.lower()]
-    data = {"plans": plansFound, "tags": tagsFound}
-    # print(data)
-    return createResponse(jsonify(data))
+    data = jsonify({"plans": plansFound, "tags": tagsFound})
+    print(data.data)
+    return createResponse(data)
 
 
 @app.route('/get-plan', methods=['GET', 'POST'])
 def getPlan():
     planId = json.loads(request.data.decode('utf-8'))
-    # print(planId)
+    print(planId)
     planFound = [plan for plan in plans if plan["id"] == planId]
-    # print(planFound)
-    return createResponse(jsonify(planFound[0]))
-
+    response = jsonify(planFound[0])
+    print(response.data)
+    return createResponse(response)
 
 @app.route('/start-plan', methods=['GET', 'POST'])
 def startPlan():  # userId:number, plan:Plan, from:string, to:string
     data = json.loads(request.data.decode('utf-8'))
+    print(data)
     planFound = [plan for plan in plans if plan["id"] == data["planId"]]
     interestFound = [interest for interest in planFound[0]
                      ["steps"] if interest["planWeek"] == 1]
@@ -1048,14 +1060,16 @@ def startPlan():  # userId:number, plan:Plan, from:string, to:string
            "material": interestFound[0]["material"]}
     if(not isAlreadyStarted):
         activeStep.append(obj)
-        return createResponse(jsonify(planFound[0]["id"]))
+        response = jsonify(planFound[0]["id"])
+        print(response.data)
+        return createResponse(response)
     else:
         return createResponse(jsonify(-1))
-
 
 @app.route('/create-plan', methods=['GET', 'POST'])
 def createPlan():
     data = json.loads(request.data.decode('utf-8'))
+    print(data)
     # print(data["steps"])
     data["id"] = len(plans)
     for s in data["steps"]:
@@ -1069,6 +1083,111 @@ def createPlan():
     # print(plans)
 
     return createResponse(jsonify(len(plans)-1))
+
+
+@app.route('/get-active-step', methods=['GET', 'POST'])
+def getActiveStep():
+    data = json.loads(request.data.decode('utf-8'))
+    print(data)
+    for a in activeStep:
+        if(a["planId"] == data["planId"] and a["userId"] == data["userId"]):
+            response = jsonify(a)
+            print(response.data)
+            return createResponse(response)
+    return createResponse(jsonify(False))
+
+@app.route('/next-active-step', methods=['GET', 'POST'])
+def nextActiveStep():
+    data = json.loads(request.data.decode('utf-8'))
+    print(data)
+    activeStep1 = activeStep
+    for a in list(activeStep1):
+        # print(a)
+        if(a["planId"] == data["planId"] and a["userId"] == data["userId"]):
+            p = searchPlan(a["planId"])
+            pw = a["planWeek"]
+            activeStep.remove(a)
+            if(pw < len(p["steps"])):
+                s = searchStep(pw+1, p["steps"])
+                s["planId"] = data["planId"]
+                s["endDate"] = a["endDate"]
+                s["userId"] = data["userId"]
+                activeStep.append(s)
+                # print(activeStep)
+                return createResponse(jsonify(False))
+            return createResponse(jsonify(True))
+
+    return createResponse(jsonify(False))
+
+
+
+def searchPlan(id):
+    for p in plans:
+        if p["id"] == id:
+            return p
+    return False
+
+def searchStep(week, steps):
+    for s in steps:
+        if s["planWeek"] == week:
+            return s
+    return False
+
+def createResponse(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers',
+                         "Origin, X-Requested-With, Content-Type, Accept")
+    return response
+
+
+def get_yt_video_id(url):
+    """Returns Video_ID extracting from the given url of Youtube
+
+    Examples of URLs:
+      Valid:
+        'http://youtu.be/_lOT2p_FCvA',
+        'www.youtube.com/watch?v=_lOT2p_FCvA&feature=feedu',
+        'http://www.youtube.com/embed/_lOT2p_FCvA',
+        'http://www.youtube.com/v/_lOT2p_FCvA?version=3&amp;hl=en_US',
+        'https://www.youtube.com/watch?v=rTHlyTphWP0&index=6&list=PLjeDyYvG6-40qawYNR4juzvSOg-ezZ2a6',
+        'youtube.com/watch?v=_lOT2p_FCvA',
+
+      Invalid:
+        'youtu.be/watch?v=_lOT2p_FCvA',
+    """
+
+    from urllib.parse import urlparse, parse_qs
+
+    if url.startswith(('youtu', 'www')):
+        url = 'http://' + url
+
+    query = urlparse(url)
+
+    if 'youtube' in query.hostname:
+        if query.path == '/watch':
+            return parse_qs(query.query)['v'][0]
+        elif query.path.startswith(('/embed/', '/v/')):
+            return query.path.split('/')[2]
+    elif 'youtu.be' in query.hostname:
+        return query.path[1:]
+    else:
+        raise ValueError
+
+
+def getSpreakerUrl(url):
+    found = False
+    link = ""
+    str = ""
+    strs = url.split()
+    for st in strs:
+        if("src" in st):
+            str = st
+    for s in str:
+        if(s == '"'):
+            found = not found
+        if(found):
+            link += s
+    return link[1:]
 
 
 def allowed_file(filename):
@@ -1145,111 +1264,6 @@ def uploadPdf():
 def get_pdf(filename):
     return send_file(UPLOAD_FOLDER+"pdf/"+filename, mimetype='pdf')
 
-
-@app.route('/get-active-step', methods=['GET', 'POST'])
-def getActiveStep():
-    data = json.loads(request.data.decode('utf-8'))
-    print(data)
-    for a in activeStep:
-        if(a["planId"] == data["planId"] and a["userId"] == data["userId"]):
-            return createResponse(jsonify(a))
-    return createResponse(jsonify(False))
-
-
-@app.route('/next-active-step', methods=['GET', 'POST'])
-def nextActiveStep():
-    data = json.loads(request.data.decode('utf-8'))
-    activeStep1 = activeStep
-    for a in list(activeStep1):
-        # print(a)
-        if(a["planId"] == data["planId"] and a["userId"] == data["userId"]):
-            p = searchPlan(a["planId"])
-            pw = a["planWeek"]
-            activeStep.remove(a)
-            if(pw < len(p["steps"])):
-                s = searchStep(pw+1, p["steps"])
-                s["planId"] = data["planId"]
-                s["endDate"] = a["endDate"]
-                s["userId"] = data["userId"]
-                activeStep.append(s)
-                # print(activeStep)
-                return createResponse(jsonify(False))
-            return createResponse(jsonify(True))
-
-    return createResponse(jsonify(False))
-
-
-def searchPlan(id):
-    for p in plans:
-        if p["id"] == id:
-            return p
-    return False
-
-
-def searchStep(week, steps):
-    for s in steps:
-        if s["planWeek"] == week:
-            return s
-    return False
-
-
-def createResponse(response):
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers',
-                         "Origin, X-Requested-With, Content-Type, Accept")
-    return response
-
-
-def get_yt_video_id(url):
-    """Returns Video_ID extracting from the given url of Youtube
-
-    Examples of URLs:
-      Valid:
-        'http://youtu.be/_lOT2p_FCvA',
-        'www.youtube.com/watch?v=_lOT2p_FCvA&feature=feedu',
-        'http://www.youtube.com/embed/_lOT2p_FCvA',
-        'http://www.youtube.com/v/_lOT2p_FCvA?version=3&amp;hl=en_US',
-        'https://www.youtube.com/watch?v=rTHlyTphWP0&index=6&list=PLjeDyYvG6-40qawYNR4juzvSOg-ezZ2a6',
-        'youtube.com/watch?v=_lOT2p_FCvA',
-
-      Invalid:
-        'youtu.be/watch?v=_lOT2p_FCvA',
-    """
-
-    from urllib.parse import urlparse, parse_qs
-
-    if url.startswith(('youtu', 'www')):
-        url = 'http://' + url
-
-    query = urlparse(url)
-
-    if 'youtube' in query.hostname:
-        if query.path == '/watch':
-            return parse_qs(query.query)['v'][0]
-        elif query.path.startswith(('/embed/', '/v/')):
-            return query.path.split('/')[2]
-    elif 'youtu.be' in query.hostname:
-        return query.path[1:]
-    else:
-        raise ValueError
-
-
-def getSpreakerUrl(url):
-    found = False
-    link = ""
-    str = ""
-    strs = url.split()
-    for st in strs:
-        if("src" in st):
-            str = st
-    for s in str:
-        if(s == '"'):
-            found = not found
-        if(found):
-            link += s
-    return link[1:]
-
-
 if __name__ == '__main__':
     port = 8000  # the custom port you want
-    app.run(host='192.168.1.135', port=port, debug=True)
+    app.run(host='192.168.1.136', port=port, debug=True)
