@@ -23,7 +23,7 @@
         [ngClass]="{ shadow: i.isActive === true }"
         class="tui-space_top-1 pre-trans"
         size="l"
-        [avatarUrl]="i.url"
+        [avatarUrl]="i.imageUrl"
         style="cursor: pointer"
       ></tui-avatar>
       <p
@@ -31,7 +31,7 @@
           color: i.isActive === true ? 'var(--prim-custom)' : 'black'
         }"
       >
-        {{ i.inter }}
+        {{ i.name }}
       </p>
     </div>
   </div>

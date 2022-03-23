@@ -1,3 +1,4 @@
+import { NotifierComponent } from './../../../injectables/notifier/notifier.component';
 import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 import { LocalStorageService } from '../../../../services/local-storage.service';
 import { Plan } from '../../../../model/Plan';
@@ -15,7 +16,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class StartPlanDateComponent implements OnInit {
   plan!: Plan;
   activeItemIndex = 1;
-  userId!: number;
   value!: TuiDayRange;
   firstMonth = TuiMonth.currentLocal();
   hoveredItem: TuiDay | null = null;
@@ -29,7 +29,7 @@ export class StartPlanDateComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private planService: PlanService,
     private localService: LocalStorageService,
-    private readonly notificationsService: TuiNotificationsService,
+    private notifier: NotifierComponent,
     private router: Router
   ) {}
 
@@ -55,16 +55,12 @@ export class StartPlanDateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userId = this.localService.getLogId();
+    this.localService.getLogId();
     this.activatedRoute.paramMap.subscribe(() => {
       if (window.history.state['plan'] !== undefined) {
         this.plan = window.history.state['plan'];
       } else {
-        this.notificationsService
-          .show('Something has gone wrong', {
-            status: TuiNotification.Error,
-          })
-          .subscribe();
+        this.notifier.notifyError('Something has gone wrong');
         this.router.navigateByUrl('/home/home-page');
       }
       this.onDayClick(TuiDay.currentLocal());
@@ -74,27 +70,19 @@ export class StartPlanDateComponent implements OnInit {
   startPlan() {
     this.planService
       .startPlan(
-        this.userId,
+        this.localService.getLogId(),
         this.plan,
         this.value.from.toString(),
         this.value.to.toString()
-      ) //per riportarle ok usare parseRawDateString
-      .subscribe((activePlanId) => {
-        if (activePlanId == -1) {
-          this.notificationsService
-            .show('The plan was already started', {
-              status: TuiNotification.Info,
-            })
-            .subscribe();
+      ) 
+      .subscribe((canStart) => {
+        if (!canStart) {
+          this.notifier.notifyError('The plan was already started');
           this.router.navigateByUrl('/home/home-page');
         } else {
-          this.notificationsService
-            .show('The plan is started!', {
-              status: TuiNotification.Success,
-            })
-            .subscribe();
+          this.notifier.notifySuccess('The plan is started!');
           this.router.navigateByUrl('/plan/complete/step-complete', {
-            state: { planId: activePlanId },
+            state: { planId:  this.plan.id},
           });
         }
       });

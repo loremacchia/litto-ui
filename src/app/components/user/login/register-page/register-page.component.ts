@@ -1,3 +1,4 @@
+import { NotifierComponent } from './../../../injectables/notifier/notifier.component';
 import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 import { LocalStorageService } from '../../../../services/local-storage.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,7 +14,6 @@ import { UserServiceService } from 'src/app/services/user-service.service';
   styleUrls: ['./register-page.component.css'],
 })
 export class RegisterPageComponent implements OnInit {
-  id!: number;
   form = new FormGroup({
     username: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -24,13 +24,16 @@ export class RegisterPageComponent implements OnInit {
     private userService: UserServiceService,
     private localService: LocalStorageService,
     private router: Router,
-    private readonly notificationsService: TuiNotificationsService
+    private readonly notificationsService: TuiNotificationsService,
+    private notifier: NotifierComponent
   ) {}
 
   ngOnInit(): void {}
 
   async createUser() {
-    this.form.controls['email'].setValue(this.form.controls['email'].value.trim())
+    this.form.controls['email'].setValue(
+      this.form.controls['email'].value.trim()
+    );
     if (this.form.valid) {
       await this.userService
         .createUser(
@@ -40,22 +43,23 @@ export class RegisterPageComponent implements OnInit {
             this.form.controls['password'].value
           )
         )
-        .subscribe((retrievedId) => {
-          this.notificationsService
-            .show('Check your Email to continue the registration', {
-              status: TuiNotification.Info,
-            })
-            .subscribe();
-          this.id = +retrievedId;
-          this.localService.setCurrentUserId(retrievedId);
-          this.router.navigateByUrl('/user/register-second');
-        });
+        .subscribe(
+          (retrievedId) => {
+            this.notificationsService
+              .show('Check your Email to continue the registration', {
+                status: TuiNotification.Info,
+              })
+              .subscribe();
+            this.localService.setCurrentUserId(retrievedId);
+            this.router.navigateByUrl('/user/register-second');
+          },
+          (error) => {
+            console.log(error);
+            this.notifier.notifyError('Email already used, try a different one or log-in');
+          }
+        );
     } else {
-      this.notificationsService
-        .show('Your email, username or password are incorrect', {
-          status: TuiNotification.Error,
-        })
-        .subscribe();
+      this.notifier.notifyError('Your email, username or password are invalid');
     }
   }
 }

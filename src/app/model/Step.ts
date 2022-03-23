@@ -7,7 +7,7 @@ export class Step {
   subtitle!: string;
   imageUrl!: string;
   planName!: string;
-  planId!: number;
+  planId!: string;
   planWeek!: number;
   material!:[{[key:string]:string}];
   materialLength!:number;
@@ -19,7 +19,7 @@ export class Step {
     imageUrl: string,
     planName: string,
     planWeek: number,
-    planId: number
+    planId: string
   ) {
     this.endDate = endDate;
     this.title = title;

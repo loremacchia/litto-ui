@@ -1,14 +1,14 @@
 import { classToPlain } from 'class-transformer';
 
 export class Interest {
-    inter: string;
-    url: string;
+    name: string;
+    imageUrl: string;
     isActive?: boolean = false;
     level!: number
 
-    constructor(inter: string, url: string, level: number = 1) {
-        this.inter = inter;
-        this.url = url;
+    constructor(name: string, imageUrl: string, level: number = 1) {
+        this.name = name;
+        this.imageUrl = imageUrl;
         this.level = level;
     }
 }

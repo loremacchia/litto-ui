@@ -1,25 +1,20 @@
+import { NotifierComponent } from './../../../injectables/notifier/notifier.component';
 import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 import { FileUploadService } from '../../../../services/file-upload.service';
 import { EditorConstant } from '../../../injectables/constants/editor';
 import { LocalStorageService } from '../../../../services/local-storage.service';
-import { SearchReturn } from '../../../../model/SearchReturn';
 import { PlanService } from 'src/app/services/plan.service';
 import { Component, OnInit } from '@angular/core';
-import { HomeService } from '../../../../services/home.service';
-import { Step } from '../../../../model/Step';
-import { ChangeDetectionStrategy } from '@angular/core';
 import {
   FormControl,
   FormGroup,
-  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TUI_ARROW } from '@taiga-ui/kit';
 import { tuiPure } from '@taiga-ui/cdk';
-import { map, mapTo, share, startWith, switchMap, tap } from 'rxjs/operators';
-import { Observable, of, timer } from 'rxjs';
-import { TuiFileLike } from '@taiga-ui/kit';
+import { map, share, startWith } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-step-create',
@@ -27,10 +22,8 @@ import { TuiFileLike } from '@taiga-ui/kit';
   styleUrls: ['./step-create.component.css'],
 })
 export class StepCreateComponent implements OnInit {
-  userId!: number;
   activeItemIndex = 2;
   planWeek!: number;
-  // planDuration!: number;
   selectedMaterial!: { [key: string]: any };
   clicked = false;
 
@@ -114,12 +107,12 @@ export class StepCreateComponent implements OnInit {
     private localService: LocalStorageService,
     private router: Router,
     private planService: PlanService,
-    private readonly notificationsService: TuiNotificationsService,
-    private fileUploadService: FileUploadService
+    private fileUploadService: FileUploadService,
+    private notifier: NotifierComponent
   ) {}
 
   ngOnInit(): void {
-    this.userId = this.localService.getLogId();
+    this.localService.getLogId();
     this.activatedRoute.paramMap.subscribe(() => {
       if (window.history.state['number'] !== undefined) {
         this.planWeek = window.history.state['number'];
@@ -154,11 +147,7 @@ export class StepCreateComponent implements OnInit {
         })
       );
     } else {
-      this.notificationsService
-        .show('Fill at least the title and description of the week!', {
-          status: TuiNotification.Error,
-        })
-        .subscribe();
+      this.notifier.notifyError('Fill at least the title and description of the week!');
     }
   }
 
@@ -217,16 +206,10 @@ export class StepCreateComponent implements OnInit {
           this.formSpreaker.controls['link'].setValue('');
           this.formSpreaker.controls['description'].setValue('');
         } else {
-          this.notificationsService
-            .show('Check the Spreaker link or title', {
-              status: TuiNotification.Error,
-            })
-            .subscribe();
+          this.notifier.notifyError('Check the Spreaker link or title');
         }
         break;
       case 'PDF':
-        console.log("innnn")
-        console.log(this.formPDF.controls['fileLink'].value)
         if (this.formPDF.valid) {
           console.log(this.formPDF.controls['fileLink'].value)
           this.steps.push({
@@ -241,11 +224,7 @@ export class StepCreateComponent implements OnInit {
           this.formPDF.controls['fileLink'].setValue('');
           this.formPDF.controls['file'].setValue(undefined);
         } else {
-          this.notificationsService
-            .show('Check the PDF title', {
-              status: TuiNotification.Error,
-            })
-            .subscribe();
+          this.notifier.notifyError('Check the PDF title');
         }
         break;
       case 'YouTube':
@@ -263,9 +242,7 @@ export class StepCreateComponent implements OnInit {
           this.formYouTube.controls['link'].setValue('');
           this.formYouTube.controls['description'].setValue('');
         } else {
-          this.notificationsService
-            .show('Check the YouTube title', { status: TuiNotification.Error })
-            .subscribe();
+          this.notifier.notifyError('Check the YouTube title');
         }
         break;
       case 'Text':
@@ -281,9 +258,7 @@ export class StepCreateComponent implements OnInit {
           this.formText.controls['title'].setValue('');
           this.formText.controls['text'].setValue('');
         } else {
-          this.notificationsService
-            .show('Check the Text or title', { status: TuiNotification.Error })
-            .subscribe();
+          this.notifier.notifyError('Check the Text or title');
         }
         break;
       case 'Link':
@@ -301,9 +276,7 @@ export class StepCreateComponent implements OnInit {
           this.formLink.controls['title'].setValue('');
           this.formLink.controls['description'].setValue('');
         } else {
-          this.notificationsService
-            .show('Check the link or title', { status: TuiNotification.Error })
-            .subscribe();
+          this.notifier.notifyError('Check the link or title');
         }
         break;
 
@@ -325,30 +298,22 @@ export class StepCreateComponent implements OnInit {
       this.goCustSteps();
     }
     let plan = JSON.parse(
-      this.localService.getCreatingPlan(this.userId) as string
+      this.localService.getCreatingPlan(this.localService.getLogId()) as string
     );
     plan['duration'] = this.localService.getCreatingStepsNumber();
     let steps = this.localService.getCreatingSteps();
     plan['steps'] = steps;
     if (steps != undefined) {
-      this.planService.createPlan(plan).subscribe((planIdd) => {
-        this.notificationsService
-          .show('The plan is correctly created!', {
-            status: TuiNotification.Success,
-          })
-          .subscribe();
-
+      this.planService.createPlan(this.localService.getLogId(), plan).subscribe((planIdd) => {
+        this.notifier.notifySuccess('The plan is correctly created!');
         this.localService.freeCreatingPlanAndSteps(),
           this.router.navigateByUrl('/plan/overview/view-plan', {
             state: { planId: planIdd },
           });
-      });
+      },
+      error => this.notifier.notifyError("Cannot create the plan"));
     } else {
-      this.notificationsService
-        .show('Create some step before completing the plan!', {
-          status: TuiNotification.Error,
-        })
-        .subscribe();
+      this.notifier.notifyError('Create some step before completing the plan!');
     }
   }
 

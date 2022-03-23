@@ -1,9 +1,8 @@
-import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
+import { NotifierComponent } from './../../injectables/notifier/notifier.component';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { UserServiceService } from 'src/app/services/user-service.service';
-import { Interest } from 'src/app/model/Interest';
 import { User } from 'src/app/model/User';
 
 @Component({
@@ -12,32 +11,29 @@ import { User } from 'src/app/model/User';
   styleUrls: ['./user-page.component.css'],
 })
 export class UserPageComponent implements OnInit {
-  id!: number;
   user!: User;
   activeItemIndex = 3;
   constructor(
-    private activatedRoute: ActivatedRoute,
     private localService: LocalStorageService,
     private router: Router,
-    private readonly notificationsService: TuiNotificationsService,
-    private userService: UserServiceService
+    private userService: UserServiceService,
+    private notifier: NotifierComponent
   ) {}
 
   ngOnInit(): void {
-    this.id = this.localService.getLogId();
-    this.userService.getUser(this.id).subscribe((user) => {
-      console.log(user);
+    this.localService.getLogId();
+    this.userService.getUser(this.localService.getLogId()).subscribe((user) => {
       this.user = user;
-      this.user.id = this.id;
-      console.log(this.user);
-    });
+    },
+    error => {
+      this.notifier.notifyError("Cannot retrieve the user")
+      this.router.navigateByUrl('/home/home-page');
+    })
   }
 
   logOut() {
     this.localService.removeUserId();
-    this.notificationsService
-      .show('Logged out', { status: TuiNotification.Success })
-      .subscribe();
+    this.notifier.notifySuccess('Logged out');
     this.router.navigateByUrl('/');
   }
 }

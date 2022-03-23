@@ -1,15 +1,13 @@
+import { NotifierComponent } from './../../../injectables/notifier/notifier.component';
 import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 import { LocalStorageService } from '../../../../services/local-storage.service';
 import { PlanService } from 'src/app/services/plan.service';
 import { Step } from '../../../../model/Step';
 import { ActivatedRoute, Router } from '@angular/router';
-import { JsonpClientBackend } from '@angular/common/http';
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import {TUI_IS_MOBILE} from '@taiga-ui/cdk';
+import { Component, OnInit } from '@angular/core';
 import {
   DomSanitizer,
-  SafeResourceUrl,
-  SafeUrl,
+  SafeResourceUrl
 } from '@angular/platform-browser';
 import { TuiPdfViewerOptions, TuiPdfViewerService } from '@taiga-ui/kit';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
@@ -21,11 +19,8 @@ import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 })
 export class StepCompleteComponent implements OnInit {
   activeItemIndex = 1;
-  userId!: number;
-  planInfo = {
-    planId: 0,
-  };
-
+  planId!:string;
+  userId!:string;
   step!: Step;
   totalMaterials: number = 1;
   materialIndex: number = this.localService.getMaterialIndex();
@@ -42,8 +37,8 @@ export class StepCompleteComponent implements OnInit {
     private pdfService: TuiPdfViewerService,
     private localService: LocalStorageService,
     private planService: PlanService,
-    private readonly notificationsService: TuiNotificationsService,
-    private router: Router
+    private router: Router,
+    private notifier: NotifierComponent
   ) {}
 
   ngOnInit(): void {
@@ -54,15 +49,19 @@ export class StepCompleteComponent implements OnInit {
     this.userId = this.localService.getLogId();
     this.activatedRoute.paramMap.subscribe(() => {
       if (window.history.state['planId'] !== undefined) {
-        this.planInfo.planId = window.history.state['planId'];
+        this.planId = window.history.state['planId'];
       }
       this.planService
-        .getActiveStep(this.userId, this.planInfo.planId)
+        .getActiveStep(this.userId, this.planId)
         .subscribe((step) => {
           // step.normalize();
           this.step = step;
           console.log(this.step.material);
           this.totalMaterials = this.step.material.length;
+        },
+        error => {
+          this.notifier.notifyError("Cannot retrieve the step");
+          this.router.navigateByUrl('/home/home-page');
         });
     });
   }
@@ -96,25 +95,15 @@ export class StepCompleteComponent implements OnInit {
 
   completeStep() {
     this.planService
-      .completeStep(this.userId, this.planInfo.planId)
+      .completeStep(this.userId, this.planId, this.step.planWeek)
       .subscribe((val) => {
         if (val) {
-          console.log('finish plan');
-          this.notificationsService
-            .show('You have completed the plan!!', {
-              status: TuiNotification.Success,
-            })
-            .subscribe();
+          this.notifier.notifySuccess('You have completed the step!!');
+          this.localService.removeMaterialIndex();
+          this.router.navigateByUrl('/home/home-page');
         } else {
-          console.log('finish step');
-          this.notificationsService
-            .show('You have completed the step!', {
-              status: TuiNotification.Success,
-            })
-            .subscribe();
+          this.notifier.notifyError('Something has gone wrong');
         }
-        this.localService.removeMaterialIndex();
-        this.router.navigateByUrl('/home/home-page');
       });
   }
 }

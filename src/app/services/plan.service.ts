@@ -12,36 +12,34 @@ import { plainToClass } from 'class-transformer';
 })
 
 export class PlanService {
-  baseUrl = "http://192.168.1.136:8080/"
+  baseUrl = "http://localhost:8080/litto-backend/webapi/" + "ogm";
   // baseUrl = "http://b7ed-151-41-61-172.ngrok.io"
   headers!: 
     {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
   constructor(private http: HttpClient) { }
 
-  getPlan(planId : number) : Observable<Plan>{
-    return this.http.post<Plan>(this.baseUrl + "/get-plan", JSON.stringify(planId))
+  getPlan(planId : string) : Observable<Plan>{
+    return this.http.get<Plan>(this.baseUrl + "/plan/"+planId)
       .pipe(map(res => plainToClass(Plan, res as Object)))
   }
 
-  startPlan(userId:number, plan:Plan, from:string, to:string ): Observable<Number>{
-    console.log("g9g9")
-    return this.http.post(this.baseUrl + "/start-plan", JSON.stringify({"userId":userId, "planId":plan.id, "dateFrom":from, "dateTo":to }))
-      .pipe(map(res => plainToClass(Number, res as Object)))
+  startPlan(userId:string, plan:Plan, from:string, to:string ): Observable<Boolean>{
+    return this.http.post(this.baseUrl + "/user/"+userId+"/start/"+plan.id+"", JSON.stringify({"dateFrom":from, "dateTo":to }))
+      .pipe(map(res => plainToClass(Boolean, res as Object)))
   }
 
-  createPlan(newPlan : {[key:string]:any}) : Observable<Number>{
-    return this.http.post(this.baseUrl + "/create-plan", JSON.stringify(newPlan))
-      .pipe(map(res => plainToClass(Number, res as Object)))
+  createPlan(userId: string, newPlan : {[key:string]:any}) : Observable<string>{
+    return this.http.post(this.baseUrl + "/plan/create/"+userId, JSON.stringify(newPlan))
+      .pipe(map(res => res as string))
   }
 
-  getActiveStep(userId : number,planId : number)  : Observable<Step>{
-    console.log("gigi")
-    return this.http.post(this.baseUrl + "/get-active-step", JSON.stringify({"userId":userId,"planId":planId}))
+  getActiveStep(userId : string,planId : string)  : Observable<Step>{
+    return this.http.get(this.baseUrl + "/step/"+userId+"/"+planId)
       .pipe(map(res => plainToClass(Step, res as Object)))
   }
 
-  completeStep(userId : number,planId : number)  : Observable<Boolean>{
-    return this.http.post(this.baseUrl + "/next-active-step", JSON.stringify({"userId":userId,"planId":planId}))
+  completeStep(userId : string,planId : string, planWeek:number)  : Observable<Boolean>{
+    return this.http.get(this.baseUrl + "/step/"+userId+"/"+planId+"/next/"+planWeek)
       .pipe(map(res => res as Boolean))
   }
 }

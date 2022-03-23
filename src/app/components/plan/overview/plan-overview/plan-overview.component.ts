@@ -1,11 +1,10 @@
+import { NotifierComponent } from './../../../injectables/notifier/notifier.component';
 import { LocalStorageService } from '../../../../services/local-storage.service';
 import { Step } from '../../../../model/Step';
 import { Plan } from '../../../../model/Plan';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlanService } from 'src/app/services/plan.service';
-import { Interest } from 'src/app/model/Interest';
-import { User } from 'src/app/model/User';
 
 @Component({
   selector: 'app-plan-overview',
@@ -13,8 +12,7 @@ import { User } from 'src/app/model/User';
   styleUrls: ['./plan-overview.component.css'],
 })
 export class PlanOverviewComponent implements OnInit {
-  userId!: number;
-  planId!: number;
+  planId!: string;
   plan!: Plan;
   activeItemIndex = 0;
   duration!: number;
@@ -24,16 +22,17 @@ export class PlanOverviewComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private planService: PlanService,
     private localService: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private notifier: NotifierComponent
   ) {}
 
   ngOnInit(): void {
-    this.userId = this.localService.getLogId();
+    this.localService.getLogId();
     this.activatedRoute.paramMap.subscribe(() => {
       if (window.history.state['planId'] !== undefined) {
         this.planId = window.history.state['planId'];
       } else {
-        this.planId = 0;
+        this.router.navigateByUrl('/home/home-page');
       }
       console.log(this.planId);
       this.planService.getPlan(this.planId).subscribe((plan) => {
@@ -41,7 +40,12 @@ export class PlanOverviewComponent implements OnInit {
         this.duration = this.plan.duration;
         this.currentStep = this.searchStep(this.weekIndex);
         console.log(this.plan);
-      });
+      },
+      error => {
+        this.notifier.notifyError("Cannot retrieve the plan");
+        this.router.navigateByUrl('/home/home-page');
+      }
+      );
     });
   }
 

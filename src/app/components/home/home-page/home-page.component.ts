@@ -1,3 +1,4 @@
+import { NotifierComponent } from './../../injectables/notifier/notifier.component';
 import { RecommendedPlan } from '../../../model/RecommendedPlans';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../../../services/local-storage.service';
@@ -12,29 +13,33 @@ import { ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit {
-  id!: number;
   steps!: Step[];
   searchContent: string = '';
   activeItemIndex = 0;
   changeDetection!: ChangeDetectionStrategy.OnPush;
-  isRecommend :boolean= false;
-  recommendedPlans : RecommendedPlan[] = [];
+  isRecommend :boolean= false; // Variable to check if the recommendation is on
+  recommendedPlans! : RecommendedPlan;
+
   constructor(
     private homeService: HomeService,
     private localService: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private notifier: NotifierComponent
   ) {}
 
   ngOnInit(): void {
-    this.id = this.localService.getLogId();
-    this.homeService.getCurrentGoals(this.id).subscribe((steps) => {
-      console.log(steps);
+    this.localService.getLogId();
+    this.homeService.getCurrentGoals(this.localService.getLogId()).subscribe((steps) => {
       for (let s of steps) {
         s.normalize();
       }
-      console.log(steps);
       this.steps = steps;
       console.log(this.steps);
+    },
+    (error) => {
+      console.log(error);
+      this.notifier.notifyError("Cannot retrieve the current active steps");
+      this.router.navigateByUrl("/user/user-page");
     });
   }
 
@@ -49,10 +54,15 @@ export class HomePageComponent implements OnInit {
     if(this.isRecommend){
       this.homeService.getRecommendedPlans(this.localService.getLogId()).subscribe((val) => {
         this.recommendedPlans = val;
-      })
+      },
+      (error) => {
+        console.log(error);
+        this.notifier.notifyError("Cannot recommend the plans for the user");
+        this.isRecommend = !this.isRecommend;
+      });
     }
     else {
-      this.recommendedPlans = [];
+      this.recommendedPlans.plans = [];
     }
   }
 }

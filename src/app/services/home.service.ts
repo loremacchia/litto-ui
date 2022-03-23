@@ -13,24 +13,24 @@ import { plainToClass } from 'class-transformer';
 })
 
 export class HomeService {
-  baseUrl = "http://192.168.1.136:8080/"
+  baseUrl = "http://localhost:8080/litto-backend/webapi/" + "ogm";
   // baseUrl = "http://b7ed-151-41-61-172.ngrok.io"
   headers!: 
     {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
   constructor(private http: HttpClient) { }
 
-  getCurrentGoals(userId:number) : Observable<Step[]>{
-    return this.http.post<Step[]>(this.baseUrl + "/get-current-goals", JSON.stringify(userId))
+  getCurrentGoals(userId:string) : Observable<Step[]>{
+    return this.http.get<Step[]>(this.baseUrl + "/user/"+userId+"/goals")
       .pipe(map(res => plainToClass(Step, res as Object[])))
   }
 
   searchForString(searched:string) : Observable<SearchReturn> {
-    return this.http.post<SearchReturn>(this.baseUrl + "/search", JSON.stringify(searched))
+    return this.http.get<SearchReturn>(this.baseUrl + "/search"+searched)
       .pipe(map(res => plainToClass(SearchReturn, res as Object)))
   }
 
-  getRecommendedPlans(userId:number) : Observable<RecommendedPlan[]>{
-    return this.http.post<RecommendedPlan[]>(this.baseUrl + "/get-recommended-plans", JSON.stringify(userId))
-      .pipe(map(res => plainToClass(RecommendedPlan, res as Object[])))
+  getRecommendedPlans(userId:string) : Observable<RecommendedPlan>{
+    return this.http.get<RecommendedPlan>(this.baseUrl + "/user/"+userId+"/recommended")
+      .pipe(map(res => plainToClass(RecommendedPlan, res as Object)))
   }
 }

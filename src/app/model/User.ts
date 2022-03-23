@@ -1,7 +1,7 @@
 import { Plan } from './Plan';
 import { Interest } from './Interest';
 export class User {
-  id!: number;
+  id!: string;
   username!: string;
   email!: string;
   password!: string;
@@ -16,7 +16,7 @@ export class User {
   constructor() {}
 
   setItems(
-    id: number,
+    id: string,
     username: string,
     email: string,
     password: string,

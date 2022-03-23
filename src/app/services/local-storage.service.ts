@@ -15,7 +15,7 @@ export class LocalStorageService {
     return JSON.parse(localStorage.getItem('userId') as string);
   }
 
-  setCurrentUserId(id: number) {
+  setCurrentUserId(id: string) {
     localStorage.setItem('userId', JSON.stringify(id));
   }
 
@@ -47,8 +47,7 @@ export class LocalStorageService {
     return true;
   }
 
-  getCreatingPlan(userId: number) {
-    console.log('heyy');
+  getCreatingPlan(userId: string) {
     if (localStorage.getItem('creatingPlans')) {
       var plan = localStorage.getItem('creatingPlans') as string;
       return plan;

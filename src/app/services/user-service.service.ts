@@ -18,29 +18,25 @@ export class UserServiceService {
   // baseUrl = "http://b7ed-151-41-61-172.ngrok.io"
   constructor(private http: HttpClient) { }
 
-  createUser(user: UserInit): Observable<number> {
-    return this.http.post<number>(this.baseUrl + "/create-user", JSON.stringify(classToPlain(user)));
+  createUser(user: UserInit): Observable<string> {
+    return this.http.post<string>(this.baseUrl + "/user", JSON.stringify(classToPlain(user)));
   }
 
-  loginUser(email: string, password: string) : Observable<number> {
-    console.log("loginUser")
-    console.log(email + " "+ password)
-    let returny = JSON.stringify({"email":email, "password":password})
-    console.log(returny)
-    return this.http.post<number>(this.baseUrl + "/login-user", returny)
+  loginUser(email: string, password: string) : Observable<string> {
+    return this.http.post<string>(this.baseUrl + "/user/login", JSON.stringify({"email":email, "password":password}))
   }
 
   getInitialInterests(): Observable<Interest[]> {
-    return this.http.get(this.baseUrl + "/get-interests")
+    return this.http.get(this.baseUrl + "/interests")
       .pipe(map(res => plainToClass(Interest, res as Object[])))
   }
 
-  completeUserAccount(id: number, user: UserCreate): Observable<void> {
-    return this.http.post<void>(this.baseUrl + "/complete-user", JSON.stringify(classToPlain(user)));
+  completeUserAccount(id: string, user: UserCreate): Observable<boolean> {
+    return this.http.post<boolean>(this.baseUrl + "/user/"+id, JSON.stringify(classToPlain(user)));
   }
 
-  getUser(id: number): Observable<User> {
-    return this.http.post(this.baseUrl + "/user-page", JSON.stringify(id))
+  getUser(id: string): Observable<User> {
+    return this.http.get(this.baseUrl + "/user/"+id)
       .pipe(map(res => plainToClass(User, res as Object)))
   }
 

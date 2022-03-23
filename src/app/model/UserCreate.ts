@@ -1,7 +1,6 @@
 import { classToPlain } from 'class-transformer';
 
 export class UserCreate {
-    id! : number;
     bio!: string;
     name!: string;
     surname!: string;
@@ -10,8 +9,7 @@ export class UserCreate {
 
     constructor(){}
 
-    setInitial(id : number, bio: string, name: string, surname: string,imageUrl:string){
-        this.id = id;
+    setInitial(bio: string, name: string, surname: string,imageUrl:string){
         this.bio = bio;
         this.name = name;
         this.surname = surname;

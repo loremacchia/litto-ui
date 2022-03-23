@@ -1,3 +1,4 @@
+import { NotifierComponent } from './../injectables/notifier/notifier.component';
 import { Router } from '@angular/router';
 import { LocalStorageService } from './../../services/local-storage.service';
 import { Component, OnInit } from '@angular/core';
@@ -11,7 +12,6 @@ import { ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./active-steps.component.css'],
 })
 export class ActiveStepsComponent implements OnInit {
-  userId!: number;
   steps!: Step[];
   searchContent: string = '';
   activeItemIndex = 1;
@@ -20,15 +20,21 @@ export class ActiveStepsComponent implements OnInit {
   constructor(
     private homeService: HomeService,
     private router: Router,
-    private localService: LocalStorageService
+    private localService: LocalStorageService,
+    private notifier: NotifierComponent
   ) {}
   ngOnInit(): void {
-    this.userId = this.localService.getLogId();
-    this.homeService.getCurrentGoals(this.userId).subscribe((steps) => {
+    this.localService.getLogId();
+    this.homeService.getCurrentGoals(this.localService.getLogId()).subscribe((steps) => {
       for (let s of steps) {
         s.normalize();
       }
       this.steps = steps;
+    },
+    (error) => {
+      console.log(error);
+      this.notifier.notifyError("Cannot retrieve the current active steps");
+      this.router.navigateByUrl("/user/user-page");
     });
   }
 

@@ -1,3 +1,4 @@
+import { NotifierComponent } from './../notifier/notifier.component';
 import { Router } from '@angular/router';
 import { HomeService } from './../../../services/home.service';
 import { SearchReturn } from './../../../model/SearchReturn';
@@ -14,15 +15,25 @@ export class SearchItemComponent implements OnInit {
   form = new FormGroup({
     searchedValue: new FormControl(),
   });
-  constructor(private homeService: HomeService, private router: Router) {}
+  constructor(
+    private homeService: HomeService,
+    private router: Router,
+    private notifier: NotifierComponent
+  ) {}
 
   searchStringInit() {
     this.homeService
       .searchForString(this.form.controls['searchedValue'].value)
-      .subscribe((search) => {
-        this.search = search;
-        console.log(this.search);
-      });
+      .subscribe(
+        (search) => {
+          this.search = search;
+          console.log(this.search);
+        },
+        (error) => {
+          console.log(error);
+          this.notifier.notifyError('Cannot search for this word');
+        }
+      );
   }
 
   searchString(val: string) {

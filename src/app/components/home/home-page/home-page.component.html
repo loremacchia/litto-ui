@@ -58,7 +58,8 @@
 
 <div *ngIf="isRecommend" class="tui-space_top-10 button-big-space">
   <div class="tui-text_body-xl">Recommended Plans</div>
-  <div *ngFor="let r of recommendedPlans" class="tui-space_top-5">
+  <app-plan-slider [plans]="recommendedPlans.plans"></app-plan-slider>
+  <!-- <div *ngFor="let r of recommendedPlans" class="tui-space_top-5">
     <tui-tag
       size="l"
       value="{{ r.name }}"
@@ -66,7 +67,7 @@
       class="ter-button official-shadow tui-space_bottom-2"
     ></tui-tag>
     <app-plan-slider [plans]="r.plans"></app-plan-slider>
-  </div>
+  </div> -->
 </div>
 
 <div class="big-top-space"></div>

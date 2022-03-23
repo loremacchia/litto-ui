@@ -1,19 +1,15 @@
-import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
+import { NotifierComponent } from './../../../injectables/notifier/notifier.component';
 import { FileUploadService } from '../../../../services/file-upload.service';
 import { LocalStorageService } from '../../../../services/local-storage.service';
 import { SearchReturn } from '../../../../model/SearchReturn';
-import { PlanService } from 'src/app/services/plan.service';
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../../../../services/home.service';
-import { Step } from '../../../../model/Step';
-import { ChangeDetectionStrategy } from '@angular/core';
 import {
   FormControl,
   FormGroup,
-  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-create-plan-first',
   templateUrl: './create-plan-first.component.html',
@@ -21,7 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class CreatePlanFirstComponent implements OnInit {
   searchActive = '';
-  userId!: number;
+  userId!: string;
   activeItemIndex = 2;
   imageUrl =
     'https://www.idmore.it/wp-content/uploads/2016/12/ef3-placeholder-image.jpg';
@@ -42,7 +38,7 @@ export class CreatePlanFirstComponent implements OnInit {
     private fileUploadService: FileUploadService,
     private localService: LocalStorageService,
     private homeService: HomeService,
-    private readonly notificationsService: TuiNotificationsService,
+    private notifier: NotifierComponent,
     private router: Router
   ) {}
 
@@ -56,6 +52,11 @@ export class CreatePlanFirstComponent implements OnInit {
   searchTag() {
     this.homeService.searchForString(this.searchActive).subscribe((search) => {
       this.search = search;
+    },
+    (error) => {
+      console.log(error);
+      this.notifier.notifyError("Cannot search for this word");
+      this.router.navigateByUrl('/home/home-page');
     });
   }
 
@@ -64,9 +65,7 @@ export class CreatePlanFirstComponent implements OnInit {
       this.localService.setCreatingPlan(this.createJson());
       this.router.navigateByUrl('/plan/create/step-create', { state: { number: 1 } });
     } else {
-      this.notificationsService
-        .show('Fill both Title and Description', { status: TuiNotification.Error })
-        .subscribe();
+      this.notifier.notifyError('Fill both Title and Description');
     }
   }
 
