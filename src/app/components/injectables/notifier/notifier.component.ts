@@ -1,5 +1,9 @@
 import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
 
 @Component({
   selector: 'app-notifier',
