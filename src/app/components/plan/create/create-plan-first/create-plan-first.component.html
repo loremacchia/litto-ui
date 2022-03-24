@@ -64,8 +64,8 @@
       >Add plan topics (what it is about)
       <ng-container *ngIf="search">
         <tui-data-list *tuiDataList>
-          <button *ngFor="let item of search.tags" tuiOption [value]="item">
-            <span class="name">{{ item }}</span>
+          <button *ngFor="let item of search.tags" tuiOption [value]="item.name">
+            <span class="name">{{ item.name }}</span>
           </button>
         </tui-data-list>
       </ng-container>

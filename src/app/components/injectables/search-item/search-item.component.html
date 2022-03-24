@@ -31,10 +31,10 @@
         <button
           *ngFor="let item of search.tags"
           tuiOption
-          [value]="item"
-          (click)="searchString(item)"
+          [value]="item.name"
+          (click)="searchString(item.name)"
         >
-          <span class="name">{{ item }}</span>
+          <span class="name">{{ item.name }}</span>
         </button>
       </tui-data-list>
     </ng-container>

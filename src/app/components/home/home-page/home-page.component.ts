@@ -39,7 +39,7 @@ export class HomePageComponent implements OnInit {
     (error) => {
       console.log(error);
       this.notifier.notifyError("Cannot retrieve the current active steps");
-      this.router.navigateByUrl("/user/user-page");
+      // this.router.navigateByUrl("/user/user-page");
     });
   }
 

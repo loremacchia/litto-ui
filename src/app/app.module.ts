@@ -1,3 +1,4 @@
+import { TokenInterceptorService } from './services/token-interceptor.service';
 import { StepCreateComponent } from './components/plan/create/step-create/step-create.component';
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -56,7 +57,7 @@ import { LoginPageComponent } from './components/user/login/login-page/login-pag
 import { RegisterPageComponent } from './components/user/login/register-page/register-page.component';
 import { WelcomePageComponent } from './components/user/login/welcome-page/welcome-page.component';
 import { RegisterSecondComponent } from './components/user/login/register-second/register-second.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DisplayInterestsComponent } from './components/user/login/display-interests/display-interests.component';
 import { UserPageComponent } from './components/user/user-page/user-page.component';
 import { HomePageComponent } from './components/home/home-page/home-page.component';
@@ -144,7 +145,8 @@ import { CreatePlanFirstComponent } from './components/plan/create/create-plan-f
     TuiDropdownControllerModule,
     TuiDataListModule,
   ],
-  providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
+  providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer },
+              { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

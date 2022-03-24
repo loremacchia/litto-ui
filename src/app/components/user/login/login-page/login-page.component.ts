@@ -36,12 +36,13 @@ export class LoginPageComponent implements OnInit {
           this.form.controls['email'].value,
           this.form.controls['password'].value
         )
-        .subscribe((retrievedId) => {
-          if (retrievedId == null) {
+        .subscribe((tokenId) => {
+          if (tokenId == null) {
             this.notifier.notifyError('Your email or password are incorrect');
           } else {
             this.notifier.notifySuccess('Correct Login!');
-            this.localService.setCurrentUserId(retrievedId);
+            this.localService.setCurrentUserId(tokenId.id);
+            this.localService.setToken(tokenId.token)
             this.router.navigateByUrl('/home/home-page');
           }
         },

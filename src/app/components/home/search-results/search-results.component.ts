@@ -1,3 +1,4 @@
+import { Interest } from 'src/app/model/Interest';
 import { NotifierComponent } from './../../injectables/notifier/notifier.component';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { Plan } from '../../../model/Plan';
@@ -14,7 +15,7 @@ export class SearchResultsComponent implements OnInit {
   searched!: string;
   activeItemIndex = 0;
   plans: Plan[] = [];
-  tags: string[] = [];
+  tags: Interest[] = [];
   
   constructor(
     private activatedRoute: ActivatedRoute,

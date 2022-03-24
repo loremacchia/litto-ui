@@ -56,7 +56,6 @@ export class CreatePlanFirstComponent implements OnInit {
     (error) => {
       console.log(error);
       this.notifier.notifyError("Cannot search for this word");
-      this.router.navigateByUrl('/home/home-page');
     });
   }
 
@@ -85,14 +84,12 @@ export class CreatePlanFirstComponent implements OnInit {
 
   createJson() {
     const dict = {
-      userId: this.userId,
       imageUrl: this.imageUrl,
       level: this.form.controls['level'].value,
       title: this.form.controls['title'].value,
       subtitle: this.form.controls['subtitle'].value,
       // weeks: this.form.controls['weeks'].value,
-      discord: this.form.controls['discord'].value,
-      tags: this.form.controls['tags'].value,
+      tags: this.form.controls['tags'].value
     };
     return JSON.stringify(dict);
   }
@@ -104,7 +101,6 @@ export class CreatePlanFirstComponent implements OnInit {
     this.form.controls['title'].setValue(d['title']);
     this.form.controls['subtitle'].setValue(d['subtitle']);
     // this.form.controls['weeks'].setValue(d['weeks']);
-    this.form.controls['discord'].setValue(d['discord']);
     this.form.controls['tags'].setValue(d['tags']);
   }
 }

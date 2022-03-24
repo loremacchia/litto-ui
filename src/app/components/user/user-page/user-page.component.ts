@@ -33,7 +33,20 @@ export class UserPageComponent implements OnInit {
 
   logOut() {
     this.localService.removeUserId();
+    this.localService.removeToken();
     this.notifier.notifySuccess('Logged out');
     this.router.navigateByUrl('/');
+  }
+
+  delete(){
+    this.userService.deleteUser(this.localService.getLogId()).subscribe(val => {
+      if(val){
+        this.logOut();
+      }
+      else{
+        this.notifier.notifyError("Cannot delete the user")
+      }
+    })
+    
   }
 }

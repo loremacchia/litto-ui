@@ -1,3 +1,4 @@
+import { TokenId } from './../model/TokenId';
 import { UserCreate } from 'src/app/model/UserCreate';
 import { User } from 'src/app/model/User';
 import { UserInit } from '../model/UserInit';
@@ -22,23 +23,23 @@ export class UserServiceService {
   };
   constructor(private http: HttpClient) {}
 
-  createUser(user: UserInit): Observable<string> {
-    return this.http.post<string>(
+  createUser(user: UserInit): Observable<TokenId> { // TODO ritorna token e id
+    return this.http.post<TokenId>(
       this.baseUrl + '/user',
       JSON.stringify(classToPlain(user) ), this.httpOptions
-    );
+    ).pipe(map((res) => plainToClass(TokenId, res as Object)));;
   }
 
-  loginUser(email: string, password: string): Observable<string> {
-    return this.http.post<string>(
+  loginUser(email: string, password: string): Observable<TokenId> { // TODO ritorna token e id
+    return this.http.post<TokenId>(
       this.baseUrl + '/user/login',
       JSON.stringify({ email: email, password: password }), this.httpOptions
-    );
+    ).pipe(map((res) => plainToClass(TokenId, res as Object)));;
   }
 
   getInitialInterests(): Observable<Interest[]> {
     return this.http
-      .get(this.baseUrl + '/interests',this.httpOptions)
+      .get(this.baseUrl + '/user/interests',this.httpOptions)
       .pipe(map((res) => plainToClass(Interest, res as Object[])));
   }
 
@@ -53,5 +54,10 @@ export class UserServiceService {
     return this.http
       .get(this.baseUrl + '/user/' + id, this.httpOptions)
       .pipe(map((res) => plainToClass(User, res as Object)));
+  }
+
+  deleteUser(id: string): Observable<boolean> {
+    return this.http
+      .delete<boolean>(this.baseUrl + '/user/' + id, this.httpOptions);
   }
 }

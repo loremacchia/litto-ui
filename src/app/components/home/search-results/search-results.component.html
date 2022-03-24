@@ -35,8 +35,8 @@
         status="custom"
         class="taggy shadow-light"
         [hoverable]="true"
-        [value]="this.tags[idx]"
-        (click)="searchString(this.tags[idx])"
+        [value]="this.tags[idx].name"
+        (click)="searchString(this.tags[idx].name)"
       ></tui-tag>
     </div>
   </div>

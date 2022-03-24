@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 
 import { UserInit } from '../../../../model/UserInit';
 import { UserServiceService } from 'src/app/services/user-service.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register-page',
@@ -44,13 +45,14 @@ export class RegisterPageComponent implements OnInit {
           )
         )
         .subscribe(
-          (retrievedId) => {
+          (tokenId) => {
             this.notificationsService
               .show('Check your Email to continue the registration', {
                 status: TuiNotification.Info,
               })
               .subscribe();
-            this.localService.setCurrentUserId(retrievedId);
+            this.localService.setCurrentUserId(tokenId.id);
+            this.localService.setToken(tokenId.token)
             this.router.navigateByUrl('/user/register-second');
           },
           (error) => {

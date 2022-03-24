@@ -56,8 +56,8 @@ export class StepCompleteComponent implements OnInit {
         .subscribe((step) => {
           // step.normalize();
           this.step = step;
-          console.log(this.step.material);
-          this.totalMaterials = this.step.material.length;
+          console.log(this.step.materials);
+          this.totalMaterials = this.step.materials.length;
         },
         error => {
           this.notifier.notifyError("Cannot retrieve the step");

@@ -128,7 +128,10 @@ export class StepCreateComponent implements OnInit {
   populateForm(prevStep: { [key: string]: any }) {
     this.form.controls['title'].setValue(prevStep['title']);
     this.form.controls['subtitle'].setValue(prevStep['subtitle']);
-    this.steps = prevStep['material'];
+    this.steps = prevStep['materials'];
+    if(this.steps == undefined){
+      this.steps = []
+    }
     for (let s of this.steps) {
       this.printableSteps.push(s['title']);
     }
@@ -171,7 +174,7 @@ export class StepCreateComponent implements OnInit {
       planWeek: this.planWeek,
       title: this.form.controls['title'].value,
       subtitle: this.form.controls['subtitle'].value,
-      material: this.orderMaterial(),
+      materials: this.orderMaterial(),
     };
     return dict;
   }
@@ -300,9 +303,16 @@ export class StepCreateComponent implements OnInit {
     let plan = JSON.parse(
       this.localService.getCreatingPlan(this.localService.getLogId()) as string
     );
+    let t = []
+    for(let i in plan['tags']){
+      t.push({name:plan['tags'][i]})
+    }
+    plan['tags'] = t
     plan['duration'] = this.localService.getCreatingStepsNumber();
     let steps = this.localService.getCreatingSteps();
     plan['steps'] = steps;
+    console.log(plan)
+    console.log(JSON.stringify(plan))
     if (steps != undefined) {
       this.planService.createPlan(this.localService.getLogId(), plan).subscribe((planIdd) => {
         this.notifier.notifySuccess('The plan is correctly created!');

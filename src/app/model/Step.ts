@@ -9,7 +9,7 @@ export class Step {
   planName!: string;
   planId!: string;
   planWeek!: number;
-  material!:[{[key:string]:string}];
+  materials!:[{[key:string]:string}];
   materialLength!:number;
 
   constructor(

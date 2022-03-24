@@ -85,7 +85,7 @@ export class LocalStorageService {
           found = true;
           (dic['title'] = newStep['title']),
             (dic['subtitle'] = newStep['subtitle']),
-            (dic['material'] = newStep['material']);
+            (dic['materials'] = newStep['materials']);
         }
       }
       if (!found) {
@@ -133,5 +133,21 @@ export class LocalStorageService {
   emptyUnusefulInfos(){
     this.removeMaterialIndex();
     localStorage.removeItem('creatingSteps');
+  }
+
+  setToken(token: string){
+    localStorage.setItem('token', JSON.stringify(token));
+  }
+
+  removeToken(){
+    localStorage.removeItem('token');
+  }
+
+  getToken() {
+    if (localStorage.getItem('token')) {
+      return JSON.parse(localStorage.getItem('token') as string);
+    } else {
+      return null;
+    }
   }
 }
