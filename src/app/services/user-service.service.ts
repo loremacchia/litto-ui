@@ -14,7 +14,7 @@ import { classToPlain, plainToClass } from 'class-transformer';
   providedIn: 'root',
 })
 export class UserServiceService {
-  baseUrl = 'http://localhost:8080/litto-backend/webapi/' + 'ogm';
+  baseUrl = 'http://localhost:8080/litto-backend/webapi/' + 'gql';
   // baseUrl = "http://b7ed-151-41-61-172.ngrok.io"
   httpOptions = {
     headers: new HttpHeaders({

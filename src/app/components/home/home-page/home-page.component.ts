@@ -1,3 +1,4 @@
+import { Plan } from './../../../model/Plan';
 import { NotifierComponent } from './../../injectables/notifier/notifier.component';
 import { RecommendedPlan } from '../../../model/RecommendedPlans';
 import { Router } from '@angular/router';
@@ -18,7 +19,7 @@ export class HomePageComponent implements OnInit {
   activeItemIndex = 0;
   changeDetection!: ChangeDetectionStrategy.OnPush;
   isRecommend :boolean= false; // Variable to check if the recommendation is on
-  recommendedPlans! : RecommendedPlan;
+  recommendedPlans! : Plan[];
 
   constructor(
     private homeService: HomeService,
@@ -28,6 +29,7 @@ export class HomePageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // this.recommendedPlans.plans = []
     this.localService.getLogId();
     this.homeService.getCurrentGoals(this.localService.getLogId()).subscribe((steps) => {
       for (let s of steps) {
@@ -50,19 +52,24 @@ export class HomePageComponent implements OnInit {
   }
 
   recommend(){
+    this.recommendedPlans = []
     this.isRecommend = !this.isRecommend;
     if(this.isRecommend){
       this.homeService.getRecommendedPlans(this.localService.getLogId()).subscribe((val) => {
         this.recommendedPlans = val;
+        if( this.recommendedPlans == undefined || this.recommendedPlans.length == 0 ){
+          this.notifier.notifyError("No plan to recommend");
+        }
       },
       (error) => {
         console.log(error);
         this.notifier.notifyError("Cannot recommend the plans for the user");
-        this.isRecommend = !this.isRecommend;
+        this.recommendedPlans = []
+        // this.isRecommend = !this.isRecommend;
       });
     }
     else {
-      this.recommendedPlans.plans = [];
+      this.recommendedPlans = [];
     }
   }
 }

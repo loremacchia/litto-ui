@@ -1,3 +1,4 @@
+import { Plan } from './../model/Plan';
 import { RecommendedPlan } from './../model/RecommendedPlans';
 import { SearchReturn } from './../model/SearchReturn';
 import { Injectable } from '@angular/core';
@@ -12,7 +13,7 @@ import { plainToClass } from 'class-transformer';
   providedIn: 'root',
 })
 export class HomeService {
-  baseUrl = 'http://localhost:8080/litto-backend/webapi/' + 'ogm';
+  baseUrl = 'http://localhost:8080/litto-backend/webapi/' + 'gql';
 
   // baseUrl = "http://b7ed-151-41-61-172.ngrok.io"
   httpOptions = {
@@ -35,12 +36,12 @@ export class HomeService {
       .pipe(map((res) => plainToClass(SearchReturn, res as Object)));
   }
 
-  getRecommendedPlans(userId: string): Observable<RecommendedPlan> {
+  getRecommendedPlans(userId: string): Observable<Plan[]> {
     return this.http
-      .get<RecommendedPlan>(
+      .get<Plan[]>(
         this.baseUrl + '/user/' + userId + '/recommended',
         this.httpOptions
       )
-      .pipe(map((res) => plainToClass(RecommendedPlan, res as Object)));
+      .pipe(map((res) => plainToClass(Plan, res as Object[])));
   }
 }

@@ -9,7 +9,7 @@ export class User {
   name!: string;
   surname!: string;
   interests!: Interest[];
-  plans!: Plan[];
+  completedPlans!: Plan[];
   imageUrl!: string;
   level!: number;
 
@@ -24,7 +24,7 @@ export class User {
     name: string,
     surname: string,
     interests: Interest[],
-    plans: Plan[],
+    completedPlans: Plan[],
     imageUrl: string,
     level: number
   ) {
@@ -36,7 +36,7 @@ export class User {
     this.name = name;
     this.surname = surname;
     this.interests = interests;
-    this.plans = plans;
+    this.completedPlans = completedPlans;
     this.imageUrl = imageUrl;
     this.level = level;
   }
